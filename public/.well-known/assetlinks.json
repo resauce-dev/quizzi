@@ -1,0 +1,5 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : { "namespace": "android_app", "package_name": "dev.resauce.quizzi",
+    "sha256_cert_fingerprints": ["28:B0:33:C6:CE:A7:9B:77:1E:C7:D7:B2:E2:A4:1F:92:96:66:6A:9B:B4:BE:09:36:73:C8:C7:B7:81:E4:E3:ED"] }
+}]

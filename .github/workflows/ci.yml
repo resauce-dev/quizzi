@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    tags:        
+      - v*.*.*
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Execute remote SSH Commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script_stop: true
+        script: |
+          cd ~/web/quizzi*
+          git fetch
+          git pull
+          ~/.nvm/versions/node/v12.18.2/bin/npm install
+          ~/.nvm/versions/node/v12.18.2/bin/npm run build
