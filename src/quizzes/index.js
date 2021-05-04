@@ -516,6 +516,6 @@ marvelChars.addSymbol('795b0a6e-d3c1-430c-897d-a5fc12646d6e', 'Mister Fantastic'
 
 export default [ 
     logos, animChars, flags, apparel, socialMedia, 
-    foodDrink, alcohol, vehicleBrands, dogBreeds, 
+    foodDrink, vehicleBrands, dogBreeds, 
     musicArtists, animals, movieTitles, marvelChars
 ]
