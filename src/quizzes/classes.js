@@ -1,24 +1,33 @@
 import { shuffleArray, getRandomString, stripSpaces } from './methods'
+import domain from '@/domain'
 
 class Symbol {
-  constructor(id, name, imgExtension, hasPadding = true) {
-    name = name.toUpperCase();
+  /**
+   * Symbol database model to be provided
+   * 
+   * @param {*} question 
+   */
+  constructor(question) {
+    const name = question.name.toUpperCase();
 
-    this.id = id
+    this.id =question.id
     this.name = {
       'original': name,
       'stripped': stripSpaces(name),
       'words': name.split(/[\s-]/)
     }
-    this.imgExtension = imgExtension
+    this.image = question.image
+    this.hasPadding = question.has_padding;
 
     this.availableLetters = null
     this.activeLetters = [] // Indexes
     this.isPlayable = false;
-    this.hasPadding = hasPadding;
   }
   enable() {
     this.isPlayable = true;
+  }
+  getImageUrl() {
+    return this.image ? `${domain}/assets/${this.image.id}` : './img/unknown.svg'
   }
   getLetters() {
     if(!this.availableLetters) {
@@ -75,14 +84,19 @@ class Symbol {
 }
   
 class Quiz {
-  constructor(slug, quizName) {
-    this.slug = slug
-    this.name = quizName
+  /**
+   * Quiz database model to be provided
+   * 
+   * @param {*} quiz 
+   */
+  constructor(quiz) {
+    this.id = quiz.id
+    this.name = quiz.name
     this.symbols = []
     this.availableSymbolIds = [];
   }
-  addSymbol(id, name, imgExtension, hasPadding) {
-    const symbol = new Symbol(id, name, imgExtension, hasPadding)
+  addSymbol(question) {
+    const symbol = new Symbol(question)
     this.symbols.push(symbol)
     /**
      * When adding a symbol, if it is the first symbol added,
@@ -122,5 +136,5 @@ class Quiz {
       return 'in-progress'
   }
 }
-  
+
 export { Quiz }
