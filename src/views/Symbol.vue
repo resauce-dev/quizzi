@@ -4,7 +4,7 @@
     <div class="symbol p-3 pb-5">
       <b-badge class="symbol-badge shadow mb-2" pill variant="primary">Symbol {{$route.params.symbol}}</b-badge>
       <div class="image-box my-3" :class="symbol.hasPadding ? 'p-3' : ''">
-        <img :src="`../img/symbols/${quiz.slug}/${symbol.id}.${symbol.imgExtension}`" alt="Symbol" class="image">
+        <img :src="symbol.getImageUrl()" alt="Questionable Image" class="image">
       </div>     
       <symbol-built-name :symbol="symbol" />
       <div class="pt-4" v-if="symbol.isCorrect()">
