@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <navigation />
-    <div class="quiz">
+    <div class="quiz" v-if="quiz">
       <div class="header neo-shadow">
         <h2 class="header-title">{{quiz.name}}</h2>
         <p class="header-body">
@@ -10,11 +10,11 @@
           <template v-else-if="quiz.getStatus() === 'in-progress'">In progress...</template>
         </p>
       </div>
-      <div class="sym-container mt-3">
+      <div class="sym-container mt-3" v-if="quiz.symbols">
         <router-link
           v-for="(symbol, index) in quiz.symbols" 
           :key="`symbol_${index}`" 
-          :to="`/quizzes/${slug}/${index + 1}`"
+          :to="`/quizzes/${id}/${index + 1}`"
           :alt="`Attempt symbol ${index + 1}`"
           v-slot="{ href, route, navigate }">
           <b-button 
@@ -39,9 +39,14 @@ export default {
   components: { Navigation },
   data() { 
     return { 
-      slug: this.$route.params.quiz,
+      id: this.$route.params.quiz,
       quiz: this.$store.getters.getQuiz(this.$route.params.quiz),
-    } 
+    }
+  },
+  watch: {
+    quiz (newQuizData) {
+      this.quiz = newQuizData
+    }
   }
 }
 </script>
