@@ -1,21 +1,33 @@
 <template>
   <p class="mt-5">
-    <template v-if="updateExists">
+    <template v-if="isDevelopment">
+      <span class="text-secondary">
+        <b-icon icon="bug" scale="1.5" class="mr-2" variant="secondary" aria-hidden="true"></b-icon>
+        Development Mode
+      </span>
+    </template>
+    <template v-else-if="isFetchingUpdateContent">
+      <span class="text-secondary">
+        <b-icon icon="wifi" scale="1.5" class="mr-2" variant="secondary" aria-hidden="true" animation="fade"></b-icon>
+        Downloading Updates...
+      </span>
+    </template>
+    <template v-else-if="isUpdateInstallable">
       <a href="#" @click="refreshApp">
         <b-icon icon="cloud-download" scale="1.5" class="mr-2" variant="primary" aria-hidden="true"></b-icon>
-        Download update
+        Install Updates
       </a>
     </template>
     <template v-else-if="isUpdatingApp">
-      <span class="text-primary">
-        <b-icon icon="arrow-clockwise" animation="spin" scale="1.5" class="mr-2" variant="primary" aria-hidden="true"></b-icon>
+      <span class="text-secondary">
+        <b-icon icon="arrow-clockwise" scale="1.5" class="mr-2" variant="secondary" aria-hidden="true" animation="spin"></b-icon>
         Updating...
       </span>
     </template>
     <template v-else>
       <span class="text-success">
         <b-icon icon="check-circle" scale="1.5" class="mr-2" variant="success" aria-hidden="true"></b-icon>
-        No updates
+        No Updates
       </span>
     </template>
   </p>
@@ -28,7 +40,3 @@ export default {
   mixins: [update],
 }
 </script>
-
-<style>
-
-</style>

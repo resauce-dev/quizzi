@@ -5,31 +5,32 @@ import { register } from 'register-service-worker'
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready () {
-      console.log(
+      console.info('👷‍♂️', 
         'App is being served from cache by a service worker.\n' +
         'For more details, visit https://goo.gl/AFskqB'
       )
     },
     registered () {
-      console.log('Service worker has been registered.')
+      console.info('👷‍♂️', 'Service worker has been registered.')
     },
     cached () {
-      console.log('Content has been cached for offline use.')
+      console.info('👷‍♂️', 'Content has been cached for offline use.')
     },
     updatefound () {
-      console.log('New content is downloading.')
+      console.info('👷‍♂️', 'New content is downloading.')
+      document.dispatchEvent(new CustomEvent('swUpdating'));
     },
     updated (registration) {
-      console.log('New content is available; please refresh.')
+      console.info('👷‍♂️', 'New content is available; please refresh.')
       document.dispatchEvent(
         new CustomEvent('swUpdated', { detail: registration })
       );
     },
     offline () {
-      console.log('No internet connection found. App is running in offline mode.')
+      console.info('👷‍♂️', 'No internet connection found. App is running in offline mode.')
     },
     error (error) {
-      console.error('Error during service worker registration:', error)
+      console.error('👷‍♂️', 'Error during service worker registration:', error)
     }
   })
 }
