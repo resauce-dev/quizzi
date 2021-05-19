@@ -1,6 +1,6 @@
 <template>
   <div class="card neo-shadow">
-    <router-link class="p-3" :to="`/quizzes/${quiz.slug}`" :alt="`Play ${quiz.name}`">
+    <router-link class="p-3" :to="`/quizzes/${quiz.id}`" :alt="`Play ${quiz.name}`">
       <div class="content">
         <div>
           <h2 class="card-title">{{quiz.name}}</h2>
@@ -10,7 +10,13 @@
             <template v-else-if="quiz.getStatus() === 'in-progress'">In progress</template>
           </p>
         </div>
-        <b-badge pill class="ml-3" :variant="quiz.isCompleted() ? 'success' : 'danger'">{{correctCount}} / {{quizLength}} <span class="sr-only">unread messages</span></b-badge>
+        <b-badge v-if="quizLength > 0" pill class="ml-3" :variant="quiz.isCompleted() ? 'success' : 'danger'">
+          {{correctCount}} / {{quizLength}} 
+          <span class="sr-only">unread messages</span>
+        </b-badge>
+        <span class="quizLength" v-else>
+          <b-icon icon="cloud-download" scale="1.5" class="mr-2" variant="primary" aria-hidden="true"></b-icon>
+        </span>
       </div>
       <b-progress height="0.4rem" :value="correctCount" :max="quizLength" variant="success"></b-progress>
     </router-link>
