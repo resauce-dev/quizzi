@@ -8,14 +8,8 @@ class Symbol {
    * @param {*} question 
    */
   constructor(question) {
-    const name = question.name.toUpperCase();
-
-    this.id =question.id
-    this.name = {
-      'original': name,
-      'stripped': stripSpaces(name),
-      'words': name.split(/[\s-]/)
-    }
+    this.id = question.id
+    this.name = question.name.toUpperCase()
     this.image = question.image
     this.hasPadding = question.has_padding;
 
@@ -26,12 +20,18 @@ class Symbol {
   enable() {
     this.isPlayable = true;
   }
+  getNames() {
+    return {
+      'stripped': stripSpaces(this.name),
+      'words': this.name.split(/[\s-]/)
+    }
+  }
   getImageUrl() {
     return this.image ? `${domain}/assets/${this.image.id}` : './img/unknown.svg'
   }
   getLetters() {
     if(!this.availableLetters) {
-      let name = this.name.stripped
+      let name = this.getNames().stripped
       let string = getRandomString( name.length * 2 )
       let letterArray = (name + string).toUpperCase().split("")
       this.availableLetters = shuffleArray(letterArray)
@@ -59,12 +59,12 @@ class Symbol {
   }
   clickLetterIndex(letterIndex) {
     if(!this.availableLetters[letterIndex]) { throw `The selected letter doesn't exist`  }
-    if(this.getBuiltName().length === this.name.stripped.length) { return }
+    if(this.getBuiltName().length === this.getNames().stripped.length) { return }
     this.activeLetters.push(letterIndex)
   }
   isCorrect() {
     let list = JSON.parse(localStorage.getItem('completedSymbols'))
-    const isCorrect = this.name.stripped === this.getBuiltName()
+    const isCorrect = this.getNames().stripped === this.getBuiltName()
     if(!list) {
       list = [];
       localStorage.setItem('completedSymbols', JSON.stringify(list));
@@ -92,8 +92,12 @@ class Quiz {
   constructor(quiz) {
     this.id = quiz.id
     this.name = quiz.name
-    this.symbols = []
+    this.symbols = quiz.questions || []
     this.availableSymbolIds = [];
+
+    if('symbols' in quiz && quiz.symbols.length > 0) {
+      quiz.symbols.forEach(s => this.addSymbol(s))
+    }
   }
   addSymbol(question) {
     const symbol = new Symbol(question)
@@ -137,4 +141,4 @@ class Quiz {
   }
 }
 
-export { Quiz }
+export { Quiz, Symbol }

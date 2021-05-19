@@ -1,6 +1,6 @@
 <template>
   <div class="word-container">
-    <div class="d-flex word" v-for="(word, wordi) in symbol.name.words" :key="word">
+    <div class="d-flex word" v-for="(word, wordi) in symbol.getNames().words" :key="word">
       <div v-for="(letter, letteri) in word" :key="`${letteri}_${letter}`" class="letter" :class="letter === ' ' ? 'space' : ''"> 
         {{ getLetter(wordi, letteri) }}
       </div>
@@ -20,14 +20,14 @@ export default {
   methods: {
     getLetter(wordi, letteri) {
       let offsetCount = 0;
-      this.symbol.name.words.forEach((word, i) => {
+      this.symbol.getNames().words.forEach((word, i) => {
         if(i >= wordi) { return }
         offsetCount = offsetCount + word.length
       })
       let letterIndex = offsetCount ? offsetCount + letteri : letteri
 
       if(this.symbol.isCorrect()) {
-        return this.symbol.name.stripped[letterIndex]
+        return this.symbol.getNames().stripped[letterIndex]
       }
       return this.symbol.getBuiltName()[letterIndex]
     }
