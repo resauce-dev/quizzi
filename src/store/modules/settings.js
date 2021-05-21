@@ -4,6 +4,7 @@
 const state = {
   canVibrate: false,
   canPlayAudio: false,
+  notifyStatus: Notification.permission,
 }
 
 /**
@@ -13,7 +14,9 @@ const state = {
  */
 const getters = {
   canVibrate: state => state.canVibrate,
-  canPlayAudio: state => state.canPlayAudio
+  canPlayAudio: state => state.canPlayAudio,
+  getNotifyStatus: state => state.notifyStatus,
+  isNotifyStatus: state => status => state.notifyStatus === status,
 }
 
 /**
@@ -22,8 +25,9 @@ const getters = {
  * @return state.data
  */
 const mutations = {
-  toggleCanVibrate: (state, e) => state.canInstall = e,
-  toggleCanPlayAudio: (state, e) => state.canInstall = e,
+  toggleCanVibrate: state => state.canInstall = !state.canInstall,
+  toggleCanPlayAudio: state => state.canPlayAudio = !state.canPlayAudio,
+  notifyStatus: (state, e) => state.notifyStatus = e,
 }
 
 /**
@@ -32,7 +36,10 @@ const mutations = {
  * @return commit()
  */
 const actions = {
-
+  requestNotifyPermission: async ({ getters, commit }) => {
+    commit('notifyStatus', await Notification.requestPermission())
+    console.info(`🎫 User ${getters.canSendNotifications} access to notifications`)
+  }
 }
 
 export default {
