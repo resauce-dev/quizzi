@@ -63,8 +63,7 @@
       },
       "workboxPluginMode": "InjectManifest",
       "workboxOptions": {
-        "swSrc": "src/my-service-worker.js",
-        "skipWaiting": true
+        "swSrc": "src/my-service-worker.js"
       }
     }
   }
