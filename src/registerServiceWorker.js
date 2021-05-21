@@ -3,7 +3,7 @@
 import { register } from 'register-service-worker'
 
 if (process.env.NODE_ENV === 'production') {
-  register(`${process.env.BASE_URL}my-service-worker.js`, {
+  register(`${process.env.BASE_URL}service-worker.js`, {
     registrationOptions: { scope: './' },
     ready () {
       console.info('👷‍♂️', 
