@@ -10,14 +10,11 @@ function getRandomString(length) {
 
 function shuffleArray(a) {
   for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    [a[i], a[j]] = [a[j], a[i]]
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
-  return a
 }
 
-function stripSpaces(str) {
-  return str.replace(/[\s-]/g,'')
-}
+const stripSpaces = str => str.replace(/[\s-]/g,'')
 
 export { shuffleArray, getRandomString, stripSpaces }
