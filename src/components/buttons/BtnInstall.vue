@@ -1,6 +1,6 @@
 <template>
   <QuizCard 
-    :disabled="!installPrompt"
+    :disabled="!canInstall"
     :compact="true"
     title="Install App"
     subtitle="Save your progress"
@@ -17,24 +17,27 @@ import { mapGetters } from 'vuex'
 export default {
   components: { QuizCard },
   computed: {
-    ...mapGetters('app', ['installPrompt'])
+    ...mapGetters('app', ['canInstall'])
   },
   methods: {
     async install() {
+      if(!this.canInstall) return
       // Show the install prompt
-      this.installPrompt.prompt()
+      this.canInstall.prompt()
       // Wait for the user to respond to the prompt
-      const { outcome } = await this.installPrompt.userChoice
+      const { outcome } = await this.canInstall.userChoice
       // Optionally, send analytics event with outcome of user choice
-      console.log(`User response to the install prompt: ${outcome}`)
+      this.$gtag.event(`application_install_${outcome}`)
       // We've used the prompt, and can't use it again, throw it away
-      this.$store.commit('app/setInstallPrompt', null)
+      this.$store.commit('app/setCanInstallPrompt', null)
     }
   },
   created() {
-    window.addEventListener('appinstalled', (evt) => {
-      console.log('App Installed: BtnInstall', evt);
-    });
+    window.addEventListener(
+      'appinstalled', 
+      this.$gtag.event('application_installed'), 
+      { once: true }
+    );
   }
 }
 </script>
