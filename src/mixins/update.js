@@ -20,7 +20,6 @@ export default {
         return isUpdateAvailable ? JSON.parse(isUpdateAvailable.toLowerCase()) : false
       },
       set(isInstallable) {
-        this.isUpdateInstallable = isInstallable
         return localStorage.setItem('updateAvailable', isInstallable)
       }
     }
