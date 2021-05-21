@@ -62,6 +62,7 @@ const actions = {
     store.commit('app/setInstallPrompt'. e)
     // Optionally, send analytics event that PWA install promo was shown.
     alert('Saved install prompt for later')
+    console.log(store.getters['app/installPrompt'])
   });
 }
 
