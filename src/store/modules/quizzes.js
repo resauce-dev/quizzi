@@ -74,15 +74,14 @@ const actions = {
     url.search = new URLSearchParams(params).toString()
 
     try {
-
-      const cache = await caches.open(`v1__quiz-index`)
+      const cache = await caches.open(`quiz-index`)
       cache.add(url)
 
       var response = await fetch(url)
-      var data = await response.json()
+      var {data} = await response.json()
 
-      console.info('📜 Fetched Quizzes', data.data)
-      commit('setQuizzes', data.data)
+      console.info('📜 Fetched Quizzes', data)
+      commit('setQuizzes', data)
       return true
     } catch (e) {
       console.error('📜 Something went wrong!', e)
@@ -114,27 +113,28 @@ const actions = {
     url.search = new URLSearchParams(params).toString()
 
     try {
-
-      const cache = await caches.open(`v1__quiz__${id}`)
+      const cache = await caches.open(`quiz__${id}`)
       cache.add(url)
-      cache.add('./img/unknown.svg') // this needs to be cached globally // Cache broken image URL
 
       var response = await fetch(url)
-      var data = await response.json()
-
-      // Cache all Images
-      const assetLinks = data.data.questions.map(i => `${rootGetters['app/apiUrl']}/assets/${i.image.id}`)
-      cache.addAll(assetLinks)
+      var { data } = await response.json()
 
       // Commit the result
-      console.info('📜 Fetched Quiz', data.data.name, data.data)
-      commit('setQuizQuestions', {id: data.data.id, questions: data.data.questions})
+      console.info('📜 Fetched Quiz', data.name, data)
+      commit('setQuizQuestions', {id: data.id, questions: data.questions})
       return true
     } catch (e) {
       console.error('📜 Something went wrong!', e)
       return false
     }
   },
+  async fetchQuizAssets({ state, rootGetters }, id) {
+    const cache = await caches.open(`quiz__${id}`)
+    const assetLinks = state.quizzes[id].questions.map(
+      i => `${rootGetters['app/apiUrl']}/assets/${i.image.id}`
+    )
+    cache.addAll(assetLinks)
+  }
 }
 
 export default {

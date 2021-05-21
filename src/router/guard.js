@@ -8,6 +8,13 @@ router.beforeEach(async (to, from, next)=>{
    */
   if(!store.getters['quizzes/hasQuizzes']) {
     await store.dispatch('quizzes/fetchQuizzes')
+
+    const cacheKeys = await caches.keys()
+    cacheKeys.forEach(async key => {
+      if(key.substr(0, 6) !== 'quiz__') return
+      await store.dispatch('quizzes/fetchQuiz', key.replace(/quiz__/g, ''))
+    });
+
   }
 
   /**
@@ -26,6 +33,7 @@ router.beforeEach(async (to, from, next)=>{
    */
   if('quiz' in to.params && store.getters['quizzes/getQuiz'](to.params.quiz).symbols.length < 1) {
     await store.dispatch('quizzes/fetchQuiz', to.params.quiz)
+    await store.dispatch('quizzes/fetchQuizAssets', to.params.quiz)
   }
 
   /**
