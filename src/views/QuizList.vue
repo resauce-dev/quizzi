@@ -76,7 +76,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['isOnline']),
+    ...mapGetters('app', ['isOnline']),
     ...mapGetters('quizzes', ['quizzes']),
     filteredQuizzes() {
       if(!this.quizzes) return []

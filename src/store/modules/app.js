@@ -3,7 +3,8 @@
  */
 const state = {
   appName: 'Quizzi',
-  apiUrl: 'https://cms.resauce.dev'
+  apiUrl: 'https://cms.resauce.dev',
+  isOnline: window.navigator.onLine,
 }
 
 /**
@@ -14,6 +15,7 @@ const state = {
 const getters = {
   appName: state => state.appName,
   apiUrl: state => state.apiUrl,
+  isOnline: state => state.isOnline,
 }
 
 /**
@@ -21,8 +23,11 @@ const getters = {
  * 
  * @return state.data
  */
- const mutations = {
-
+const mutations = {
+  setIsOnline(state, bool) {
+    console.info(`🖥 Internet ${bool?'Online':'Offline'}`)
+    return state.isOnline = bool
+  }
 }
 
 /**
@@ -32,6 +37,19 @@ const getters = {
  */
 const actions = {
 
+}
+
+/**
+ * Plugin to globally listen to Network
+ * Decide if user is Online or Offline
+ */
+ export const plugin = store => {
+  window.addEventListener('online', () => 
+    store.commit('app/setIsOnline', true)
+  );
+  window.addEventListener('offline', () => 
+    store.commit('app/setIsOnline', false)
+  );
 }
 
 export default {

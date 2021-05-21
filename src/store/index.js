@@ -3,11 +3,10 @@ import Vuex from 'vuex'
 // import VuexPersistence from 'vuex-persist'
 
 import app from '@/store/modules/app'
-import user from '@/store/modules/user'
 import settings from '@/store/modules/settings'
 import quizzes from '@/store/modules/quizzes' // remove
 
-import { plugin as userPlugin } from '@/store/modules/user'
+import { plugin as appPlugin } from '@/store/modules/app'
 
 // const vuexLocal = new VuexPersistence({
 //   storage: window.localStorage,
@@ -20,11 +19,10 @@ export default new Vuex.Store({
   strict: true,
   plugins: [
     // vuexLocal.plugin,
-    userPlugin
+    appPlugin
   ],
   modules: {
     app,
-    user,
     settings,
     quizzes, // remove
   },
