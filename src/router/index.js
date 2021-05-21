@@ -34,6 +34,11 @@ Vue.use(VueRouter)
     path: '/privacy',
     name: 'Privacy',
     component: () => import('../views/Privacy.vue')
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('../views/Settings.vue')
   }
 ]
 

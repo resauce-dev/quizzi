@@ -34,22 +34,6 @@
           <p><b-button variant="neo" class="mt-5" @click="toggleShowStatus('not-started')">Start a quiz</b-button></p>
         </div>
       </div>   
-
-      <hr>   
-      
-      <btn-notification />
-
-      <QuizCard 
-        :disabled="false"
-        :show-progress-bar="false"
-        :compact="true"
-        title="Install Quizzi"
-        subtitle="Easy Access & Saved Progression"
-        icon="app-indicator"
-        variant="info"
-        @click="install"
-      />
-
     </div>
     <p class="footer-links mt-5 mb-4">
       <small>
@@ -65,11 +49,10 @@
 import { mapGetters } from 'vuex'
 import Navigation from '@/components/Navigation'
 import QuizCard from '@/components/QuizCard.vue'
-import BtnNotification from '../components/buttons/BtnNotification.vue'
 
 export default {
   name: 'Quiz-List',
-  components: { Navigation, QuizCard, BtnNotification },
+  components: { Navigation, QuizCard },
   data() {
     return {
       showQuizzesWithStatus: null
