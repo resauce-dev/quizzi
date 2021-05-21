@@ -1,5 +1,5 @@
 import { shuffleArray, getRandomString, stripSpaces } from './methods'
-import domain from '@/domain'
+import app from '@/store/modules/app'
 
 class Symbol {
   /**
@@ -27,6 +27,7 @@ class Symbol {
     }
   }
   getImageUrl() {
+    const domain = app.getters.appName
     return this.image ? `${domain}/assets/${this.image.id}` : './img/unknown.svg'
   }
   getLetters() {

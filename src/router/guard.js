@@ -7,7 +7,7 @@ router.beforeEach(async (to, from, next)=>{
    * Only if there is no data already.
    */
   if(!store.getters.hasQuizzes) {
-    await store.dispatch('fetchQuizzes')
+    await store.dispatch('quizzes/fetchQuizzes')
   }
 
   /**
@@ -25,7 +25,7 @@ router.beforeEach(async (to, from, next)=>{
    * And the questions array is empty
    */
   if('quiz' in to.params && store.getters.getQuiz(to.params.quiz).symbols.length < 1) {
-    await store.dispatch('fetchQuiz', to.params.quiz)
+    await store.dispatch('quizzes/fetchQuiz', to.params.quiz)
   }
 
   /**

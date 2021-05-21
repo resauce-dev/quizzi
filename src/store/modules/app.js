@@ -2,7 +2,8 @@
  * Stored State Data
  */
 const state = {
-  name: 'Quizzi',
+  appName: 'Quizzi',
+  apiUrl: 'https://cms.resauce.dev'
 }
 
 /**
@@ -11,9 +12,8 @@ const state = {
  * @return state.data
  */
 const getters = {
-  appName: state => {
-    return state.appName
-  },
+  appName: state => state.appName,
+  apiUrl: state => state.apiUrl,
 }
 
 /**
