@@ -27,7 +27,7 @@
         </div>
         <div v-else-if="showQuizzesWithStatus === 'not-started'">
           <p>Congratulations, you've completed all our quizzes at this time! </p>
-          <p>More coming soon......... </p>
+          <p>More coming soon... </p>
         </div>
         <div v-else>
           <p>Ooops! You don't currently have any quizzes {{ showQuizzesWithStatus }}...</p>
