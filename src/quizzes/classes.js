@@ -131,6 +131,9 @@ class Quiz {
   getCorrectCount() {
     return this.symbols.filter(s => s.isCorrect()).length
   }
+  isStatus(status) {
+    return this.getStatus() === status
+  }
   getStatus() {
     if(this.getCorrectCount() === 0) 
       return 'not-started'

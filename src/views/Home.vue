@@ -9,16 +9,16 @@
           </b-button>
         </router-link>
       </div>
-      <update-app-btn />
+      <btn-update-app />
     </div>
   </div>
 </template>
 
 <script>
-import UpdateAppBtn from '@/components/UpdateAppBtn'
+import BtnUpdateApp from '@/components/buttons/BtnUpdateApp'
 export default {
   name: 'Home',
-  components: { UpdateAppBtn }
+  components: { BtnUpdateApp }
 }
 </script>
 

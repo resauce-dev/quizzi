@@ -5,9 +5,9 @@
       <div class="header neo-shadow">
         <h2 class="header-title">{{quiz.name}}</h2>
         <p class="header-body">
-          <template v-if="quiz.getStatus() === 'not-started'">This quiz hasn't been started yet</template>
-          <template v-else-if="quiz.getStatus() === 'completed'">Congratulations, you've completed this quiz!</template>
-          <template v-else-if="quiz.getStatus() === 'in-progress'">In progress...</template>
+          <template v-if="quiz.isStatus('not-started')">This quiz hasn't been started yet</template>
+          <template v-else-if="quiz.isStatus('completed')">Congratulations, you've completed this quiz!</template>
+          <template v-else-if="quiz.isStatus('in-progress')">In progress...</template>
         </p>
       </div>
       <div class="sym-container mt-3" v-if="quiz.symbols">
@@ -38,7 +38,7 @@ export default {
   name: 'Quiz',
   components: { Navigation },
   data() { 
-    return { 
+    return {
       id: this.$route.params.quiz,
       quiz: this.$store.getters.getQuiz(this.$route.params.quiz),
     }

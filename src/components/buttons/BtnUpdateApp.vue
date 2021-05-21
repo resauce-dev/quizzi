@@ -36,7 +36,7 @@
 <script>
 import update from '@/mixins/update'
 export default {
-  name: 'update-app-btn',
+  name: 'btn-update-app',
   mixins: [update],
 }
 </script>

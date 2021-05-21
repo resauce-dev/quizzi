@@ -7,17 +7,18 @@
         <b-badge class="type-toggle-button" pill :variant="showQuizzesWithStatus === 'in-progress' ? 'success' : 'secondary'" @click="toggleShowStatus('in-progress')">In Progress</b-badge>
         <b-badge class="type-toggle-button" pill :variant="showQuizzesWithStatus === 'completed' ? 'success' : 'secondary'" @click="toggleShowStatus('completed')">Completed</b-badge>
       </div>
-      <div class="text-center">
-        <a href="#" class="quizLength" @click="loadQuizzes">
-          <b-icon icon="arrow-clockwise" scale="1.5" class="mr-2" variant="primary" aria-hidden="true"></b-icon>
-          Check for updates
-        </a>
-      </div>
       <div v-if="filteredQuizzes.length > 0">
         <QuizCard 
           v-for="quiz in filteredQuizzes" 
-          :quiz="quiz" 
           :key="quiz.name"
+          :disabled="!online && quiz.getSymbolCount() < 1"
+          :title="quiz.name"
+          :subtitle="getQuizSubTitle(quiz)"
+          :icon="getQuizIcon(quiz)"
+          :variant="getQuizVariant(quiz)"
+          :badge-text="quiz.getSymbolCount() > 0 && !quiz.isStatus('completed') ? `${quiz.getCorrectCount()} / ${quiz.getSymbolCount()}` : null"
+          :progress-data="quiz.getStatus('started') && quiz.getSymbolCount() > 0 ? {value:quiz.getCorrectCount(),max:quiz.getSymbolCount()} : null"
+          :link="{to:`/quizzes/${quiz.id}`, alt:`Play ${quiz.name}`}"
         />
       </div>
       <div v-else class="py-5 text-center w-75 m-auto text-muted">
@@ -32,15 +33,31 @@
           <p>Ooops! You don't currently have any quizzes {{ showQuizzesWithStatus }}...</p>
           <p><b-button variant="neo" class="mt-5" @click="toggleShowStatus('not-started')">Start a quiz</b-button></p>
         </div>
-      </div>
-      <p class="mt-5 text-center">
-        <small>
-          <router-link to="/about">About Quizzi</router-link>
-          —
-          <router-link to="/privacy">Privacy Policy</router-link>
-        </small>
-      </p>
+      </div>   
+
+      <hr>   
+      
+      <btn-notification />
+
+      <QuizCard 
+        :disabled="false"
+        :show-progress-bar="false"
+        :compact="true"
+        title="Install Quizzi"
+        subtitle="Easy Access & Saved Progression"
+        icon="app-indicator"
+        variant="info"
+        @click="install"
+      />
+
     </div>
+    <p class="footer-links mt-5 mb-4">
+      <small>
+        <router-link to="/about">About Quizzi</router-link>
+        —
+        <router-link to="/privacy">Privacy Policy</router-link>
+      </small>
+    </p>
   </div>
 </template>
 
@@ -48,12 +65,14 @@
 import { mapGetters } from 'vuex'
 import Navigation from '@/components/Navigation'
 import QuizCard from '@/components/QuizCard.vue'
+import BtnNotification from '../components/buttons/BtnNotification.vue'
 
 export default {
   name: 'Quiz-List',
-  components: { Navigation, QuizCard },
+  components: { Navigation, QuizCard, BtnNotification },
   data() {
     return {
+      online: window.navigator.onLine,
       showQuizzesWithStatus: null
     }
   },
@@ -68,16 +87,47 @@ export default {
     }
   },
   methods: {
-    async loadQuizzes() {
-      return await this.$store.dispatch('fetchQuizzes')
+    getQuizSubTitle(quiz) {
+      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1) return 'Tap to download'
+      if(quiz.isStatus('not-started')) return 'Start this quiz'
+      if(quiz.isStatus('in-progress')) return 'In progress...'
+      if(quiz.isStatus('completed')) return 'You\'ve completed this quiz!'
+      return 'Missing Title'
+    },
+    getQuizIcon(quiz) {
+      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1 && !this.online) return 'wifi-off'
+      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1) return 'cloud-download'
+      if(quiz.isStatus('not-started')) return null
+      if(quiz.isStatus('in-progress')) return null
+      if(quiz.isStatus('completed')) return 'check2-circle'
+      return null
+    },
+    getQuizVariant(quiz) {
+      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1 && !this.online) return 'secondary'
+      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1) return 'primary'
+      if(quiz.isStatus('not-started')) return 'primary'
+      if(quiz.isStatus('in-progress')) return 'warning'
+      if(quiz.isStatus('completed')) return 'success'
+      return null
     },
     toggleShowStatus(status) {
-      if(this.showQuizzesWithStatus === status) {
-        return this.showQuizzesWithStatus = null
-      }
-      return this.showQuizzesWithStatus = status 
+      return this.showQuizzesWithStatus = 
+        this.showQuizzesWithStatus === status 
+        ? null 
+        : status
+    },
+    install() {
+      alert('Installing App')
     }
   },
+  created() {
+    window.addEventListener('online', () => this.online = true);
+    window.addEventListener('offline', () => this.online = false);
+  },
+  destroyed() {
+    window.removeEventListener('online', () => this.online = true);
+    window.removeEventListener('offline', () => this.online = false);
+  }
 }
 </script>
 
@@ -101,5 +151,10 @@ export default {
   cursor: pointer;
   color: var(--blue);
 }
-
+.footer-links {
+  padding: 25px 0;
+  background: linear-gradient(135deg, var(--color-cultured), #ffffffa1);
+  box-shadow: 6px 6px 13px rgba(196, 196, 196, 0.2), -6px -6px 13px rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
 </style>

@@ -1,41 +1,94 @@
 <template>
-  <div class="card neo-shadow">
-    <router-link class="p-3" :to="`/quizzes/${quiz.id}`" :alt="`Play ${quiz.name}`">
-      <div class="content">
-        <div>
-          <h2 class="card-title">{{quiz.name}}</h2>
-          <p class="card-subtitle">
-            <template v-if="quiz.getStatus() === 'not-started'">Start this quiz</template>
-            <template v-else-if="quiz.getStatus() === 'completed'">More coming soon</template>
-            <template v-else-if="quiz.getStatus() === 'in-progress'">In progress</template>
-          </p>
+  <component
+    :alt="link ? link.alt : null"
+    :is="link ? linkType : 'div'"
+    :to="linkType === 'router-link' ? link.to : null" 
+    :href="linkType === 'a' ? link.to : null" 
+    :target="linkType === 'a' ? '_blank' : null"
+    :class="[
+      'card', 'neo-shadow', '', 'px-4',
+      (compact ? 'card-compact' : null),
+      (disabled ? 'card-disabled' : null),
+      `card-variant--${variant}`
+    ]"
+    @click="$emit('click')"
+  >
+    <div class="card--content">
+      <div class="card--body">
+        <div class="card-textuals">
+          <h2 class="card-textuals--title">{{title}}</h2>
+          <p class="card-textuals--subtitle" v-if="subtitle">{{subtitle}}</p>
         </div>
-        <b-badge v-if="quizLength > 0" pill class="ml-3" :variant="quiz.isCompleted() ? 'success' : 'danger'">
-          {{correctCount}} / {{quizLength}} 
-          <span class="sr-only">unread messages</span>
+        <b-badge v-if="badgeText" variant="success" class="ml-3" pill>
+          {{badgeText}}
         </b-badge>
-        <span class="quizLength" v-else>
-          <b-icon icon="cloud-download" scale="1.5" class="mr-2" variant="primary" aria-hidden="true"></b-icon>
-        </span>
+        <b-icon 
+          v-if="icon"
+          :icon="icon" 
+          :variant="variant" 
+          scale="1.5" 
+          class="mx-2" 
+          aria-hidden="true"
+        ></b-icon>
       </div>
-      <b-progress height="0.4rem" :value="correctCount" :max="quizLength" variant="success"></b-progress>
-    </router-link>
-  </div>
+      <div class="card--footer">
+        <b-progress 
+          v-if="progressData"
+          height="0.4rem" 
+          :value="progressData.value" 
+          :max="progressData.max" 
+          :variant="variant">
+        </b-progress>
+      </div>
+    </div>
+  </component>
 </template>
 
 <script>
 export default {
   name: 'QuizCard',
   props: {
-    quiz: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      default: 'Title Missing'
+    },
+    subtitle: {
+      type: String,
+      default: null
+    },
+    icon: {
+      type: String,
+      default: null
+    },
+    compact: {
+      type: Boolean,
+      default: false
+    },
+    variant: {
+      type: String,
+      default: 'secondary'
+    },
+    badgeText: {
+      type: String,
+      default: null
+    },
+    progressData: {
       type: Object,
-      required: true
+      default: null
+    },
+    link: {
+      type: Object,
+      default: null
     }
   },
-  data() {
-    return {
-      quizLength: this.quiz.getSymbolCount(),
-      correctCount: this.quiz.getCorrectCount(),
+  computed: {
+    linkType() {
+      if(!this.link) return null
+      return this.link && this.link.to.substr(0,4) === 'http' ? 'a' : 'router-link'
     }
   }
 }
@@ -44,21 +97,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .card{
+  text-decoration: none;
   cursor: pointer;
   overflow: hidden;
   border-radius: 5px;
   margin: 20px 0;
   width: 100%;
-  min-height: 80px;
+  min-height: 110px;
   border: 1px solid transparent;
   color: var(--color-raisin)
-}
-.card:hover {
-    transform: scale(1.02);
-    color: var(--blue);
-}
-.card:focus {
-  outline: 0;
 }
 
 .card,
@@ -68,28 +115,48 @@ export default {
   transition: all 0.28s;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
+.card:hover { transform: scale(1.02) }
+.card:focus { outline: 0 }
+.card-compact { min-height: 70px }
+
+.card-variant--primary:hover { color: var(--primary) }
+.card-variant--secondary:hover { color: var(--secondary) }
+.card-variant--success:hover { color: var(--success) }
+.card-variant--danger:hover { color: var(--danger) }
+.card-variant--warning:hover { color: var(--warning) }
+.card-variant--info:hover { color: var(--info) }
+.card-variant--light:hover { color: var(--light) }
+.card-variant--dark:hover { color: var(--dark) }
+
+.card-disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
-.content {
+.card--content {
+  color: inherit;
+  margin: auto 0;
+}
+
+.card--body {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  padding: 0;
   width: 100%;
   height: 100%;
 }
 
-.card-title {
+.card-textuals {
+  flex-grow: 1;
+  padding: 0;
+}
+.card-textuals--title {
   font-weight: bold;
   color: inherit;
   font-size: 14px;
   margin: 0;
 }
-
-.card-subtitle {
+.card-textuals--subtitle {
   color: var(--gray);
   margin: 0;
   font-size: 12px;
@@ -97,6 +164,7 @@ a {
 }
 
 .progress {
-  box-shadow: inset -1px -1px 12px -12px black
+  box-shadow: inset -1px -1px 12px -12px black;
+  margin-top: 16px;
 }
 </style>

@@ -34,10 +34,16 @@ export default {
       this.isFetchingUpdateContent = true
     }, { once: true })
 
+    // Has the content been cached?
+    document.addEventListener('swCached', () => {
+      this.isFetchingUpdateContent = false
+    }, { once: true })
+
     // Store the SW registration so we can send it a message
     // We use `isUpdateInstallable` to display there is an update 
     // the user needs to refresh for
     document.addEventListener('swUpdated', (event) => {
+      this.isFetchingUpdateContent = false
       this.isUpdateInstallable = true
       this.registration = event.detail
     }, { once: true })

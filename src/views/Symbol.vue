@@ -110,7 +110,7 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('keydown', this.keyHandler);
-  }
+  },
 }
 
 </script>
