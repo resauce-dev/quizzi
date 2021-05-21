@@ -3,7 +3,7 @@ import VueGtag from 'vue-gtag'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 import './router/guard'
 import './registerServiceWorker'
@@ -13,7 +13,7 @@ Vue.use(VueGtag, {
 }, router)
 
 Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
+Vue.use(BootstrapVueIcons)
 
 Vue.config.productionTip = false
 

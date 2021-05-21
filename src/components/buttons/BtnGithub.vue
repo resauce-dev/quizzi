@@ -3,8 +3,8 @@
     :compact="true"
     title="Help Contribute"
     subtitle="We're open-source on Github"
-    icon="controller"
-    variant="warning"
+    icon="github"
+    variant="dark"
     :link="{to: 'https://github.com/resauce-dev/quizzi?ref=Quizzi', alt: 'Github Repository'}"
   />
 </template>
