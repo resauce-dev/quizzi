@@ -2,7 +2,8 @@
  * Stored State Data
  */
 const state = {
-
+  canVibrate: false,
+  canPlayAudio: false,
 }
 
 /**
@@ -11,7 +12,8 @@ const state = {
  * @return state.data
  */
 const getters = {
-
+  canVibrate: state => state.canVibrate,
+  canPlayAudio: state => state.canPlayAudio
 }
 
 /**
@@ -19,8 +21,9 @@ const getters = {
  * 
  * @return state.data
  */
- const mutations = {
-
+const mutations = {
+  toggleCanVibrate: (state, e) => state.canInstall = e,
+  toggleCanPlayAudio: (state, e) => state.canInstall = e,
 }
 
 /**
