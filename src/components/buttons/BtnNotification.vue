@@ -16,11 +16,6 @@ import { mapGetters } from 'vuex'
 
 export default {
   components: { QuizCard },
-  data() {
-    return {
-      notifyPermission: Notification.permission
-    }
-  },
   computed: {
     ...mapGetters('settings', ['isNotifyStatus']),
     iconInfo() {

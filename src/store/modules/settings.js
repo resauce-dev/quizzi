@@ -25,7 +25,7 @@ const getters = {
  * @return state.data
  */
 const mutations = {
-  toggleCanVibrate: state => state.canInstall = !state.canInstall,
+  toggleCanVibrate: state => state.canVibrate = !state.canVibrate,
   toggleCanPlayAudio: state => state.canPlayAudio = !state.canPlayAudio,
   notifyStatus: (state, e) => state.notifyStatus = e,
 }
