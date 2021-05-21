@@ -6,7 +6,7 @@ router.beforeEach(async (to, from, next)=>{
    * Fetch all quiz root data
    * Only if there is no data already.
    */
-  if(!store.getters.hasQuizzes) {
+  if(!store.getters['quizzes/hasQuizzes']) {
     await store.dispatch('quizzes/fetchQuizzes')
   }
 
@@ -15,7 +15,7 @@ router.beforeEach(async (to, from, next)=>{
    * If we are on a quiz page
    * And we can't find the requested quiz
    */
-   if('quiz' in to.params && !store.getters.quizIds.includes(to.params.quiz)) {
+   if('quiz' in to.params && !store.getters['quizzes/quizIds'].includes(to.params.quiz)) {
     return next({path: '/quizzes', replace: true })
   }
 
@@ -24,7 +24,7 @@ router.beforeEach(async (to, from, next)=>{
    * Only if user is on a quiz related page
    * And the questions array is empty
    */
-  if('quiz' in to.params && store.getters.getQuiz(to.params.quiz).symbols.length < 1) {
+  if('quiz' in to.params && store.getters['quizzes/getQuiz'](to.params.quiz).symbols.length < 1) {
     await store.dispatch('quizzes/fetchQuiz', to.params.quiz)
   }
 
@@ -33,7 +33,7 @@ router.beforeEach(async (to, from, next)=>{
    * If we are on a question page
    * And we can't find the requested question
    */
-  if('symbol' in to.params && to.params.symbol > store.getters.getQuiz(to.params.quiz).getSymbolCount()) {
+  if('symbol' in to.params && to.params.symbol > store.getters['quizzes/getQuiz'](to.params.quiz).getSymbolCount()) {
     return next({path: `/quizzes/${to.params.quiz}`, replace: true })
   }
 

@@ -1,5 +1,4 @@
 import { shuffleArray, getRandomString, stripSpaces } from './methods'
-import app from '@/store/modules/app'
 
 class Symbol {
   /**
@@ -25,10 +24,6 @@ class Symbol {
       'stripped': stripSpaces(this.name),
       'words': this.name.split(/[\s-]/)
     }
-  }
-  getImageUrl() {
-    const domain = app.getters.appName
-    return this.image ? `${domain}/assets/${this.image.id}` : './img/unknown.svg'
   }
   getLetters() {
     if(!this.availableLetters) {

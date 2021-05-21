@@ -4,7 +4,11 @@
     <div class="symbol p-3 pb-5">
       <b-badge class="symbol-badge shadow mb-2" pill variant="primary">Symbol {{$route.params.symbol}}</b-badge>
       <div class="image-box my-3" :class="symbol.hasPadding ? 'p-3' : ''">
-        <img :src="symbol.getImageUrl()" alt="Questionable Image" class="image">
+        <img 
+          :src="symbol.image ? `${$store.getters['app/apiUrl']}/assets/${symbol.image.id}` : './img/unknown.svg'" 
+          alt="Questionable Image" 
+          class="image"
+        >
       </div>     
       <symbol-built-name :symbol="symbol" />
       <div class="pt-4" v-if="symbol.isCorrect()">
@@ -65,8 +69,8 @@ export default {
   data() { 
     const symbolIdOffsetted = parseInt(this.$route.params.symbol) - 1
     return { 
-      quiz: this.$store.getters.getQuiz(this.$route.params.quiz),
-      symbol: this.$store.getters.getQuizSymbol(this.$route.params.quiz, symbolIdOffsetted),
+      quiz: this.$store.getters['quizzes/getQuiz'](this.$route.params.quiz),
+      symbol: this.$store.getters['quizzes/getQuizSymbol'](this.$route.params.quiz, symbolIdOffsetted),
     }
   },
   computed: {

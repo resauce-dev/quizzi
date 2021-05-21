@@ -40,7 +40,7 @@ export default {
   data() { 
     return {
       id: this.$route.params.quiz,
-      quiz: this.$store.getters.getQuiz(this.$route.params.quiz),
+      quiz: this.$store.getters['quizzes/getQuiz'](this.$route.params.quiz),
     }
   },
   watch: {
