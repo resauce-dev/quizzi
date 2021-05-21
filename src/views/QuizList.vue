@@ -11,7 +11,7 @@
         <QuizCard 
           v-for="quiz in filteredQuizzes" 
           :key="quiz.name"
-          :disabled="!online && quiz.getSymbolCount() < 1"
+          :disabled="!isOnline && quiz.getSymbolCount() < 1"
           :title="quiz.name"
           :subtitle="getQuizSubTitle(quiz)"
           :icon="getQuizIcon(quiz)"
@@ -72,12 +72,12 @@ export default {
   components: { Navigation, QuizCard, BtnNotification },
   data() {
     return {
-      online: window.navigator.onLine,
       showQuizzesWithStatus: null
     }
   },
   computed: {
-    ...mapGetters(['quizzes']),
+    ...mapGetters('user', ['isOnline']),
+    ...mapGetters('quizzes', ['quizzes']),
     filteredQuizzes() {
       if(!this.quizzes) return []
       if(!this.showQuizzesWithStatus) {
@@ -95,7 +95,7 @@ export default {
       return 'Missing Title'
     },
     getQuizIcon(quiz) {
-      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1 && !this.online) return 'wifi-off'
+      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1 && !this.isOnline) return 'wifi-off'
       if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1) return 'cloud-download'
       if(quiz.isStatus('not-started')) return null
       if(quiz.isStatus('in-progress')) return null
@@ -103,7 +103,7 @@ export default {
       return null
     },
     getQuizVariant(quiz) {
-      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1 && !this.online) return 'secondary'
+      if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1 && !this.isOnline) return 'secondary'
       if(quiz.isStatus('not-started') && quiz.getSymbolCount() < 1) return 'primary'
       if(quiz.isStatus('not-started')) return 'primary'
       if(quiz.isStatus('in-progress')) return 'warning'
@@ -119,14 +119,6 @@ export default {
     install() {
       alert('Installing App')
     }
-  },
-  created() {
-    window.addEventListener('online', () => this.online = true);
-    window.addEventListener('offline', () => this.online = false);
-  },
-  destroyed() {
-    window.removeEventListener('online', () => this.online = true);
-    window.removeEventListener('offline', () => this.online = false);
   }
 }
 </script>
