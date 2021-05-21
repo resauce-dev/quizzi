@@ -2,7 +2,6 @@
  * Stored State Data
  */
 const state = {
-  appName: 'Quizzi',
   apiUrl: 'https://cms.resauce.dev',
   isOnline: window.navigator.onLine,
   canInstall: null,
@@ -14,7 +13,6 @@ const state = {
  * @return state.data
  */
 const getters = {
-  appName: state => state.appName,
   apiUrl: state => state.apiUrl,
   isOnline: state => state.isOnline,
   canInstall: state => state.canInstall,
