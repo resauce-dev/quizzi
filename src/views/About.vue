@@ -1,7 +1,7 @@
 <template>
   <div>
     <navigation />
-    <div class="px-5 my-3">
+    <div class="px-5 mt-3 mb-5">
       <h1>About Quizzi</h1>
       <h2>5W's... Who, What, Where, When, Why</h2>
       <p>

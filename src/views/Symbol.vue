@@ -1,7 +1,7 @@
 <template>
   <div>
     <navigation />
-    <div class="symbol p-3 pb-5">
+    <div class="symbol mt-3 mb-5">
       <b-badge class="symbol-badge shadow mb-2" pill variant="primary">Symbol {{$route.params.symbol}}</b-badge>
       <div class="image-box my-3" :class="symbol.hasPadding ? 'p-3' : ''">
         <img 
