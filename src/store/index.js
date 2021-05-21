@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import VuexPersistence from 'vuex-persist'
 import { Quiz } from '@/quizzes/classes'
 import domain from '@/domain'
 
 Vue.use(Vuex)
 
+// const vuexLocal = new VuexPersistence({
+//   storage: window.localStorage,
+// })
+
 export default new Vuex.Store({
+  // plugins: [vuexLocal.plugin],
   state: {
     quizzes: {}
   },

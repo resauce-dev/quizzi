@@ -15,7 +15,8 @@
     "vue": "^2.6.11",
     "vue-gtag": "^1.8.0",
     "vue-router": "^3.4.3",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "vuex-persist": "^3.1.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
@@ -59,6 +60,11 @@
       "appleMobileWebAppStatusBarStyle": "white",
       "manifestOptions": {
         "display": "fullscreen"
+      },
+      "workboxPluginMode": "InjectManifest",
+      "workboxOptions": {
+        "swSrc": "src/my-service-worker.js",
+        "skipWaiting": true
       }
     }
   }

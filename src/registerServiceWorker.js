@@ -3,11 +3,11 @@
 import { register } from 'register-service-worker'
 
 if (process.env.NODE_ENV === 'production') {
-  register(`${process.env.BASE_URL}service-worker.js`, {
+  register(`${process.env.BASE_URL}my-service-worker.js`, {
+    registrationOptions: { scope: './' },
     ready () {
       console.info('👷‍♂️', 
-        'App is being served from cache by a service worker.\n' +
-        'For more details, visit https://goo.gl/AFskqB'
+        'App is being served from cache by a service worker.\n — For more details, visit https://goo.gl/AFskqB',
       )
     },
     registered () {
@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === 'production') {
     },
     cached () {
       console.info('👷‍♂️', 'Content has been cached for offline use.')
+      document.dispatchEvent(new CustomEvent('swCached'));
     },
     updatefound () {
       console.info('👷‍♂️', 'New content is downloading.')
@@ -32,5 +33,6 @@ if (process.env.NODE_ENV === 'production') {
     error (error) {
       console.error('👷‍♂️', 'Error during service worker registration:', error)
     }
+
   })
 }
