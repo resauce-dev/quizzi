@@ -2,10 +2,6 @@ self.addEventListener('install', event => {
   console.log('V1 installing…');
 });
 
-self.addEventListener('installed', event => {
-  console.log('App is being served from cache by a service worker.')
-})
-
 /**
  * When implementing push requests
  * Check this source:
@@ -133,7 +129,6 @@ self.addEventListener('activate', (event) => {
  * https://developers.google.com/web/ilt/pwa/caching-files-with-service-worker#cache_falling_back_to_the_network
  */
 self.addEventListener('fetch', function(e) {
-  console.info('🐶 Fetch Happening', e.request.url)
   e.respondWith(
     caches.match(e.request).then(function(response) {
       return response || fetch(e.request);

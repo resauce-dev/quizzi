@@ -1,24 +1,34 @@
 <template>
   <QuizCard 
-    :disabled="false"
-    :show-progress-bar="false"
+    :disabled="!installPrompt"
     :compact="true"
-    title="Install Quizzi"
-    subtitle="Easy Access & Saved Progression"
+    title="Install App"
+    subtitle="Save your progress"
     icon="app-indicator"
     variant="info"
-    @click="$emit('click')"
+    @click="install"
   />
 </template>
 
 <script>
 import QuizCard from '@/components/QuizCard.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: { QuizCard },
-  data() {
-    return {
-      notifyPermission: Notification.permission
+  computed: {
+    ...mapGetters('app', ['installPrompt'])
+  },
+  methods: {
+    async install() {
+      // Show the install prompt
+      this.installPrompt.prompt()
+      // Wait for the user to respond to the prompt
+      const { outcome } = await this.installPrompt.userChoice
+      // Optionally, send analytics event with outcome of user choice
+      console.log(`User response to the install prompt: ${outcome}`)
+      // We've used the prompt, and can't use it again, throw it away
+      this.$store.commit('app/setInstallPrompt', null)
     }
   },
   created() {
