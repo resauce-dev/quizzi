@@ -40,5 +40,5 @@ router.beforeEach(async (to, from, next)=>{
   /**
    * Allow the users requested action
    */
-  return next();
+  return next()
 })

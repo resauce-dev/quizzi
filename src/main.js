@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueGtag from 'vue-gtag';
+import VueGtag from 'vue-gtag'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -10,7 +10,7 @@ import './registerServiceWorker'
 
 Vue.use(VueGtag, { 
   config: { id: "UA-167804735-1" } 
-}, router);
+}, router)
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)

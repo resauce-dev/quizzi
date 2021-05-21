@@ -15,17 +15,17 @@ if (process.env.NODE_ENV === 'production') {
     },
     cached () {
       console.info('👷‍♂️', 'Content has been cached for offline use.')
-      document.dispatchEvent(new CustomEvent('swCached'));
+      document.dispatchEvent(new CustomEvent('swCached'))
     },
     updatefound () {
       console.info('👷‍♂️', 'New content is downloading.')
-      document.dispatchEvent(new CustomEvent('swUpdating'));
+      document.dispatchEvent(new CustomEvent('swUpdating'))
     },
     updated (registration) {
       console.info('👷‍♂️', 'New content is available; please refresh.')
       document.dispatchEvent(
         new CustomEvent('swUpdated', { detail: registration })
-      );
+      )
     },
     offline () {
       console.info('👷‍♂️', 'No internet connection found. App is running in offline mode.')

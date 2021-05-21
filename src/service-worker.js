@@ -1,6 +1,6 @@
 self.addEventListener('install', event => {
-  console.log('V1 installing…');
-});
+  console.log('V1 installing…')
+})
 
 /**
  * When implementing push requests
@@ -13,12 +13,12 @@ self.addEventListener('push', function (e) {
   var data;
 
   if (e.data) {
-    data = JSON.parse(e.data.text());
+    data = JSON.parse(e.data.text())
   } else {
     data = {
       title: 'Quizzi: Coninue Playing!',
       body: 'Here is a notification body!'
-    };
+    }
   }
 
   const title = data.title

@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     getLetter(wordi, letteri) {
-      let offsetCount = 0;
+      let offsetCount = 0
       this.symbol.getNames().words.forEach((word, i) => {
         if(i >= wordi) { return }
         offsetCount = offsetCount + word.length

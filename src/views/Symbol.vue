@@ -84,7 +84,7 @@ export default {
      * If the next generated ID doesn't exist, don't allow proceeding.
      */
     canProceed() {
-      return this.nextSymbolId < this.symbolCount;
+      return this.nextSymbolId < this.symbolCount
     }
   },
   methods: {
@@ -110,10 +110,10 @@ export default {
     }
   },
   created() {
-    window.addEventListener('keydown', this.keyHandler);
+    window.addEventListener('keydown', this.keyHandler)
   },
   beforeDestroy() {
-    window.removeEventListener('keydown', this.keyHandler);
+    window.removeEventListener('keydown', this.keyHandler)
   },
 }
 

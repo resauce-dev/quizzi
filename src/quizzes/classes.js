@@ -10,14 +10,14 @@ class Symbol {
     this.id = question.id
     this.name = question.name.toUpperCase()
     this.image = question.image
-    this.hasPadding = question.has_padding;
+    this.hasPadding = question.has_padding
 
     this.availableLetters = null
     this.activeLetters = [] // Indexes
-    this.isPlayable = false;
+    this.isPlayable = false
   }
   enable() {
-    this.isPlayable = true;
+    this.isPlayable = true
   }
   getNames() {
     return {
@@ -62,8 +62,8 @@ class Symbol {
     let list = JSON.parse(localStorage.getItem('completedSymbols'))
     const isCorrect = this.getNames().stripped === this.getBuiltName()
     if(!list) {
-      list = [];
-      localStorage.setItem('completedSymbols', JSON.stringify(list));
+      list = []
+      localStorage.setItem('completedSymbols', JSON.stringify(list))
     }
 
     if(isCorrect && !list.includes(this.id)) {
@@ -89,7 +89,7 @@ class Quiz {
     this.id = quiz.id
     this.name = quiz.name
     this.symbols = quiz.questions || []
-    this.availableSymbolIds = [];
+    this.availableSymbolIds = []
 
     if('symbols' in quiz && quiz.symbols.length > 0) {
       quiz.symbols.forEach(s => this.addSymbol(s))

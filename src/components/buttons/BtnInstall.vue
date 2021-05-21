@@ -37,7 +37,7 @@ export default {
       'appinstalled', 
       this.$gtag.event('application_installed'), 
       { once: true }
-    );
+    )
   }
 }
 </script>

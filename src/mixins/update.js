@@ -67,7 +67,7 @@ export default {
       if (!this.registration || !this.registration.waiting) return
 
       // Inform the frontend that we're doing an update.
-      this.isUpdatingApp = true;
+      this.isUpdatingApp = true
 
       // Sent a google-analytics event that an update occured
       this.$gtag.event('application_updated')
