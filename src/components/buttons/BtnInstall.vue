@@ -17,7 +17,7 @@ import { mapGetters } from 'vuex'
 export default {
   components: { QuizCard },
   computed: {
-    ...mapGetters('app', ['canInstall'])
+    ...mapGetters('settings', ['canInstall'])
   },
   methods: {
     async install() {
