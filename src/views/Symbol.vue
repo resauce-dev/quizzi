@@ -109,7 +109,6 @@ export default {
             this.question.findAndClickLetter(key)
           break
       }
-      console.log('iscorrect', this.questionIsCorrect)
     }
   },
   created() {
