@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 
 import app from '@/store/modules/app'
 import settings from '@/store/modules/settings'
-import quizzes from '@/store/modules/quizzes' // remove
+import quiz from '@/store/modules/quiz'
 
 import { plugin as appPlugin } from '@/store/modules/app'
 
@@ -24,6 +24,6 @@ export default new Vuex.Store({
   modules: {
     app,
     settings,
-    quizzes, // remove
+    quiz,
   },
 })

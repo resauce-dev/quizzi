@@ -1,8 +1,8 @@
 import { shuffleArray, getRandomString, stripSpaces } from './methods'
 
-class Symbol {
+class Question {
   /**
-   * Symbol database model to be provided
+   * Question database model to be provided
    * 
    * @param {*} question 
    */
@@ -26,12 +26,11 @@ class Symbol {
     }
   }
   getLetters() {
-    if(!this.availableLetters) {
-      let name = this.getNames().stripped
-      let string = getRandomString( name.length * 2 )
-      let letterArray = (name + string).toUpperCase().split("")
-      this.availableLetters = shuffleArray(letterArray)
-    }
+    if(this.availableLetters) return this.availableLetters
+    let name = this.getNames().stripped
+    let string = getRandomString( name.length * 2 )
+    let letterArray = (name + string).toUpperCase().split("")
+    this.availableLetters = shuffleArray(letterArray)
     return this.availableLetters
   }
   getBuiltName() {
@@ -88,56 +87,15 @@ class Quiz {
   constructor(quiz) {
     this.id = quiz.id
     this.name = quiz.name
-    this.symbols = quiz.questions || []
-    this.availableSymbolIds = []
+    this.questions = quiz.questions || []
 
-    if('symbols' in quiz && quiz.symbols.length > 0) {
-      quiz.symbols.forEach(s => this.addSymbol(s))
+    if('questions' in quiz && quiz.questions.length > 0) {
+      quiz.questions.forEach(s => this.addSymbol(s))
     }
   }
-  addSymbol(question) {
-    const symbol = new Symbol(question)
-    this.symbols.push(symbol)
-    /**
-     * When adding a symbol, if it is the first symbol added,
-     * enable the symbol.
-     */
-    if(this.symbols.length < 1) {
-      this.availableSymbolIds.push(symbol.id)
-    }
-  }
-  enableNextQuestion() {
-    // find the last symbol by id,
-    // add the next symbol id to the list of available
-    // this should add the next question to the available list
-  }
-  questionIsAvailable(id) {
-    return id
-  }
-  getSymbols() {
-    return this.symbols.filter(s => s.isCompleted())
-  }
-  isCompleted() {
-    const completedLength = this.symbols.filter(q => q.isCorrect()).length
-    return this.symbols.length === completedLength
-  }
-  getSymbolCount() {
-    return this.symbols.length
-  }
-  getCorrectCount() {
-    return this.symbols.filter(s => s.isCorrect()).length
-  }
-  isStatus(status) {
-    return this.getStatus() === status
-  }
-  getStatus() {
-    if(this.getCorrectCount() === 0) 
-      return 'not-started'
-    else if(this.getCorrectCount() === this.getSymbolCount())
-      return 'completed'
-    else
-      return 'in-progress'
+  addSymbol(question_data) {
+    this.questions.push(question_data)
   }
 }
 
-export { Quiz, Symbol }
+export { Quiz, Question }

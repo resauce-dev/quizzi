@@ -1,19 +1,19 @@
 <template>
   <div>
     <navigation />
-    <div class="symbol mt-3 mb-5">
-      <b-badge class="symbol-badge shadow mb-2" pill variant="primary">Symbol {{$route.params.symbol}}</b-badge>
-      <div class="image-box my-3" :class="symbol.hasPadding ? 'p-3' : ''">
+    <div class="question mt-3 mb-5">
+      <b-badge class="question-badge shadow mb-2" pill variant="primary">Question {{$route.params.symbol}}</b-badge>
+      <div class="image-box my-3" :class="question.hasPadding ? 'p-3' : ''">
         <img 
-          :src="symbol.image ? `${$store.getters['app/apiUrl']}/assets/${symbol.image.id}` : './img/unknown.svg'" 
+          :src="question.image ? `${$store.getters['app/apiUrl']}/assets/${question.image.id}` : './img/unknown.svg'" 
           alt="Questionable Image" 
           class="image"
         >
       </div>     
-      <symbol-built-name :symbol="symbol" />
-      <div class="pt-4" v-if="symbol.isCorrect()">
+      <symbol-built-name :symbol="question" />
+      <div v-if="questionIsCorrect" class="pt-4">
         <success-check-mark />
-        <div v-if="quiz.isCompleted()" class="mt-5">
+        <div v-if="$store.getters['quiz/isQuizCompleted'](quiz.id)" class="mt-5">
           <p class="text-muted">Quiz Completed!</p>
           <router-link to="/quizzes" alt="Start another quiz">
             <b-button class="mt-4" variant="neo">
@@ -22,14 +22,14 @@
           </router-link>
         </div>
         <div v-else-if="canProceed" class="mt-5">
-          <router-link :to="`/quizzes/${$route.params.quiz}/${nextSymbolId}`" alt="Go to next symbol" ref="next">
+          <router-link :to="`/quizzes/${$route.params.quiz}/${nextQuestionId}`" alt="Go to next symbol" ref="next">
             <b-button class="mt-5" variant="neo">
-              Next Symbol <b-icon icon="caret-right" aria-hidden="true"></b-icon>
+              Next Question <b-icon icon="caret-right" aria-hidden="true"></b-icon>
             </b-button>
           </router-link>
         </div>
         <div v-else class="mt-5">
-          <router-link :to="`/quizzes/${$route.params.quiz}`" class="View all symbols" ref="next">
+          <router-link :to="`/quizzes/${$route.params.quiz}`" class="View all questions" ref="next">
             <b-button class="mt-5" variant="neo">
               <b-icon icon="caret-left" aria-hidden="true"></b-icon> Go Back 
             </b-button>
@@ -39,17 +39,17 @@
       <div v-else>
         <div class="letters m-3">
           <b-button 
-            v-for="(letter, index) in symbol.getLetters()" 
+            v-for="(letter, index) in question.getLetters()" 
             :key="`${index}_${letter}`"
             variant="transparent" 
-            :disabled="symbol.activeLetters.includes(index)"
+            :disabled="question.activeLetters.includes(index)"
             class="letter neo-shadow"
-            @click="symbol.clickLetterIndex(index)">
+            @click="question.clickLetterIndex(index)">
             {{letter}}
           </b-button>
         </div>
         <div class="action-bar">
-          <b-button size="sm" variant="outline-secondary" @click="symbol.undo()">
+          <b-button size="sm" variant="outline-secondary" @click="question.undo()">
             <b-icon icon="arrow-counterclockwise" aria-label="Undo Last Letter"></b-icon> Undo Letter
           </b-button>
         </div>
@@ -63,50 +63,53 @@ import charList from '@/quizzes/charList'
 import Navigation from '@/components/Navigation'
 import SuccessCheckMark from '@/components/SuccessCheckMark'
 import SymbolBuiltName from '@/components/SymbolBuiltName'
+import { Question } from '@/quizzes/classes'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Quiz-Symbol',
   components: { Navigation, SuccessCheckMark, SymbolBuiltName},
   data() { 
-    const symbolIdOffsetted = parseInt(this.$route.params.symbol) - 1
+    const questionWithOffset = parseInt(this.$route.params.symbol) - 1
     return { 
-      quiz: this.$store.getters['quizzes/getQuiz'](this.$route.params.quiz),
-      symbol: this.$store.getters['quizzes/getQuizSymbol'](this.$route.params.quiz, symbolIdOffsetted),
+      quiz: this.$store.getters['quiz/getQuiz'](this.$route.params.quiz),
+      question: new Question(this.$store.getters['quiz/getQuestion'](this.$route.params.quiz, questionWithOffset)),
     }
   },
   computed: {
-    nextSymbolId() {
-      return parseInt(this.$route.params.symbol) + 1
-    },
-    symbolCount() {
-      return this.quiz.symbols.length + 1
-    },
+    ...mapGetters('quiz', ['getQuestionCount']),
     /**
      * If the next generated ID doesn't exist, don't allow proceeding.
      */
-    canProceed() {
-      return this.nextSymbolId < this.symbolCount
+    canProceed(){ return this.nextQuestionId < this.questionCount },
+    lastQuestionId(){ return parseInt(this.$route.params.symbol) + 1 },
+    nextQuestionId(){ return parseInt(this.$route.params.symbol) + 1 },
+    questionCount(){ return this.getQuestionCount(this.quiz.id) },
+    questionIsCorrect() { 
+      return this.$store.getters['quiz/isQuestionCorrect'](this.quiz.id, this.question.id, this.question.getBuiltName()) 
     }
   },
   methods: {
     keyHandler(e) {
-      if(this.quiz.isCompleted()) { return }
+      if(this.$store.getters['quiz/isQuizCompleted'](this.quiz.id)) { return }
       let key = e.key.toUpperCase()
       
       let isValidCharacter = charList.indexOf(key) !== -1 
 
       switch (key) {
         case 'ENTER':
-          if(this.symbol.isCorrect())
+          if(this.$store.getters['quiz/isQuestionCorrect'](this.quiz.id, this.question.id))
             this.$refs.next.$el.click()
           break
         case 'BACKSPACE':
-          this.symbol.undo()
+          this.question.undo()
           break
         default:
           if(isValidCharacter)
-            this.symbol.findAndClickLetter(key)
+            this.question.findAndClickLetter(key)
           break
       }
+      console.log('iscorrect', this.questionIsCorrect)
     }
   },
   created() {
@@ -120,7 +123,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.symbol {
+.question {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -129,7 +132,7 @@ export default {
   text-align: center;
 }
 
-.symbol-badge {
+.question-badge {
   margin-top: -1.5rem;
 }
 

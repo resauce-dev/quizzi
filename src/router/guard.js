@@ -6,13 +6,13 @@ router.beforeEach(async (to, from, next)=>{
    * Fetch all quiz root data
    * Only if there is no data already.
    */
-  if(!store.getters['quizzes/hasQuizzes']) {
-    await store.dispatch('quizzes/fetchQuizzes')
+  if(!store.getters['quiz/hasQuizIndex']) {
+    await store.dispatch('quiz/fetchQuizzes')
 
     const cacheKeys = await caches.keys()
     cacheKeys.forEach(async key => {
       if(key.substr(0, 6) !== 'quiz__') return
-      await store.dispatch('quizzes/fetchQuiz', key.replace(/quiz__/g, ''))
+      await store.dispatch('quiz/fetchQuiz', key.replace(/quiz__/g, ''))
     });
 
   }
@@ -22,18 +22,18 @@ router.beforeEach(async (to, from, next)=>{
    * If we are on a quiz page
    * And we can't find the requested quiz
    */
-   if('quiz' in to.params && !store.getters['quizzes/quizIds'].includes(to.params.quiz)) {
+   if('quiz' in to.params && !store.getters['quiz/getQuizIds'].includes(to.params.quiz)) {
     return next({path: '/quizzes', replace: true })
   }
 
   /**
    * Fetch the selected quiz data
    * Only if user is on a quiz related page
-   * And the questions array is empty
+   * And the quiz is not downloaded
    */
-  if('quiz' in to.params && store.getters['quizzes/getQuiz'](to.params.quiz).symbols.length < 1) {
-    await store.dispatch('quizzes/fetchQuiz', to.params.quiz)
-    await store.dispatch('quizzes/fetchQuizAssets', to.params.quiz)
+  if('quiz' in to.params && !store.getters['quiz/isDownloaded'](to.params.quiz)) {
+    await store.dispatch('quiz/fetchQuiz', to.params.quiz)
+    await store.dispatch('quiz/fetchQuizAssets', to.params.quiz)
   }
 
   /**
@@ -41,7 +41,7 @@ router.beforeEach(async (to, from, next)=>{
    * If we are on a question page
    * And we can't find the requested question
    */
-  if('symbol' in to.params && to.params.symbol > store.getters['quizzes/getQuiz'](to.params.quiz).getSymbolCount()) {
+  if('symbol' in to.params && to.params.symbol > store.getters['quiz/getQuestionCount'](to.params.quiz)) {
     return next({path: `/quizzes/${to.params.quiz}`, replace: true })
   }
 

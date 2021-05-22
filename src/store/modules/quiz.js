@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { Quiz } from '@/quizzes/classes'
-
+import { stripSpaces } from '@/quizzes/methods'
 /**
  * Stored State Data
  */
@@ -14,21 +14,51 @@ const state = {
  * @return state.data
  */
 const getters = {
-  hasQuizzes: (state, getters) => {
-    return getters.quizIds.length > 0
+  getQuizIds: (state) => Object.keys(state.quizzes),
+  getQuizList: (state) => Object.values(state.quizzes),
+  getQuiz: (state) => (quiz_id) => state.quizzes[quiz_id],
+  hasQuizIndex: (state, getters) => getters.getQuizIds.length > 0,
+  getQuestions: (state, getters) => (quiz_id) => getters.getQuiz(quiz_id).questions,
+  getQuestionCount: (state, getters) => (quiz_id) => getters.getQuestions(quiz_id).length,
+  getQuestionIndex: (state, getters) => (quiz_id, question_id) => getters.getQuestions(quiz_id).map(q => q.id).indexOf(question_id),
+  getQuestionById: (state, getters) => (quiz_id, question_id) => getters.getQuestion(quiz_id, getters.getQuestionIndex(quiz_id, question_id)),
+  getQuestion: (state, getters) => (quiz_id, question_index) => getters.getQuestions(quiz_id)[question_index],
+  getCorrectAnswersList: () => { 
+    const list = JSON.parse(localStorage.getItem('completedSymbols')) 
+    if(!list) localStorage.setItem('completedSymbols', JSON.stringify([]))
+    return list
   },
-  quizIds: state => {
-    return Object.keys(state.quizzes)
+  isQuestionCorrect: (state, getters) => (quiz_id, question_id, given_answer = '') => {
+    if(!quiz_id || !question_id) throw "Missing parameter"
+    if(getters.getCorrectAnswersList.indexOf(question_id) > -1) return true
+
+    if(stripSpaces(getters.getQuestionById(quiz_id, question_id).name) === given_answer) {
+      const correctAnswersList = getters.getCorrectAnswersList
+      correctAnswersList.push(question_id)
+      localStorage.setItem('completedSymbols', JSON.stringify(correctAnswersList))
+      return true
+    }
+
+    return false
   },
-  quizzes: state => {
-    return Object.values(state.quizzes)
+  isDownloaded: (state, getters) => (quiz_id) => getters.getQuestions(quiz_id).length > 0,
+  isQuizState: (state, getters) => (quiz_id, status) => getters.getQuizState(quiz_id) === status,
+  isQuizCompleted: (state, getters) => (quiz_id) => getters.getQuestionCount(quiz_id) === getters.getQuizCorrectAnswerCount(quiz_id),
+  getQuizCorrectAnswerCount: (state, getters) => (quiz_id) => {
+    const questions = getters.getQuestions(quiz_id)
+    const completedQuestions = JSON.parse(localStorage.getItem('completedSymbols'))
+    let correctCount = 0;
+    questions.forEach(q => completedQuestions.includes(q.id) ? correctCount++ : null)
+    return correctCount
   },
-  getQuiz: state => id => {
-    return state.quizzes[id]
+  getQuizState: (state, getters) => (quiz_id) => {
+    if(getters.getQuizCorrectAnswerCount(quiz_id) === 0)
+      return 'not-started'
+    else if(getters.getQuizCorrectAnswerCount(quiz_id) === getters.getQuestionCount(quiz_id))
+      return 'completed'
+    else
+      return 'in-progress'
   },
-  getQuizSymbol: state => (id, symbolIndex) => {
-    return state.quizzes[id].symbols[symbolIndex]
-  }
 }
 
 /**
@@ -36,9 +66,9 @@ const getters = {
  * 
  * @return state.data
  */
-const mutations = {
+ const mutations = {
   setQuizQuestions(state, {id, questions}) {
-    let quizSymbolIds = state.quizzes[id].symbols.map(s => s.id)
+    let quizSymbolIds = state.quizzes[id].questions.map(s => s.id)
     questions.forEach(sym => {
       if(quizSymbolIds.indexOf(sym.id) < 0) { state.quizzes[id].addSymbol(sym) }
     })
@@ -55,7 +85,7 @@ const mutations = {
  * 
  * @return commit()
  */
-const actions = {
+ const actions = {
   async fetchQuizzes({ rootGetters, commit }) {
     var url = new URL(`${rootGetters['app/apiUrl']}/items/quizzi_quizzes`)
 

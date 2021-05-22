@@ -1,5 +1,5 @@
 self.addEventListener('install', event => {
-  console.log('V1 installing…')
+  console.log('V1 installing…', event)
 })
 
 /**

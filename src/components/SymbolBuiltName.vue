@@ -26,7 +26,7 @@ export default {
       })
       let letterIndex = offsetCount ? offsetCount + letteri : letteri
 
-      if(this.symbol.isCorrect()) {
+      if(this.$store.getters['quiz/isQuestionCorrect'](this.$route.params.quiz, this.symbol.id)) {
         return this.symbol.getNames().stripped[letterIndex]
       }
       return this.symbol.getBuiltName()[letterIndex]
