@@ -4,7 +4,7 @@
 const state = {
   canVibrate: false,
   canPlayAudio: false,
-  canInstall: null,
+  canInstall: false,
   notifyStatus: Notification.permission,
 }
 
