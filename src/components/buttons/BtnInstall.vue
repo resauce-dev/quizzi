@@ -29,7 +29,7 @@ export default {
       // Optionally, send analytics event with outcome of user choice
       this.$gtag.event(`application_install_${outcome}`)
       // We've used the prompt, and can't use it again, throw it away
-      this.$store.commit('app/setCanInstallPrompt', null)
+      this.$store.commit('settings/canInstallPrompt', null)
     }
   },
   created() {

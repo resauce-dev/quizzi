@@ -4,7 +4,6 @@
 const state = {
   apiUrl: 'https://cms.resauce.dev',
   isOnline: window.navigator.onLine,
-  canInstall: null,
 }
 
 /**
@@ -15,7 +14,6 @@ const state = {
 const getters = {
   apiUrl: state => state.apiUrl,
   isOnline: state => state.isOnline,
-  canInstall: state => state.canInstall,
 }
 
 /**
@@ -25,7 +23,6 @@ const getters = {
  */
 const mutations = {
   setIsOnline: (state, bool) => state.isOnline = bool,
-  setCanInstallPrompt: (state, e) => state.canInstall = e,
 }
 
 /**
@@ -49,11 +46,6 @@ const actions = {
   window.addEventListener('offline', () => 
     store.commit('app/setIsOnline', false)
   )
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault() // Prevent the mini-infobar from appearing on mobile
-    store.commit('app/setCanInstallPrompt', e) // Stash the event so it can be triggered later.
-    this.$gtag.event('application_install_promoted') // Send analytics event that PWA install was promoted
-  })
 }
 
 export default {

@@ -4,6 +4,7 @@
 const state = {
   canVibrate: false,
   canPlayAudio: false,
+  canInstall: null,
   notifyStatus: Notification.permission,
 }
 
@@ -15,6 +16,7 @@ const state = {
 const getters = {
   canVibrate: state => state.canVibrate,
   canPlayAudio: state => state.canPlayAudio,
+  canInstall: state => state.canInstall,
   getNotifyStatus: state => state.notifyStatus,
   isNotifyStatus: state => status => state.notifyStatus === status,
 }
@@ -27,6 +29,7 @@ const getters = {
 const mutations = {
   toggleCanVibrate: state => state.canVibrate = !state.canVibrate,
   toggleCanPlayAudio: state => state.canPlayAudio = !state.canPlayAudio,
+  canInstallPrompt: (state, e) => state.canInstall = e,
   notifyStatus: (state, e) => state.notifyStatus = e,
 }
 
@@ -39,7 +42,16 @@ const actions = {
   requestNotifyPermission: async ({ getters, commit }) => {
     commit('notifyStatus', await Notification.requestPermission())
     console.info(`🎫 User ${getters.canSendNotifications} access to notifications`)
+    this.$gtag.event(`application_notifications_${getters.canSendNotifications}`) // Analytics: User enabled notifications
   }
+}
+
+export const plugin = store => {
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault() // Prevent the mini-infobar from appearing on mobile
+    store.commit('settings/canInstallPrompt', e) // Stash the event so it can be triggered later.
+    this.$gtag.event('application_install_promoted') // Analytics: PWA install was promoted
+  })
 }
 
 export default {
