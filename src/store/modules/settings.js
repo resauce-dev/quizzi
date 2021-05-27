@@ -31,6 +31,13 @@ const mutations = {
   toggleCanPlayAudio: state => state.canPlayAudio = !state.canPlayAudio,
   canInstallPrompt: (state, e) => state.canInstall = e,
   notifyStatus: (state, e) => state.notifyStatus = e,
+  toggleNotifyStatus: state => {
+    if(state.notifyStatus === 'granted') {
+      state.notifyStatus = 'disabled'
+    } else if (state.notifyStatus === 'disabled') {
+      state.notifyStatus = 'granted'
+    }
+  },
 }
 
 /**
