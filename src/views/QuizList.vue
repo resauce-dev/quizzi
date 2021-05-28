@@ -8,18 +8,21 @@
         <b-badge class="type-toggle-button" pill :variant="showQuizzesWithStatus === 'completed' ? 'success' : 'secondary'" @click="toggleShowStatus('completed')">Completed</b-badge>
       </div>
       <div v-if="filteredQuizzes.length > 0">
-        <QuizCard 
-          v-for="quiz in filteredQuizzes" 
-          :key="quiz.name"
-          :disabled="!isOnline && $store.getters['quiz/getQuestionCount'](quiz.id) < 1"
-          :title="quiz.name"
-          :subtitle="getQuizSubTitle(quiz)"
-          :icon="getQuizIcon(quiz)"
-          :variant="getQuizVariant(quiz)"
-          :badge-text="$store.getters['quiz/getQuestionCount'](quiz.id) > 0 && !$store.getters['quiz/isQuizState'](quiz.id, 'completed') ? `${$store.getters['questions/countCorrectAnswers'](quiz.id)} / ${$store.getters['quiz/getQuestionCount'](quiz.id)}` : null"
-          :progress-data="$store.getters['quiz/getQuestionCount'](quiz.id) > 0 ? {value:$store.getters['questions/countCorrectAnswers'](quiz.id),max:$store.getters['quiz/getQuestionCount'](quiz.id)} : null"
-          :link="{to:`/quizzes/${quiz.id}`, alt:`Play ${quiz.name}`}"
-        />
+        <transition-group tag="div" name="slide-in" :style="{ '--total': filteredQuizzes.length }">
+          <QuizCard 
+            :style="{'--i': i}"
+            v-for="(quiz, i) in filteredQuizzes" 
+            :key="quiz.name"
+            :disabled="!isOnline && $store.getters['quiz/getQuestionCount'](quiz.id) < 1"
+            :title="quiz.name"
+            :subtitle="getQuizSubTitle(quiz)"
+            :icon="getQuizIcon(quiz)"
+            :variant="getQuizVariant(quiz)"
+            :badge-text="$store.getters['quiz/getQuestionCount'](quiz.id) > 0 && !$store.getters['quiz/isQuizState'](quiz.id, 'completed') ? `${$store.getters['questions/countCorrectAnswers'](quiz.id)} / ${$store.getters['quiz/getQuestionCount'](quiz.id)}` : null"
+            :progress-data="$store.getters['quiz/getQuestionCount'](quiz.id) > 0 ? {value:$store.getters['questions/countCorrectAnswers'](quiz.id),max:$store.getters['quiz/getQuestionCount'](quiz.id)} : null"
+            :link="{to:`/quizzes/${quiz.id}`, alt:`Play ${quiz.name}`}"
+          />
+        </transition-group>
       </div>
       <div v-else class="py-5 text-center w-75 m-auto text-muted">
         <div v-if="quizzes.length < 1">
@@ -35,13 +38,6 @@
         </div>
       </div>   
     </div>
-    <p class="footer-links mt-5 mb-4">
-      <small>
-        <router-link to="/about">About Quizzi</router-link>
-        —
-        <router-link to="/privacy">Privacy Policy</router-link>
-      </small>
-    </p>
   </div>
 </template>
 
@@ -129,10 +125,28 @@ export default {
   cursor: pointer;
   color: var(--blue);
 }
-.footer-links {
-  padding: 25px 0;
-  background: linear-gradient(135deg, var(--color-cultured), #ffffffa1);
-  box-shadow: 6px 6px 13px rgba(196, 196, 196, 0.2), -6px -6px 13px rgba(255, 255, 255, 0.6);
-  text-align: center;
+
+
+// Transition
+.slide-in {
+  &-move {
+    transition: opacity .5s linear, transform .5s ease-in-out;
+  }
+  &-leave-active {
+    transition: opacity .4s linear, transform .4s cubic-bezier(.5,0,.7,.4); //cubic-bezier(.7,0,.7,1); 
+    // transition-delay: calc( 0.1s * (var(--total) - var(--i)) );
+  }
+  &-enter-active { 
+    transition: opacity .5s linear, transform .5s cubic-bezier(.2,.5,.1,1);
+    transition-delay: calc( 0.1s * var(--i) );
+  }
+  &-enter, 
+  &-leave-to {
+    opacity: 0;
+  }
+  &-enter { transform: translateX(-500px); }
+  &-leave-to { transform: translateX(500px); }
 }
+
+
 </style>
