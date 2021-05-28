@@ -34,20 +34,6 @@ const actions = {
 
 }
 
-/**
- * Plugin to globally listen to Network
- * Decide if user is Online or Offline
- * Intercept "Install Web-App" notification
- */
- export const plugin = store => {
-  window.addEventListener('online', () => 
-    store.commit('app/setIsOnline', true)
-  )
-  window.addEventListener('offline', () => 
-    store.commit('app/setIsOnline', false)
-  )
-}
-
 export default {
   namespaced: true,
   strict: true,

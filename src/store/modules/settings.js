@@ -1,9 +1,11 @@
+import Vue from 'vue'
+
 /**
  * Stored State Data
  */
 const state = {
-  canVibrate: false,
-  canPlayAudio: false,
+  canVibrate: true,
+  canPlayAudio: true,
   canInstall: false,
   notifyStatus: Notification.permission,
 }
@@ -49,7 +51,7 @@ const actions = {
   requestNotifyPermission: async ({ getters, commit }) => {
     commit('notifyStatus', await Notification.requestPermission())
     console.info(`🎫 User ${getters.canSendNotifications} access to notifications`)
-    this.$gtag.event(`application_notifications_${getters.canSendNotifications}`) // Analytics: User enabled notifications
+    Vue.$gtag.event(`application_notifications_${getters.canSendNotifications}`) // Analytics: User enabled notifications
   }
 }
 
@@ -57,7 +59,7 @@ export const plugin = store => {
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault() // Prevent the mini-infobar from appearing on mobile
     store.commit('settings/canInstallPrompt', e) // Stash the event so it can be triggered later.
-    this.$gtag.event('application_install_promoted') // Analytics: PWA install was promoted
+    Vue.$gtag.event('application_install_promoted') // Analytics: PWA install was promoted
   })
 }
 

@@ -1,17 +1,17 @@
 <template>
   <component
     :alt="link ? link.alt : null"
-    :is="link ? linkType : 'div'"
-    :to="linkType === 'router-link' ? link.to : null" 
-    :href="linkType === 'a' ? link.to : null" 
-    :target="linkType === 'a' ? '_blank' : null"
+    :is="link ? elementType : 'div'"
+    :to="elementType === 'router-link' ? link.to : null" 
+    :href="elementType === 'a' ? link.to : null" 
+    :target="elementType === 'a' ? '_blank' : null"
     :class="[
       'card', 'neo-shadow', '', 'px-4',
       (compact ? 'card-compact' : null),
       (disabled ? 'card-disabled' : null),
       `card-variant--${variant}`
     ]"
-    @click="$emit('click')"
+    @click="click"
   >
     <div class="card--content">
       <div class="card--body">
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'QuizCard',
   props: {
@@ -86,9 +87,16 @@ export default {
     }
   },
   computed: {
-    linkType() {
+    ...mapGetters('settings', ['canVibrate']),
+    elementType() {
       if(!this.link) return null
       return this.link && this.link.to.substr(0,4) === 'http' ? 'a' : 'router-link'
+    }
+  },
+  methods: {
+    click(e) {
+      if(this.canVibrate) window.navigator.vibrate([50,30,50]);
+      this.$emit('click', e)
     }
   }
 }
