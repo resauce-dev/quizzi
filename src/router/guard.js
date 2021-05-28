@@ -8,13 +8,6 @@ router.beforeEach(async (to, from, next)=>{
    */
   if(!store.getters['quiz/hasQuizIndex']) {
     await store.dispatch('quiz/fetchQuizzes')
-
-    const cacheKeys = await caches.keys()
-    cacheKeys.forEach(async key => {
-      if(key.substr(0, 6) !== 'quiz__') return
-      await store.dispatch('quiz/fetchQuiz', key.replace(/quiz__/g, ''))
-    });
-
   }
 
   /**

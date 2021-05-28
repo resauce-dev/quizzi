@@ -10,12 +10,21 @@
           class="image"
         >
       </div>     
-      <symbol-built-name :symbol="question" />
-      <div v-if="questionIsCorrect" class="pt-4">
+      <small class="text-muted" v-if="isDevelopment">{{question.name}}</small>
+      <template>
+        <div class="word-container">
+          <div class="d-flex word" v-for="(word, wordi) in getQuestionNames().words" :key="word">
+            <div v-for="(letter, letteri) in word" :key="`${letteri}_${letter}`" class="letter" :class="letter === ' ' ? 'space' : ''"> 
+              {{ getLetter(wordi, letteri) }}
+            </div>
+          </div>
+        </div>
+      </template>
+      <div v-if="isActiveQuestionCorrect" class="pt-4">
         <success-check-mark />
-        <div v-if="$store.getters['quiz/isQuizCompleted'](quiz.id)" class="mt-5">
+        <div v-if="quizIsCompleted" class="mt-5">
           <p class="text-muted">Quiz Completed!</p>
-          <router-link to="/quizzes" alt="Start another quiz">
+          <router-link to="/quizzes" alt="Start another quiz" ref="next">
             <b-button class="mt-4" variant="neo">
               start another
             </b-button>
@@ -39,17 +48,17 @@
       <div v-else>
         <div class="letters m-3">
           <b-button 
-            v-for="(letter, index) in question.getLetters()" 
+            v-for="(letter, index) in getQuestionLetters()" 
             :key="`${index}_${letter}`"
             variant="transparent" 
-            :disabled="question.activeLetters.includes(index)"
+            :disabled="activeLetters.includes(index)"
             class="letter neo-shadow"
-            @click="question.clickLetterIndex(index)">
+            @click="letterClickIndex(index)">
             {{letter}}
           </b-button>
         </div>
         <div class="action-bar">
-          <b-button size="sm" variant="outline-secondary" @click="question.undo()">
+          <b-button size="sm" variant="outline-secondary" @click="letterUndo()">
             <b-icon icon="arrow-counterclockwise" aria-label="Undo Last Letter"></b-icon> Undo Letter
           </b-button>
         </div>
@@ -62,56 +71,133 @@
 import charList from '@/quizzes/charList'
 import Navigation from '@/components/Navigation'
 import SuccessCheckMark from '@/components/SuccessCheckMark'
-import SymbolBuiltName from '@/components/SymbolBuiltName'
-import { Question } from '@/quizzes/classes'
 import { mapGetters } from 'vuex'
+import { shuffleArray, getRandomString, stripSpaces } from '@/quizzes/methods'
 
 export default {
   name: 'Quiz-Symbol',
-  components: { Navigation, SuccessCheckMark, SymbolBuiltName},
+  components: { Navigation, SuccessCheckMark },
   data() { 
     const questionWithOffset = parseInt(this.$route.params.symbol) - 1
     return { 
+      isDevelopment:process.env.NODE_ENV === 'development',
       quiz: this.$store.getters['quiz/getQuiz'](this.$route.params.quiz),
-      question: new Question(this.$store.getters['quiz/getQuestion'](this.$route.params.quiz, questionWithOffset)),
+      question: this.$store.getters['quiz/getQuestion'](this.$route.params.quiz, questionWithOffset),
+      availableLetters: null,
+      activeLetters: [], // Indexes
     }
   },
   computed: {
     ...mapGetters('quiz', ['getQuestionCount']),
+    ...mapGetters('questions', ['isActiveQuestionCorrect']),
     /**
      * If the next generated ID doesn't exist, don't allow proceeding.
      */
-    canProceed(){ return this.nextQuestionId < this.questionCount },
+    canProceed(){ return this.nextQuestionId <= this.questionCount },
     lastQuestionId(){ return parseInt(this.$route.params.symbol) + 1 },
     nextQuestionId(){ return parseInt(this.$route.params.symbol) + 1 },
     questionCount(){ return this.getQuestionCount(this.quiz.id) },
-    questionIsCorrect() { 
-      return this.$store.getters['quiz/isQuestionCorrect'](this.quiz.id, this.question.id, this.question.getBuiltName()) 
-    }
+    quizIsCompleted() { return this.$store.getters['quiz/isQuizCompleted'](this.quiz.id) },
+    userAnswer() {
+      let builtName = ""
+      this.activeLetters.forEach(letterIndex => {
+        builtName = builtName + this.availableLetters[letterIndex]
+      })
+      return builtName
+    },
   },
   methods: {
     keyHandler(e) {
-      if(this.$store.getters['quiz/isQuizCompleted'](this.quiz.id)) { return }
-      let key = e.key.toUpperCase()
-      
-      let isValidCharacter = charList.indexOf(key) !== -1 
+      // Only use the last letter input
+      const key = e.key.toUpperCase()
 
+      // Process the key-press
+      let isValidCharacter = charList.indexOf(key) !== -1 
       switch (key) {
         case 'ENTER':
-          if(this.$store.getters['quiz/isQuestionCorrect'](this.quiz.id, this.question.id))
+          // Only proceed if the quesiton is correct
+          if(this.isActiveQuestionCorrect)
+            this.$refs.next.$el.click()
+          if(this.isActiveQuestionCorrect)
             this.$refs.next.$el.click()
           break
         case 'BACKSPACE':
-          this.question.undo()
+          // Only undo if the question is not already completed
+          if(!this.isActiveQuestionCorrect)
+            this.letterUndo()
           break
         default:
-          if(isValidCharacter)
-            this.question.findAndClickLetter(key)
+          // Only process if the question is not already completed
+          if(isValidCharacter && !this.isActiveQuestionCorrect)
+            this.findAndClickLetter(key)
           break
       }
+    },
+    getQuestionLetters() {
+      if(this.availableLetters) return this.availableLetters
+      let name = this.getQuestionNames().stripped
+      let string = getRandomString( name.length * 2 )
+      let letterArray = (name + string).toUpperCase().split("")
+      this.availableLetters = shuffleArray(letterArray)
+      return this.availableLetters
+    },
+    getQuestionNames() {
+      return {
+        'stripped': stripSpaces(this.question.name.toUpperCase()),
+        'words': this.question.name.toUpperCase().split(/[\s-]/)
+      }
+    },
+    letterClickIndex(letterIndex) {
+      if(!this.availableLetters[letterIndex]) { throw `The selected letter doesn't exist`  }
+      if(this.userAnswer.length === this.getQuestionNames().stripped.length) return
+      this.activeLetters.push(letterIndex)
+
+      // Log a key-press
+      this.$store.commit('questions/incrementKeyPress')
+
+      // After processing input, check to see if correct.
+      if(this.userAnswer.length === this.getQuestionNames().stripped.length) {
+        this.$store.dispatch('questions/checkAnswer', this.userAnswer)
+      }
+    },
+    letterUndo() {
+      if(this.isActiveQuestionCorrect) return
+      this.activeLetters = this.activeLetters.slice(0, -1)
+    },
+
+
+    findAndClickLetter(letter) {
+      if(this.isActiveQuestionCorrect) return
+      let letterIndex = this.getLetterIndex(letter)
+      this.letterClickIndex(letterIndex)
+    },
+    getLetterIndex(letter, start = 0) {
+      let index = this.getQuestionLetters().indexOf(letter, start)
+      if(this.activeLetters.includes(index)) {
+        index = this.getLetterIndex(letter, index + 1)
+      }
+      return index
+    },
+
+    // For built-name-symbol
+    getLetter(wordi, letteri) {
+      let offsetCount = 0
+      this.getQuestionNames().words.forEach((word, i) => {
+        if(i >= wordi) return
+        offsetCount = offsetCount + word.length
+      })
+      let letterIndex = offsetCount ? offsetCount + letteri : letteri
+
+      if(this.isActiveQuestionCorrect) return this.getQuestionNames().stripped[letterIndex]
+
+      return this.userAnswer[letterIndex]
     }
+
   },
   created() {
+    this.$store.commit('questions/setActiveQuizId', this.$route.params.quiz)
+    this.$store.commit('questions/setActiveQuestionId', this.question.id)
+
     window.addEventListener('keydown', this.keyHandler)
   },
   beforeDestroy() {
@@ -206,5 +292,34 @@ export default {
   cursor: default;
   box-shadow: none;
   pointer-events: none;
+}
+
+//built-name
+.word-container {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 375px;
+}
+
+.word {
+  margin: 0.2em 0.5em;
+}
+
+.letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 1.8em;
+  min-height: 1.8em;
+  margin: 2px;
+  color: var(--gray);
+  background: white;
+  border-radius: 5px;
+  text-shadow: 1px 1px 2px #cfcfcf;
+}
+
+.letter.space {
+  background: transparent;
 }
 </style>

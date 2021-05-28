@@ -19,7 +19,7 @@
           v-slot="{ href, route, navigate }">
           <b-button 
             class="question-button" 
-            :class="$store.getters['quiz/isQuestionCorrect']($route.params.quiz, question.id) ? 'text-success' : ''" 
+            :class="$store.getters['questions/isQuestionCorrect'](id, question.id) ? 'text-success' : ''" 
             variant="neo" 
             :href="href" 
             @click="navigate">
@@ -33,7 +33,6 @@
 
 <script>
 import Navigation from '@/components/Navigation'
-import { Question } from '@/quizzes/classes'
 
 export default {
   name: 'Quiz',
@@ -47,11 +46,6 @@ export default {
   watch: {
     quiz (newQuizData) {
       this.quiz = newQuizData
-    }
-  },
-  methods: {
-    getQuestion(q) {
-      return new Question(q);
     }
   }
 }

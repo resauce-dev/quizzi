@@ -16,8 +16,8 @@
           :subtitle="getQuizSubTitle(quiz)"
           :icon="getQuizIcon(quiz)"
           :variant="getQuizVariant(quiz)"
-          :badge-text="$store.getters['quiz/getQuestionCount'](quiz.id) > 0 && !$store.getters['quiz/isQuizState'](quiz.id, 'completed') ? `${$store.getters['quiz/getQuizCorrectAnswerCount'](quiz.id)} / ${$store.getters['quiz/getQuestionCount'](quiz.id)}` : null"
-          :progress-data="!$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && $store.getters['quiz/getQuestionCount'](quiz.id) > 0 ? {value:$store.getters['quiz/getQuizCorrectAnswerCount'](quiz.id),max:$store.getters['quiz/getQuestionCount'](quiz.id)} : null"
+          :badge-text="$store.getters['quiz/getQuestionCount'](quiz.id) > 0 && !$store.getters['quiz/isQuizState'](quiz.id, 'completed') ? `${$store.getters['questions/countCorrectAnswers'](quiz.id)} / ${$store.getters['quiz/getQuestionCount'](quiz.id)}` : null"
+          :progress-data="$store.getters['quiz/getQuestionCount'](quiz.id) > 0 ? {value:$store.getters['questions/countCorrectAnswers'](quiz.id),max:$store.getters['quiz/getQuestionCount'](quiz.id)} : null"
           :link="{to:`/quizzes/${quiz.id}`, alt:`Play ${quiz.name}`}"
         />
       </div>
@@ -61,7 +61,7 @@ export default {
   computed: {
     ...mapGetters('app', ['isOnline']),
     ...mapGetters('quiz', {quizzes: 'getQuizList'}),
-    ...mapGetters('quiz', ['getQuiz','isDownloaded']),
+    ...mapGetters('quiz', ['getQuiz','isCached']),
     filteredQuizzes() {
       if(!this.quizzes) return []
       if(!this.showQuizzesWithStatus) {
@@ -74,23 +74,23 @@ export default {
   },
   methods: {
     getQuizSubTitle(quiz) {
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isDownloaded(quiz.id)) return 'Tap to download'
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id)) return 'Tap to download'
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started')) return 'Start this quiz'
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'in-progress')) return 'In progress...'
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'completed')) return 'You\'ve completed this quiz!'
       return 'Missing Title'
     },
     getQuizIcon(quiz) {
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isDownloaded(quiz.id) && !this.isOnline) return 'wifi-off'
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isDownloaded(quiz.id)) return 'cloud-download'
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id) && !this.isOnline) return 'wifi-off'
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id)) return 'cloud-download'
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started')) return null
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'in-progress')) return null
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'completed')) return 'check2-circle'
       return null
     },
     getQuizVariant(quiz) {
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isDownloaded(quiz.id) && !this.isOnline) return 'secondary'
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isDownloaded(quiz.id)) return 'primary'
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id) && !this.isOnline) return 'secondary'
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id)) return 'primary'
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started')) return 'primary'
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'in-progress')) return 'warning'
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'completed')) return 'success'
