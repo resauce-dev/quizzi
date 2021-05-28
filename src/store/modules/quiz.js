@@ -89,8 +89,10 @@ const getters = {
     url.search = new URLSearchParams(params).toString()
 
     try {
-      const cache = await caches.open(`quiz-index`)
-      cache.add(url)
+      if (window.Cache !== undefined) {
+        const cache = await caches.open(`quiz-index`)
+        cache.add(url)
+      }
 
       var response = await fetch(url)
       var {data} = await response.json()
@@ -128,8 +130,10 @@ const getters = {
     url.search = new URLSearchParams(params).toString()
 
     try {
-      const cache = await caches.open(`quiz__${id}`)
-      cache.add(url)
+      if (window.Cache !== undefined) {
+        const cache = await caches.open(`quiz__${id}`)
+        cache.add(url)
+      }
 
       var response = await fetch(url)
       var { data } = await response.json()
@@ -144,11 +148,13 @@ const getters = {
     }
   },
   async fetchQuizAssets({ state, rootGetters }, id) {
-    const cache = await caches.open(`quiz__${id}`)
-    const assetLinks = state.quizzes[id].questions.map(
-      i => `${rootGetters['app/apiUrl']}/assets/${i.image.id}`
-    )
-    cache.addAll(assetLinks)
+    if (window.Cache !== undefined) {
+      const cache = await caches.open(`quiz__${id}`)
+      const assetLinks = state.quizzes[id].questions.map(
+        i => `${rootGetters['app/apiUrl']}/assets/${i.image.id}`
+      )
+      cache.addAll(assetLinks)
+    }
   }
 }
 
