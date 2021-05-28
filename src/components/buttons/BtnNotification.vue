@@ -19,7 +19,7 @@ export default {
   computed: {
     ...mapGetters('settings', ['isNotifyStatus']),
     iconInfo() {
-      if (!('Notification' in window) || !navigator.serviceWorker) return {icon: 'bell-fill', variant: 'danger', subtitle: 'Unsupported', disabled: true}
+      if (!('Notification' in window)) return {icon: 'bell-fill', variant: 'danger', subtitle: 'Unsupported', disabled: true}
       if(this.isNotifyStatus('default')) return {icon: 'bell', variant: 'info', subtitle: 'Click to Enable Notifications', disabled: false}
       if(this.isNotifyStatus('granted')) return {icon: 'bell', variant: 'success', subtitle: 'Enabled', disabled: false}
       if(this.isNotifyStatus('disabled')) return {icon: 'bell', variant: 'danger', subtitle: 'Disabled', disabled: false}
