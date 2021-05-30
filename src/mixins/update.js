@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export default {
   data() {
     return {
@@ -70,7 +72,7 @@ export default {
       this.isUpdatingApp = true
 
       // Sent a google-analytics event that an update occured
-      this.$gtag.event('application_updated')
+      Vue.$gtag.event('application_updated')
       
       // send message to SW to skip the waiting and activate the new SW
       this.registration.waiting.postMessage({ type: 'SKIP_WAITING' })

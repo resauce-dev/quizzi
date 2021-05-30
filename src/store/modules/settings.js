@@ -55,14 +55,6 @@ const actions = {
   }
 }
 
-export const plugin = store => {
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault() // Prevent the mini-infobar from appearing on mobile
-    store.commit('settings/canInstallPrompt', e) // Stash the event so it can be triggered later.
-    Vue.$gtag.event('application_install_promoted') // Analytics: PWA install was promoted
-  })
-}
-
 export default {
   namespaced: true,
   strict: true,
