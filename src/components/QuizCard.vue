@@ -5,40 +5,40 @@
     :to="elementType === 'router-link' ? link.to : null" 
     :href="elementType === 'a' ? link.to : null" 
     :target="elementType === 'a' ? '_blank' : null"
-    :class="[
+  >
+  <div @click="handleClick" :class="[
       'card', 'neo-shadow', '', 'px-4',
       (compact ? 'card-compact' : null),
       (disabled ? 'card-disabled' : null),
       `card-variant--${variant}`
-    ]"
-    @click.native="handleClick"
-  >
-    <div class="card--content">
-      <div class="card--body">
-        <div class="card-textuals">
-          <h2 class="card-textuals--title">{{title}}</h2>
-          <p class="card-textuals--subtitle" v-if="subtitle">{{subtitle}}</p>
+    ]">
+      <div class="card--content">
+        <div class="card--body">
+          <div class="card-textuals">
+            <h2 class="card-textuals--title">{{title}}</h2>
+            <p class="card-textuals--subtitle" v-if="subtitle">{{subtitle}}</p>
+          </div>
+          <b-badge v-if="badgeText" variant="success" class="ml-3" pill>
+            {{badgeText}}
+          </b-badge>
+          <b-icon 
+            v-if="icon"
+            :icon="icon" 
+            :variant="variant" 
+            scale="1.5" 
+            class="mx-2" 
+            aria-hidden="true"
+          ></b-icon>
         </div>
-        <b-badge v-if="badgeText" variant="success" class="ml-3" pill>
-          {{badgeText}}
-        </b-badge>
-        <b-icon 
-          v-if="icon"
-          :icon="icon" 
-          :variant="variant" 
-          scale="1.5" 
-          class="mx-2" 
-          aria-hidden="true"
-        ></b-icon>
-      </div>
-      <div class="card--footer">
-        <b-progress 
-          v-if="progressData"
-          height="0.4rem" 
-          :value="progressData.value" 
-          :max="progressData.max" 
-          :variant="variant">
-        </b-progress>
+        <div class="card--footer">
+          <b-progress 
+            v-if="progressData"
+            height="0.4rem" 
+            :value="progressData.value" 
+            :max="progressData.max" 
+            :variant="variant">
+          </b-progress>
+        </div>
       </div>
     </div>
   </component>
@@ -95,6 +95,7 @@ export default {
   },
   methods: {
     handleClick(e) {
+      console.log('Clicking')
       if(this.canVibrate) window.navigator.vibrate([50,30,50]);
       this.$emit('click', e)
     }
@@ -104,8 +105,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.card{
+a {
   text-decoration: none;
+}
+.card{
   cursor: pointer;
   overflow: hidden;
   border-radius: 5px;
