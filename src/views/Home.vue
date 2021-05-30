@@ -4,9 +4,9 @@
     <div class="d-flex flex-column">
       <div>
         <router-link to="/quizzes" alt="Play Now" v-slot="{ href, route, navigate }">
-          <b-button variant="neo" size="lg" :href="href" @click="navigate">
+          <q-button variant="neo" size="lg" :href="href" @click="navigate">
             Play Now
-          </b-button>
+          </q-button>
         </router-link>
       </div>
       <btn-update-app />
@@ -15,10 +15,12 @@
 </template>
 
 <script>
+import QButton from '@/components/QButton'
 import BtnUpdateApp from '@/components/buttons/BtnUpdateApp'
+
 export default {
   name: 'Home',
-  components: { BtnUpdateApp }
+  components: { BtnUpdateApp, QButton },
 }
 </script>
 

@@ -45,9 +45,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import vibrate from '@/mixins/vibrate'
+
 export default {
   name: 'QuizCard',
+  mixins: [vibrate],
   props: {
     disabled: {
       type: Boolean,
@@ -87,7 +89,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('settings', ['canVibrate']),
     elementType() {
       if(!this.link) return null
       return this.link && this.link.to.substr(0,4) === 'http' ? 'a' : 'router-link'
@@ -95,8 +96,7 @@ export default {
   },
   methods: {
     handleClick(e) {
-      console.log('Clicking')
-      if(this.canVibrate) window.navigator.vibrate([50,30,50]);
+      this.vibrate()
       this.$emit('click', e)
     }
   }

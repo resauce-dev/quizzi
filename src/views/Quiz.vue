@@ -17,14 +17,14 @@
           :to="`/quizzes/${id}/${index + 1}`"
           :alt="`Attempt question ${index + 1}`"
           v-slot="{ href, route, navigate }">
-          <b-button 
+          <q-button 
             class="question-button" 
             :class="$store.getters['questions/isQuestionCorrect'](id, question.id) ? 'text-success' : ''" 
             variant="neo" 
             :href="href" 
             @click="navigate">
             Q{{ index + 1 }}
-          </b-button>
+          </q-button>
         </router-link>
       </div>
     </div>
@@ -33,10 +33,11 @@
 
 <script>
 import Navigation from '@/components/Navigation'
+import QButton from '@/components/QButton'
 
 export default {
   name: 'Quiz',
-  components: { Navigation },
+  components: { Navigation, QButton },
   data() { 
     return {
       id: this.$route.params.quiz,
