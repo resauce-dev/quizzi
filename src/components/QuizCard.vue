@@ -11,7 +11,7 @@
       (disabled ? 'card-disabled' : null),
       `card-variant--${variant}`
     ]"
-    @click="click"
+    @click.native="handleClick"
   >
     <div class="card--content">
       <div class="card--body">
@@ -94,7 +94,7 @@ export default {
     }
   },
   methods: {
-    click(e) {
+    handleClick(e) {
       if(this.canVibrate) window.navigator.vibrate([50,30,50]);
       this.$emit('click', e)
     }
