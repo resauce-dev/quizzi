@@ -23,7 +23,7 @@ const getters = {
   getQuestionIndex: (state, getters) => (quiz_id, question_id) => getters.getQuestions(quiz_id).map(q => q.id).indexOf(question_id),
   getQuestionById: (state, getters) => (quiz_id, question_id) => getters.getQuestion(quiz_id, getters.getQuestionIndex(quiz_id, question_id)),
   getQuestion: (state, getters) => (quiz_id, question_index) => getters.getQuestions(quiz_id)[question_index],
-  isDownloaded: (state, getters) => (quiz_id) => getters.getQuestions(quiz_id) > 0,
+  isDownloaded: (state, getters) => (quiz_id) => getters.getQuestions(quiz_id).length > 0,
   isCached: (state, getters) => (quiz_id) => getters.getQuestionCount(quiz_id) > 0,
   isQuizState: (state, getters) => (quiz_id, status) => getters.getQuizState(quiz_id) === status,
   isQuizCompleted: (state, getters, rootState, rootGetters) => (quiz_id) => getters.getQuestionCount(quiz_id) === rootGetters['questions/countCorrectAnswers'](quiz_id),
