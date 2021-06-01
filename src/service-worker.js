@@ -1,5 +1,14 @@
 self.addEventListener('install', event => {
-  console.log('V1 installing…', event)
+  event.waitUntil(
+    caches.open('assets').then(cache => {
+      return cache.addAll([
+        '/audio/achievement_complete.wmv',
+        '/audio/game_complete.wmv',
+        '/audio/key_press.wmv',
+        '/audio/question_complete.wmv',
+      ])
+    })
+  )
 })
 
 /**

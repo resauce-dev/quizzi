@@ -152,10 +152,15 @@ export default {
       if(this.userAnswer.length === this.getQuestionNames().stripped.length) return
       this.activeLetters.push(letterIndex)
 
-      // Log a key-press
+      // Log a key-press increment
       this.$store.commit('questions/incrementKeyPress')
 
-      // After processing input, check to see if correct.
+      // Play a key-press sound
+      if(this.$store.getters['settings/canPlayAudio']) {
+        (new Audio("/audio/key_press.wav")).play()
+      }
+
+      // Check to see if new interaction is correct.
       if(this.userAnswer.length === this.getQuestionNames().stripped.length) {
         this.$store.dispatch('questions/checkAnswer', this.userAnswer)
       }
@@ -191,7 +196,7 @@ export default {
       if(this.isActiveQuestionCorrect) return this.getQuestionNames().stripped[letterIndex]
 
       return this.userAnswer[letterIndex]
-    }
+    },
 
   },
   created() {

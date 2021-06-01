@@ -102,11 +102,21 @@ const mutations = {
  * @return commit()
  */
 const actions = {
-  checkAnswer: ({ state, commit, rootGetters }, given_answer = '') => {
+  checkAnswer: ({ state, commit, getters, rootGetters }, given_answer = '') => {
     const quiz_id = state.active_quiz_id
     const question_id = state.active_question_id
     const answer = stripSpaces(rootGetters['quiz/getQuestionById'](quiz_id, question_id).name)
     if(given_answer.toUpperCase() !== answer.toUpperCase()) return false
+
+    if(rootGetters['settings/canPlayAudio']) {
+      // if last question in array then play game_complete sound else play question_complete sound
+      if (getters.countCorrectAnswers(quiz_id) >= rootGetters['quiz/getQuestionCount'](quiz_id)) {
+        (new Audio("/audio/game_complete.wav")).play()
+      } else {
+        (new Audio("/audio/question_complete.wav")).play()
+      }
+    }
+
     return commit('markCorrect')
   },
 }
