@@ -3,9 +3,9 @@
     <navigation hide-home />
     <div class="quizzes">
       <div class="type-toggle">
-        <b-badge class="type-toggle-button" pill :variant="showQuizzesWithStatus === 'not-started' ? 'success' : 'secondary'" @click="toggleShowStatus('not-started')">Not Started</b-badge>
-        <b-badge class="type-toggle-button" pill :variant="showQuizzesWithStatus === 'in-progress' ? 'success' : 'secondary'" @click="toggleShowStatus('in-progress')">In Progress</b-badge>
-        <b-badge class="type-toggle-button" pill :variant="showQuizzesWithStatus === 'completed' ? 'success' : 'secondary'" @click="toggleShowStatus('completed')">Completed</b-badge>
+        <b-badge class="type-toggle-button" pill :variant="getVariant('not-started')" @click="toggleShowStatus('not-started')">Not Started</b-badge>
+        <b-badge class="type-toggle-button" pill :variant="getVariant('in-progress')" @click="toggleShowStatus('in-progress')">In Progress</b-badge>
+        <b-badge class="type-toggle-button" pill :variant="getVariant('completed')" @click="toggleShowStatus('completed')">Completed</b-badge>
       </div>
       <div v-if="filteredQuizzes.length > 0">
         <transition-group tag="div" name="slide-in" :style="{ '--total': filteredQuizzes.length }">
@@ -69,6 +69,9 @@ export default {
     }
   },
   methods: {
+    getVariant(key) {
+      return this.showQuizzesWithStatus === key ? 'success' : 'secondary'
+    },
     getQuizSubTitle(quiz) {
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id)) return 'Tap to download'
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started')) return 'Start this quiz'
