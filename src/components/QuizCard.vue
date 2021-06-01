@@ -1,18 +1,19 @@
 <template>
   <component
-    :alt="link ? link.alt : null"
-    :is="link ? elementType : 'div'"
-    :to="elementType === 'router-link' ? link.to : null" 
-    :href="elementType === 'a' ? link.to : null" 
-    :target="elementType === 'a' ? '_blank' : null"
+    :alt="rootData.alt"
+    :is="rootData.is"
+    :to="rootData.to" 
+    :href="rootData.href" 
+    :target="rootData.target"
+    :class="[(disabled ? 'no-click' : null)]"
   >
   <div @click="handleClick" :class="[
       'card', 'neo-shadow', '', 'px-4',
       (compact ? 'card-compact' : null),
       (disabled ? 'card-disabled' : null),
-      `card-variant--${variant}`
+      `card__variant--${variant}`
     ]">
-      <div class="card--content">
+      <div class="card__content">
         <div class="card--body">
           <div class="card-textuals">
             <h2 class="card-textuals--title">{{title}}</h2>
@@ -92,6 +93,15 @@ export default {
     elementType() {
       if(!this.link) return null
       return this.link && this.link.to.substr(0,4) === 'http' ? 'a' : 'router-link'
+    },
+    rootData() {
+      return {
+        alt: this.link ? this.link.alt : null,
+        is: this.link ? this.elementType : 'div',
+        to: this.disabled ? '' : (this.elementType === 'router-link' ? this.link.to : null),
+        href: this.disabled ? '' : (this.elementType === 'a' ? this.link.to : null),
+        target: this.elementType === 'a' ? '_blank' : null,
+      }
     }
   },
   methods: {
@@ -103,11 +113,16 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 a {
   text-decoration: none;
 }
+.no-click,
+.no-click * {
+  pointer-events: none!important;
+  cursor: default;
+}
+
 .card{
   cursor: pointer;
   overflow: hidden;
@@ -130,23 +145,22 @@ a {
 .card:focus { outline: 0 }
 .card-compact { min-height: 70px }
 
-.card-variant--primary:hover { color: var(--primary) }
-.card-variant--secondary:hover { color: var(--secondary) }
-.card-variant--success:hover { color: var(--success) }
-.card-variant--danger:hover { color: var(--danger) }
-.card-variant--warning:hover { color: var(--warning) }
-.card-variant--info:hover { color: var(--info) }
-.card-variant--light:hover { color: var(--light) }
-.card-variant--dark:hover { color: var(--dark) }
+.card__variant--primary:hover { color: var(--primary) }
+.card__variant--secondary:hover { color: var(--secondary) }
+.card__variant--success:hover { color: var(--success) }
+.card__variant--danger:hover { color: var(--danger) }
+.card__variant--warning:hover { color: var(--warning) }
+.card__variant--info:hover { color: var(--info) }
+.card__variant--light:hover { color: var(--light) }
+.card__variant--dark:hover { color: var(--dark) }
 
-.card-disabled {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-.card--content {
+.card__content {
   color: inherit;
   margin: auto 0;
+}
+
+.card-disabled {
+  opacity: 0.5;
 }
 
 .card--body {
