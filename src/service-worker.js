@@ -2,10 +2,10 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('assets').then(cache => {
       return cache.addAll([
-        '/audio/achievement_complete.wmv',
-        '/audio/game_complete.wmv',
-        '/audio/key_press.wmv',
-        '/audio/question_complete.wmv',
+        '/audio/achievement_complete.wav',
+        '/audio/game_complete.wav',
+        '/audio/key_press.wav',
+        '/audio/question_complete.wav',
       ])
     })
   )
