@@ -22,7 +22,8 @@ export default {
         return isUpdateAvailable ? JSON.parse(isUpdateAvailable.toLowerCase()) : false
       },
       set(isInstallable) {
-        return localStorage.setItem('updateAvailable', isInstallable)
+        localStorage.setItem('updateAvailable', isInstallable)
+        return isInstallable
       }
     }
   },
