@@ -10,9 +10,10 @@
         :key="goal.title"
         :title="goal.title"
         :subtitle="goal.desc"
-        :icon="$store.getters['achievements/'+goal.getter]>=goal.threshold?'award-fill':'award'"
-        :variant="$store.getters['achievements/'+goal.getter]>=goal.threshold?'success':'secondary'"
-        :progress-data="{value:$store.getters['achievements/'+goal.getter],max:goal.threshold}"
+        :icon="getValue(goal.getter)>=goal.threshold?'award-fill':null"
+        :badge-text="getValue(goal.getter)<goal.threshold?`${getValue(goal.getter)} / ${goal.threshold}`:null"
+        :variant="getValue(goal.getter)>=goal.threshold?'success':'secondary'"
+        :progress-data="{value:getValue(goal.getter),max:goal.threshold}"
       />
 
     </div>
@@ -30,6 +31,11 @@ export default {
   computed: {
     ...mapGetters('achievements', ['list'])
   },
+  methods: {
+    getValue(getter) {
+      return this.$store.getters[`achievements/${getter}`]
+    }
+  }
 }
 </script>
 
