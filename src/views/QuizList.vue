@@ -36,7 +36,19 @@
           <p>Ooops! You don't currently have any quizzes {{ showQuizzesWithStatus }}...</p>
           <p><b-button variant="neo" class="mt-5" @click="toggleShowStatus('not-started')">Start a quiz</b-button></p>
         </div>
-      </div>   
+      </div>  
+
+      <hr>
+
+      <QuizCard 
+        title="My Achievements"
+        subtitle="See what you've achieved!"
+        icon="controller"
+        variant="success"
+        :compact="true"
+        :link="{to:`/achievements`, alt:'My Achievements'}"
+      />
+
     </div>
   </div>
 </template>

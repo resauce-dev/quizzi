@@ -39,6 +39,11 @@ Vue.use(VueRouter)
     path: '/settings',
     name: 'Settings',
     component: () => import('../views/Settings.vue')
+  },
+  {
+    path: '/achievements',
+    name: 'Achievements',
+    component: () => import('../views/Achievements.vue')
   }
 ]
 
