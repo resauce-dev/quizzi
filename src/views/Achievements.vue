@@ -11,10 +11,10 @@
         :title="goal.title"
         :subtitle="goal.desc"
         :icon="getValue(goal.getter)>=goal.threshold?'award-fill':null"
-        :badge-text="getValue(goal.getter)<goal.threshold?`${getValue(goal.getter)} / ${goal.threshold}`:null"
         :variant="getValue(goal.getter)>=goal.threshold?'success':'secondary'"
         :progress-data="{value:getValue(goal.getter),max:goal.threshold}"
       />
+        <!-- :badge-text="getValue(goal.getter)<goal.threshold?`${getValue(goal.getter)} / ${goal.threshold}`:null" -->
 
     </div>
   </div>
