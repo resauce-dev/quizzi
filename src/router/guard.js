@@ -1,7 +1,7 @@
 import router from './'
 import store from '../store'
 
-router.beforeEach(async (to, from, next)=>{
+router.beforeEach(async (to, from, next) => {
   /**
    * Fetch all quiz root data
    * Only if there is no data already.
