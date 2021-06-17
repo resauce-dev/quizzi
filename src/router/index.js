@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',
@@ -44,11 +44,12 @@ Vue.use(VueRouter)
     path: '/achievements',
     name: 'Achievements',
     component: () => import('../views/Achievements.vue')
-  }
+  },
+  { 
+    path: "*", 
+    name: 'Error',
+    component: () => import('../views/Error.vue')
+  },
 ]
 
-const router = new VueRouter({
-  routes
-})
-
-export default router
+export default new VueRouter({routes})
