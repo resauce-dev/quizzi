@@ -46,7 +46,7 @@ const getters = {
    * Return the count of correct user answers
    */
   countCorrectAnswers: (state) => (quiz_id) => {
-    return state.interactions[quiz_id] ? Object.values(state.interactions[quiz_id]).map(q => q.isCorrect).length : 0
+    return state.interactions[quiz_id] ? Object.values(state.interactions[quiz_id]).map(q => q.isCorrect).filter(i => i).length : 0
   },
   /**
    * Has the user interacted with the supplied quiz question yet?
