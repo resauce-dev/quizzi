@@ -34,7 +34,7 @@ router.beforeEach(async (to, from, next)=>{
    * If we are on a question page
    * And we can't find the requested question
    */
-  if('symbol' in to.params && to.params.symbol > store.getters['quiz/getQuestionCount'](to.params.quiz)) {
+  if('question' in to.params && to.params.question > store.getters['quiz/getQuestionCount'](to.params.quiz)) {
     return next({path: `/quizzes/${to.params.quiz}`, replace: true })
   }
 

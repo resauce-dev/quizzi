@@ -2,7 +2,7 @@
   <div>
     <navigation />
     <div class="question mt-3 mb-5">
-      <b-badge class="question-badge shadow mb-2" pill variant="primary">Question {{$route.params.symbol}}</b-badge>
+      <b-badge class="question-badge shadow mb-2" pill variant="primary">Question {{$route.params.question}}</b-badge>
       <div class="image-box my-3" :class="question.hasPadding ? 'p-3' : ''">
         <img 
           :src="question.image ? `${$store.getters['app/apiUrl']}/assets/${question.image.id}` : './img/unknown.svg'" 
@@ -31,7 +31,7 @@
           </router-link>
         </div>
         <div v-else-if="canProceed" class="mt-5">
-          <router-link :to="`/quizzes/${$route.params.quiz}/${nextQuestionId}`" alt="Go to next symbol" ref="next">
+          <router-link :to="`/quizzes/${$route.params.quiz}/${nextQuestionId}`" alt="Go to next question" ref="next">
             <b-button class="mt-5" variant="neo">
               Next Question <b-icon icon="caret-right" aria-hidden="true"></b-icon>
             </b-button>
@@ -75,10 +75,10 @@ import { mapGetters } from 'vuex'
 import { shuffleArray, getRandomString, stripSpaces } from '@/quizzes/methods'
 
 export default {
-  name: 'Quiz-Symbol',
+  name: 'Quiz-Question',
   components: { Navigation, SuccessCheckMark },
   data() { 
-    const questionWithOffset = parseInt(this.$route.params.symbol) - 1
+    const questionWithOffset = parseInt(this.$route.params.question) - 1
     return { 
       isDevelopment:process.env.NODE_ENV === 'development',
       quiz: this.$store.getters['quiz/getQuiz'](this.$route.params.quiz),
@@ -94,8 +94,8 @@ export default {
      * If the next generated ID doesn't exist, don't allow proceeding.
      */
     canProceed(){ return this.nextQuestionId <= this.questionCount },
-    lastQuestionId(){ return parseInt(this.$route.params.symbol) + 1 },
-    nextQuestionId(){ return parseInt(this.$route.params.symbol) + 1 },
+    lastQuestionId(){ return parseInt(this.$route.params.question) + 1 },
+    nextQuestionId(){ return parseInt(this.$route.params.question) + 1 },
     questionCount(){ return this.getQuestionCount(this.quiz.id) },
     quizIsCompleted() { return this.$store.getters['quiz/isQuizCompleted'](this.quiz.id) },
     userAnswer() {
@@ -184,7 +184,7 @@ export default {
       return index
     },
 
-    // For built-name-symbol
+    // For built-name-question
     getLetter(wordi, letteri) {
       let offsetCount = 0
       this.getQuestionNames().words.forEach((word, i) => {

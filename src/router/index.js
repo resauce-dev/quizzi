@@ -21,9 +21,9 @@ const routes = [
     component: () => import('../views/Quiz.vue')
   },
   {
-    path: '/quizzes/:quiz/:symbol',
-    name: 'Symbol',
-    component: () => import('../views/Symbol.vue')
+    path: '/quizzes/:quiz/:question',
+    name: 'Question',
+    component: () => import('../views/Question.vue')
   },
   {
     path: '/about',
