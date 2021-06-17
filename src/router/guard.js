@@ -1,5 +1,5 @@
-import router from './'
-import store from '../store'
+import router from '@/router'
+import store from '@/store'
 
 router.beforeEach(async (to, from, next) => {
   /**
@@ -30,9 +30,26 @@ router.beforeEach(async (to, from, next) => {
   }
 
   /**
-   * Navigate to the quiz-page to select a valid quiz.
+   * Store the active quiz-page
+   * Only if user is on a quiz related page
+   */
+  if('quiz' in to.params) {
+    await store.commit('app/setLastPlayedQuiz', to.params.quiz)
+  }
+
+  /**
+   * If we are on a question page
+   * But the question is not a number
+   * We should redirect the user to the quiz page.
+   */
+  if('question' in to.params && isNaN(parseInt(to.params.question))) {
+    return next({path: `/quizzes/${to.params.quiz}`, replace: true })
+  }
+
+  /**
    * If we are on a question page
    * And we can't find the requested question
+   * Navigate to the quiz-page to select a valid quiz.
    */
   if('question' in to.params && to.params.question > store.getters['quiz/getQuestionCount'](to.params.quiz)) {
     return next({path: `/quizzes/${to.params.quiz}`, replace: true })

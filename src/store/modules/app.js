@@ -4,6 +4,7 @@
 const state = {
   apiUrl: 'https://cms.resauce.dev',
   isOnline: window.navigator.onLine,
+  lastPlayedQuiz: null,
 }
 
 /**
@@ -14,6 +15,7 @@ const state = {
 const getters = {
   apiUrl: state => state.apiUrl,
   isOnline: state => state.isOnline,
+  lastPlayedQuiz: state => state.lastPlayedQuiz,
 }
 
 /**
@@ -23,6 +25,7 @@ const getters = {
  */
 const mutations = {
   setIsOnline: (state, bool) => state.isOnline = bool,
+  setLastPlayedQuiz: (state, quiz_id) => state.lastPlayedQuiz = quiz_id,
 }
 
 /**

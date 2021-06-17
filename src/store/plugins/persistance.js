@@ -4,6 +4,9 @@ export default (new VuexPersistence({
   storage: window.localStorage,
   reducer: (state) => {
     let toSave = {
+      app: {
+        lastPlayedQuiz: state.app.lastPlayedQuiz
+      },
       settings: {
         canVibrate: state.settings.canVibrate,
         canPlayAudio: state.settings.canPlayAudio,
