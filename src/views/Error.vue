@@ -11,7 +11,6 @@
           </q-button>
         </router-link>
       </div>
-      <btn-update-app />
     </div>
   </div>
 </template>
