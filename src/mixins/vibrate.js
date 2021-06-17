@@ -1,4 +1,4 @@
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
@@ -6,7 +6,7 @@ export default {
   },
   methods: {
     vibrate() {
-      if(this.canVibrate) window.navigator.vibrate([50,30,50]);
+      if(this.canVibrate) window.navigator.vibrate([50,30,50])
     }
   }
 }

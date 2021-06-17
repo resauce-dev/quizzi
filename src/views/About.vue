@@ -40,7 +40,7 @@
 
 <script>
 import Navigation from '@/components/Navigation'
-import BtnGithub from '../components/buttons/BtnGithub.vue'
+import BtnGithub from '@/components/buttons/BtnGithub.vue'
 
 export default {
   name: 'about',

@@ -23,7 +23,7 @@
 <script>
 import Navigation from '@/components/Navigation'
 import { mapGetters } from 'vuex'
-import QuizCard from '../components/QuizCard.vue'
+import QuizCard from '@/components/QuizCard.vue'
 
 export default {
   name: 'settings',

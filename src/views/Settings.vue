@@ -25,8 +25,8 @@
 import Navigation from '@/components/Navigation'
 import BtnInstall from '@/components/buttons/BtnInstall.vue'
 import BtnNotification from '@/components/buttons/BtnNotification.vue'
-import BtnVibrate from '../components/buttons/BtnVibrate.vue'
-import BtnAudio from '../components/buttons/BtnAudio.vue'
+import BtnVibrate from '@/components/buttons/BtnVibrate.vue'
+import BtnAudio from '@/components/buttons/BtnAudio.vue'
 
 export default {
   name: 'settings',
