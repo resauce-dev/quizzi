@@ -108,8 +108,11 @@ const actions = {
     const answer = stripSpaces(rootGetters['quiz/getQuestionById'](quiz_id, question_id).name)
     if(given_answer.toUpperCase() !== answer.toUpperCase()) return false
 
+    const isCorrect = commit('markCorrect')
+
     if(rootGetters['settings/canPlayAudio']) {
       // if last question in array then play game_complete sound else play question_complete sound
+      console.log(getters.countCorrectAnswers(quiz_id), rootGetters['quiz/getQuestionCount'](quiz_id))
       if (getters.countCorrectAnswers(quiz_id) >= rootGetters['quiz/getQuestionCount'](quiz_id)) {
         (new Audio("/audio/game_complete.wav")).play()
       } else {
@@ -117,7 +120,7 @@ const actions = {
       }
     }
 
-    return commit('markCorrect')
+    return isCorrect
   },
 }
 
