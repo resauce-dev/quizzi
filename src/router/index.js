@@ -37,7 +37,7 @@ const routes = [
     name: 'Achievements',
     component: () => import('@/views/Achievements.vue')
   },
-  {  path: "*", 
+  { path: "*", 
     name: 'Error',
     component: () => import('@/views/Error.vue')
   },
