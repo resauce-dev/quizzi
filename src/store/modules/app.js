@@ -3,6 +3,7 @@
  */
 const state = {
   apiUrl: 'https://cms.resauce.dev',
+  apiImageParams: '?fit=contain&height=200&quality=90',
   isOnline: window.navigator.onLine,
   lastPlayedQuiz: null,
 }
@@ -16,6 +17,7 @@ const getters = {
   apiUrl: state => state.apiUrl,
   isOnline: state => state.isOnline,
   lastPlayedQuiz: state => state.lastPlayedQuiz,
+  apiImageParams: state => state.apiImageParams,
 }
 
 /**
