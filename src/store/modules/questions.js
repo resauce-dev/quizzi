@@ -112,7 +112,6 @@ const actions = {
 
     if(rootGetters['settings/canPlayAudio']) {
       // if last question in array then play game_complete sound else play question_complete sound
-      console.log(getters.countCorrectAnswers(quiz_id), rootGetters['quiz/getQuestionCount'](quiz_id))
       if (getters.countCorrectAnswers(quiz_id) >= rootGetters['quiz/getQuestionCount'](quiz_id)) {
         (new Audio("/audio/game_complete.wav")).play()
       } else {
