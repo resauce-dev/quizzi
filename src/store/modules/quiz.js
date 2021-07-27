@@ -152,7 +152,7 @@ const getters = {
     if (window.Cache !== undefined) {
       const cache = await caches.open(`quiz__${id}`)
       const assetLinks = state.quizzes[id].questions.map(
-        i => `${rootGetters['app/apiUrl']}/assets/${i.image.id}${rootGetters['app/apiImageParams']}`
+        i => rootGetters['app/getApiAsset'](i.image.id)
       )
       cache.addAll(assetLinks)
     }

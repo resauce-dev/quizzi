@@ -5,7 +5,7 @@
       <b-badge class="question-badge shadow mb-2" pill variant="primary">Question {{$route.params.question}}</b-badge>
       <div class="image-box my-3" :class="question.hasPadding ? 'p-3' : ''">
         <img 
-          :src="question.image ? `${$store.getters['app/apiUrl']}/assets/${question.image.id}${$store.getters['app/apiImageParams']}` : './img/unknown.svg'" 
+          :src="question.image ? $store.getters['app/getApiAsset'](question.image.id) : './img/unknown.svg'" 
           alt="Questionable Image" 
           class="image"
         >
