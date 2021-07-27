@@ -10,16 +10,11 @@ if (process.env.NODE_ENV === 'production') {
         'App is being served from cache by a service worker.\n — For more details, visit https://goo.gl/AFskqB',
       )
     },
-    registered () {
-      console.info('👷‍♂️', 'Service worker has been registered.')
-    },
-    cached () {
-      console.info('👷‍♂️', 'Content has been cached for offline use.')
-      document.dispatchEvent(new CustomEvent('swCached'))
-    },
+    registered () { console.info('👷‍♂️', 'Service worker has been registered.') },
+    cached () { console.info('👷‍♂️', 'Content has been cached for offline use.') },
     updatefound () {
       console.info('👷‍♂️', 'New content is downloading.')
-      document.dispatchEvent(new CustomEvent('swUpdating'))
+      document.dispatchEvent(new CustomEvent('swUpdateFound'))
     },
     updated (registration) {
       console.info('👷‍♂️', 'New content is available; please refresh.')
@@ -27,11 +22,7 @@ if (process.env.NODE_ENV === 'production') {
         new CustomEvent('swUpdated', { detail: registration })
       )
     },
-    offline () {
-      console.info('👷‍♂️', 'No internet connection found. App is running in offline mode.')
-    },
-    error (error) {
-      console.error('👷‍♂️', 'Error during service worker registration:', error)
-    }
+    offline () { console.info('👷‍♂️', 'No internet connection found. App is running in offline mode.') },
+    error (error) { console.error('👷‍♂️', 'Error during service worker registration:', error) }
   })
 }

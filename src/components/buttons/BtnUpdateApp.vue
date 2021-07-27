@@ -6,10 +6,10 @@
         Development Mode
       </span>
     </template>
-    <template v-else-if="isFetchingUpdateContent">
+    <template v-else-if="isUpdating">
       <span class="text-secondary">
-        <b-icon icon="wifi" scale="1.5" class="mr-2" variant="secondary" aria-hidden="true" animation="fade"></b-icon>
-        Downloading Updates...
+        <b-icon icon="arrow-clockwise" scale="1.5" class="mr-2" variant="secondary" aria-hidden="true" animation="spin"></b-icon>
+        Updating...
       </span>
     </template>
     <template v-else-if="isUpdateInstallable">
@@ -18,10 +18,10 @@
         Install Updates
       </a>
     </template>
-    <template v-else-if="isUpdatingApp">
+    <template v-else-if="isFetchingUpdateContent">
       <span class="text-secondary">
-        <b-icon icon="arrow-clockwise" scale="1.5" class="mr-2" variant="secondary" aria-hidden="true" animation="spin"></b-icon>
-        Updating...
+        <b-icon icon="wifi" scale="1.5" class="mr-2" variant="secondary" aria-hidden="true" animation="fade"></b-icon>
+        Downloading Updates...
       </span>
     </template>
     <template v-else>

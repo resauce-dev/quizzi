@@ -1,8 +1,8 @@
 /**
  * Cache Default Files
  */
-self.addEventListener('install', event => {
-  event.waitUntil(
+ self.addEventListener('install', e => {
+  e.waitUntil(
     caches.open('assets').then(cache => {
       return cache.addAll([
         '/audio/achievement_complete.wav',
@@ -17,9 +17,9 @@ self.addEventListener('install', event => {
 /**
  * Clear All Caches
  */
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', e => {
   console.info('Event: Activate')
-  event.waitUntil(
+  e.waitUntil(
     self.clients.claim(),
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -39,10 +39,20 @@ self.addEventListener('activate', (event) => {
  * 
  * https://developers.google.com/web/ilt/pwa/caching-files-with-service-worker#cache_falling_back_to_the_network
  */
-self.addEventListener('fetch', function(e) {
+self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(function(response) {
-      return response || fetch(e.request)
+    caches.match(e.request).then(res => {
+      return res || fetch(e.request)
     })
   )
+})
+
+/**
+ * Listen for messages that trigger skipWaiting
+ * Important for Service-Worker update button
+ */
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting()
+  }
 })
