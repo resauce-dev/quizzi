@@ -16,8 +16,9 @@ const state = {
 const getters = {
   getQuizIds: (state) => Object.keys(state.quizzes),
   getQuizList: (state) => Object.values(state.quizzes),
+  getQuizListCount: (state, getters) => getters.getQuizIds.length,
+  hasQuizIndex: (state, getters) => getters.getQuizListCount > 0,
   getQuiz: (state) => (quiz_id) => state.quizzes[quiz_id],
-  hasQuizIndex: (state, getters) => getters.getQuizIds.length > 0,
   getQuestions: (state, getters) => (quiz_id) => getters.getQuiz(quiz_id).questions,
   getQuestionCount: (state) => (quiz_id) => state.quizzesMeta[quiz_id] ? state.quizzesMeta[quiz_id].quizLength : 0,
   getQuestionIndex: (state, getters) => (quiz_id, question_id) => getters.getQuestions(quiz_id).map(q => q.id).indexOf(question_id),
