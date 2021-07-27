@@ -1,7 +1,7 @@
 <template>
   <div>
     <navigation />
-    <div class="px-5 my-3">
+    <div class="wrapper">
       <h1>Settings</h1>
       <h2>Your Preferences...</h2>
 
@@ -46,6 +46,9 @@ h2 {
   margin-bottom: 2rem;
   font-size: 14px;
   font-weight: bold;
+}
+.wrapper {
+  padding: 25px;
 }
 .footer-links {
   padding: 25px 0;
