@@ -106,10 +106,7 @@ body {
               -6px -6px 13px rgba(255, 255, 255, 0.5)
 }
 
-a.btn-neo:hover,
-button.btn-neo:hover,
-a.neo-shadow:hover,
-button.neo-shadow:hover {
+.btn-neo:hover {
   background: linear-gradient(-20deg, var(--color-cultured), #ffffffa1);
   box-shadow: 6px 6px 13px rgba(196, 196, 196, 0.6), 
               -6px -6px 13px rgba(255, 255, 255, 0.5)

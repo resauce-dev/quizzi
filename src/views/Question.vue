@@ -14,7 +14,7 @@
       <template>
         <div class="word-container">
           <div class="d-flex word" v-for="(word, wordi) in getQuestionNames().words" :key="word">
-            <div v-for="(letter, letteri) in word" :key="`${letteri}_${letter}`" class="letter" :class="letter === ' ' ? 'space' : ''"> 
+            <div v-for="(letter, letteri) in word" :key="`${letteri}_${letter}`" class="display-letter" :class="letter === ' ' ? 'space' : ''"> 
               {{ getLetter(wordi, letteri) }}
             </div>
           </div>
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div v-else>
-        <div class="letters m-3">
+        <div class="letters">
           <b-button 
             v-for="(letter, index) in getQuestionLetters()" 
             :key="`${index}_${letter}`"
@@ -257,27 +257,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-.letter,
-.letter:hover {
-  color: var(--gray);
-}
-
-.letter {
-  --margin: 8px;
-  flex-basis: calc(20% - (var(--margin) * 2));
-  margin: var(--margin);
-
-  min-height: 46px;
-
-  padding: 5px;
-
-  border: 1px solid transparent;
-  text-shadow: 1px 1px 4px #c2bfbfab;
-  font-size: 16px;
-  cursor: pointer;
-  overflow: hidden;
+  margin: 16px 32px;
 }
 
 .action-bar {
@@ -309,17 +289,35 @@ export default {
   margin: 0.2em 0.5em;
 }
 
+.letter,
+.letter:hover {
+  color: var(--gray);
+}
+
 .letter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  --margin: 8px;
+  flex-basis: calc(20% - (var(--margin) * 2));
+  margin: var(--margin);
+
+  min-height: 46px;
+  max-width: 46px;
+
+  padding: 5px;
+
+  border: 1px solid transparent;
+  text-shadow: 1px 1px 4px #c2bfbfab;
+  font-size: 16px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.display-letter {
+  margin: 2px;
   min-width: 1.8em;
   min-height: 1.8em;
-  margin: 2px;
   color: var(--gray);
   background: white;
   border-radius: 5px;
-  text-shadow: 1px 1px 2px #cfcfcf;
 }
 
 .letter.space {
