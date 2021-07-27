@@ -39,6 +39,7 @@ const mutations = {
     } else if (state.notifyStatus === 'disabled') {
       state.notifyStatus = 'granted'
     }
+    Vue.$gtag.event(`notifications_${state.notifyStatus}`) 
   },
 }
 
@@ -48,11 +49,17 @@ const mutations = {
  * @return commit()
  */
 const actions = {
-  requestNotifyPermission: async ({ getters, commit }) => {
+  requestNotifyPermission: async ({ commit }) => {
     commit('notifyStatus', await Notification.requestPermission())
-    console.info(`🎫 User ${getters.canSendNotifications} access to notifications`)
-    Vue.$gtag.event(`application_notifications_${getters.canSendNotifications}`) // Analytics: User enabled notifications
-  }
+    Vue.$gtag.event(`notifications_${state.notifyStatus}`)
+  },
+  toggleNotify: async ({ getters, commit, dispatch }) => {
+    if(getters.isNotifyStatus('default')) {
+      dispatch('requestNotifyPermission')
+    } else {
+      commit('toggleNotifyStatus')
+    }
+  },
 }
 
 export default {
