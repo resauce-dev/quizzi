@@ -3,7 +3,7 @@
  */
 const state = {
   list: [
-    { title: 'Addicted',
+    { title: 'Commitment',
       desc: 'Turn notificatons on for game-reminders',
       getter: 'isNotifyEnabled',
       threshold: 1,
