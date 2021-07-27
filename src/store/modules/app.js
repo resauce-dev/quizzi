@@ -35,7 +35,10 @@ const mutations = {
  * @return commit()
  */
 const actions = {
-
+  playSound: ({ rootGetters }, sound) => {
+    if(!rootGetters['settings/canPlayAudio']) return
+    return (new Audio(`/audio/${sound}.wav`)).play()
+  },
 }
 
 export default {

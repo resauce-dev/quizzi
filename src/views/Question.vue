@@ -156,9 +156,7 @@ export default {
       this.$store.commit('questions/incrementKeyPress')
 
       // Play a key-press sound
-      if(this.$store.getters['settings/canPlayAudio']) {
-        (new Audio("/audio/key_press.wav")).play()
-      }
+      this.$store.dispatch('app/playSound', 'key_press')
 
       // Check to see if new interaction is correct.
       if(this.userAnswer.length === this.getQuestionNames().stripped.length) {
