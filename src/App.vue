@@ -62,7 +62,7 @@ body {
   touch-action: manipulation; /* Disables double-tap to zoom */
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 760px) {
   #app {
     height: 80vh;
     max-height: 800px;
