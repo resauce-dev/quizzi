@@ -318,6 +318,7 @@ export default {
   color: var(--gray);
   background: white;
   border-radius: 5px;
+  padding: 2px;
 }
 
 .letter.space {

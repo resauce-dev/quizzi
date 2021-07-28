@@ -6,7 +6,7 @@
       <h2>Your Achievements...</h2>
 
       <QuizCard 
-        v-for="goal in list" 
+        v-for="goal in achievements" 
         :key="goal.title"
         :title="goal.title"
         :subtitle="goal.desc"
@@ -22,19 +22,17 @@
 
 <script>
 import Navigation from '@/components/Navigation'
-import { mapGetters } from 'vuex'
 import QuizCard from '@/components/QuizCard.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'settings',
   components: { Navigation, QuizCard },
   computed: {
-    ...mapGetters('achievements', ['list'])
+    ...mapGetters('achievements', ['achievements'])
   },
   methods: {
-    getValue(getter) {
-      return this.$store.getters[`achievements/${getter}`]
-    }
+    getValue(getter) { return this.$store.getters[`achievements/${getter}`] }
   }
 }
 </script>

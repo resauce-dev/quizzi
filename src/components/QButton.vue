@@ -5,14 +5,12 @@
 </template>
 
 <script>
-import vibrate from '@/mixins/vibrate'
-
 export default {
   name: 'q-button',
-  mixins: [vibrate],
   methods: {
     handleClick(e) {
-      this.vibrate()
+      this.$store.dispatch('app/vibrate')
+      this.$store.dispatch('app/playSound', 'click')
       this.$emit('click', e)
     }
   }

@@ -44,11 +44,8 @@
 </template>
 
 <script>
-import vibrate from '@/mixins/vibrate'
-
 export default {
   name: 'QuizCard',
-  mixins: [vibrate],
   props: {
     disabled: {
       type: Boolean,
@@ -104,7 +101,8 @@ export default {
   },
   methods: {
     handleClick(e) {
-      this.vibrate()
+      this.$store.dispatch('app/vibrate')
+      this.$store.dispatch('app/playSound', 'click')
       this.$emit('click', e)
     }
   }

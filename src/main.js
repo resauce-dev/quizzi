@@ -3,6 +3,7 @@ import VueGtag from 'vue-gtag'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import achievements from './mixins/achievements'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 import './router/guard'
@@ -18,6 +19,7 @@ Vue.use(BootstrapVueIcons)
 Vue.config.productionTip = false
 
 new Vue({
+  mixins: [achievements],
   router,
   store,
   render: h => h(App)

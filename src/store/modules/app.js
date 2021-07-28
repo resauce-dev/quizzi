@@ -39,6 +39,10 @@ const actions = {
     if(!rootGetters['settings/canPlayAudio']) return
     return (new Audio(`/audio/${sound}.wav`)).play()
   },
+  vibrate: ({ rootGetters }, pattern = [50,30,50]) => {
+    if(!rootGetters['settings/canVibrate']) return
+    return window.navigator.vibrate(pattern)
+  }
 }
 
 export default {
