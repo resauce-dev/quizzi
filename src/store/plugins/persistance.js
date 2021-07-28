@@ -20,10 +20,11 @@ export default (new VuexPersistence({
     }
     
     /**
-     * Only save the notification state if explicitly disabled,
-     * Otherwise use the browser preference.
+     * If browser notifications are granted
+     * And the saved state is 'disabled'
+     * Repopulate setting using the disabled preference
      */
-    if(state.settings.notifyStatus === 'disabled') {
+    if(Notification.permission === 'granted' && state.settings.notifyStatus === 'disabled') {
       toSave.settings.notifyStatus = state.settings.notifyStatus
     }
 
