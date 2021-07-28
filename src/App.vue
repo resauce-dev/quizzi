@@ -62,7 +62,8 @@ body {
   touch-action: manipulation; /* Disables double-tap to zoom */
 }
 
-@media screen and (min-width: 760px) {
+/* Fake Mobile View if smallter than a small laptop */
+@media screen and (min-width: 1024px) { 
   #app {
     height: 80vh;
     max-height: 800px;
