@@ -152,11 +152,11 @@ export default {
       if(this.userAnswer.length === this.getQuestionNames().stripped.length) return
       this.activeLetters.push(letterIndex)
 
-      // Log a key-press increment
-      this.$store.commit('questions/incrementKeyPress')
-
       // Play a key-press sound
       this.$store.dispatch('app/playSound', 'key_press')
+
+      // Log a key-press increment
+      this.$store.commit('questions/incrementKeyPress')
 
       // Check to see if new interaction is correct.
       if(this.userAnswer.length === this.getQuestionNames().stripped.length) {
