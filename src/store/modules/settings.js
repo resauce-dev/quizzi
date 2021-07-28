@@ -53,8 +53,8 @@ const actions = {
     commit('notifyStatus', await Notification.requestPermission())
     Vue.$gtag.event(`notifications_${state.notifyStatus}`)
   },
-  toggleNotify: async ({ getters, commit, dispatch }) => {
-    if(getters.isNotifyStatus('default')) {
+  toggleNotify: async ({ commit, dispatch }) => {
+    if(Notification.permission === 'default') {
       dispatch('requestNotifyPermission')
     } else {
       commit('toggleNotifyStatus')
