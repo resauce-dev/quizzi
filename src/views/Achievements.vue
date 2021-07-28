@@ -6,7 +6,7 @@
       <h2>Your Achievements...</h2>
 
       <QuizCard 
-        v-for="goal in achievements" 
+        v-for="goal in list" 
         :key="goal.title"
         :title="goal.title"
         :subtitle="goal.desc"
@@ -15,7 +15,6 @@
         :progress-data="{value:getValue(goal.getter),max:goal.threshold}"
       />
         <!-- :badge-text="getValue(goal.getter)<goal.threshold?`${getValue(goal.getter)} / ${goal.threshold}`:null" -->
-
     </div>
   </div>
 </template>
@@ -29,7 +28,7 @@ export default {
   name: 'settings',
   components: { Navigation, QuizCard },
   computed: {
-    ...mapGetters('achievements', ['achievements'])
+    ...mapGetters('achievements', ['list'])
   },
   methods: {
     getValue(getter) { return this.$store.getters[`achievements/${getter}`] }
