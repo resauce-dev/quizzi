@@ -8,6 +8,7 @@
         '/audio/achievement_complete.wav',
         '/audio/game_complete.wav',
         '/audio/key_press.wav',
+        '/audio/click.wav',
         '/audio/question_complete.wav',
       ])
     })
