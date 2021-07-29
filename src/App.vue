@@ -91,7 +91,6 @@ body {
 .btn-neo:active {
   color: var(--gray);
   font-size: 14px!important;
-  padding: 20px 30px!important;
   border: 1px solid transparent!important;
 
   outline: 0;
@@ -99,6 +98,14 @@ body {
   text-transform: uppercase;
   letter-spacing: 3px;
   border-radius: 5px;
+}
+
+.btn-sm {
+  padding: 10px 15px!important;
+}
+
+.btn-lg {
+  padding: 20px 30px!important;
 }
 
 .btn-neo,
