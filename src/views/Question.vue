@@ -10,7 +10,9 @@
           class="image"
         >
       </div>     
-      <small class="text-muted" v-if="isDevelopment">{{question.name}}</small>
+      <p class="incorrect-letters" v-if="incorrectLetterPresses > 0">
+        {{incorrectLetterPresses}} Incorrect Letter{{incorrectLetterPresses>1?'s':''}}
+      </p>
       <template>
         <div class="word-container">
           <div class="d-flex word" v-for="(word, wordi) in getQuestionNames().words" :key="word">
@@ -31,8 +33,8 @@
           </router-link>
         </div>
         <div v-else-if="canProceed" class="mt-5">
-          <router-link :to="`/quizzes/${$route.params.quiz}/${nextQuestionId}`" alt="Go to next question" ref="next">
-            <b-button class="mt-5" variant="neo">
+          <router-link class="mt-5" :to="`/quizzes/${$route.params.quiz}/${nextQuestionId}`" alt="Go to next question" ref="next">
+            <b-button  variant="neo">
               Next Question <b-icon icon="caret-right" aria-hidden="true"></b-icon>
             </b-button>
           </router-link>
@@ -58,10 +60,11 @@
           </b-button>
         </div>
         <div class="action-bar">
-          <b-button size="sm" variant="outline-secondary" @click="letterUndo()">
+          <b-button size="sm" variant="neo" @click="letterUndo()">
             <b-icon icon="arrow-counterclockwise" aria-label="Undo Last Letter"></b-icon> Undo Letter
           </b-button>
         </div>
+        <small class="text-muted" v-if="isDevelopment">{{question.name}}</small>
       </div>
     </div>
   </div>
@@ -89,7 +92,7 @@ export default {
   },
   computed: {
     ...mapGetters('quiz', ['getQuestionCount']),
-    ...mapGetters('questions', ['isActiveQuestionCorrect']),
+    ...mapGetters('questions', ['isActiveQuestionCorrect','activeInteraction']),
     /**
      * If the next generated ID doesn't exist, don't allow proceeding.
      */
@@ -105,6 +108,9 @@ export default {
       })
       return builtName
     },
+    incorrectLetterPresses() {
+      return this.activeInteraction.key_presses-this.getQuestionNames().stripped.length
+    }
   },
   methods: {
     keyHandler(e) {
@@ -323,5 +329,16 @@ export default {
 
 .letter.space {
   background: transparent;
+}
+
+.incorrect-letters {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+  box-shadow: 0px 3px 13px 2px #d6d6d6;
+  border-radius: 50px;
+  padding: 2px 12px;
+  color: white;
+  background: #ff2d2d99;
 }
 </style>
