@@ -100,10 +100,14 @@ export default {
     }
   },
   methods: {
+    /**
+     * Emitting first allows disabling of
+     * settings before using sound & vibrate
+     */
     handleClick(e) {
+      this.$emit('click', e)
       this.$store.dispatch('app/playSound', 'click')
       this.$store.dispatch('app/vibrate')
-      this.$emit('click', e)
     }
   }
 }
