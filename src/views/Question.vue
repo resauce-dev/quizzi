@@ -10,8 +10,8 @@
           class="image"
         >
       </div>     
-      <p class="incorrect-letters" v-if="incorrectLetterPresses > 0">
-        {{incorrectLetterPresses}} Incorrect Letter{{incorrectLetterPresses>1?'s':''}}
+      <p class="incorrect-letters" v-if="showIncorrectCount">
+        {{incorrectLetterPresses}} Letter{{incorrectLetterPresses>1?'s':''}} undone
       </p>
       <template>
         <div class="word-container">
@@ -27,21 +27,21 @@
         <div v-if="quizIsCompleted" class="mt-5">
           <p class="text-muted">Quiz Completed!</p>
           <router-link to="/quizzes" alt="Start another quiz" ref="next">
-            <b-button class="mt-4" variant="neo">
+            <b-button class="mt-4" variant="neo" size="lg">
               start another
             </b-button>
           </router-link>
         </div>
         <div v-else-if="canProceed" class="mt-5">
           <router-link class="mt-5" :to="`/quizzes/${$route.params.quiz}/${nextQuestionId}`" alt="Go to next question" ref="next">
-            <b-button  variant="neo">
+            <b-button  variant="neo" size="lg">
               Next Question <b-icon icon="caret-right" aria-hidden="true"></b-icon>
             </b-button>
           </router-link>
         </div>
         <div v-else class="mt-5">
           <router-link :to="`/quizzes/${$route.params.quiz}`" class="View all questions" ref="next">
-            <b-button class="mt-5" variant="neo">
+            <b-button class="mt-5" variant="neo" size="lg">
               <b-icon icon="caret-left" aria-hidden="true"></b-icon> Go Back 
             </b-button>
           </router-link>
@@ -110,7 +110,10 @@ export default {
     },
     incorrectLetterPresses() {
       return this.activeInteraction.key_presses-this.getQuestionNames().stripped.length
-    }
+    },
+    showIncorrectCount() {
+      return this.isActiveQuestionCorrect && this.incorrectLetterPresses > 0
+    },
   },
   methods: {
     keyHandler(e) {

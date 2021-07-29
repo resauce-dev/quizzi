@@ -34,7 +34,7 @@
         </div>
         <div v-else>
           <p>Ooops! You don't currently have any quizzes {{ showQuizzesWithStatus }}...</p>
-          <p><b-button variant="neo" class="mt-5" @click="toggleShowStatus('not-started')">Start a quiz</b-button></p>
+          <p><b-button variant="neo" class="mt-5" size="lg" @click="toggleShowStatus('not-started')">Start a quiz</b-button></p>
         </div>
       </div>  
 
