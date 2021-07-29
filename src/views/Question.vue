@@ -23,7 +23,7 @@
         </div>
       </template>
       <div v-if="isActiveQuestionCorrect" class="pt-4">
-        <success-check-mark />
+        <success-check-mark class="mt-3" />
         <div v-if="quizIsCompleted" class="mt-5">
           <p class="text-muted">Quiz Completed!</p>
           <router-link to="/quizzes" alt="Start another quiz" ref="next">
