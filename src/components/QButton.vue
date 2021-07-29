@@ -8,9 +8,9 @@
 export default {
   name: 'q-button',
   methods: {
-    handleClick(e) {
-      this.$store.dispatch('app/playSound', 'click')
-      this.$store.dispatch('app/vibrate')
+    async handleClick(e) {
+      await this.$store.dispatch('app/playSound', 'click')
+      await this.$store.dispatch('app/vibrate')
       this.$emit('click', e)
     }
   }
