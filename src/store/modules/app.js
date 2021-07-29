@@ -28,7 +28,7 @@ const getters = {
 const mutations = {
   setIsOnline: (state, bool) => state.isOnline = bool,
   setLastPlayedQuiz: (state, quiz_id) => state.lastPlayedQuiz = quiz_id,
-  loadSound: (state, {name, sound}) => state.loadedSounds[name] = sound
+  addSound: (state, {name, sound}) => state.loadedSounds[name] = sound
 }
 
 /**
@@ -37,17 +37,17 @@ const mutations = {
  * @return commit()
  */
 const actions = {
-  playSound: ({ rootGetters, state, commit }, name) => {
+  playSound: async ({ rootGetters, state, commit }, name) => {
     if(!rootGetters['settings/canPlayAudio']) return
     if(!state.loadedSounds[name]) {
-      commit('loadSound', {name, sound:new Audio(`/audio/${name}.wav`)})
+      commit('addSound', {name, sound:new Audio(`/audio/${name}.wav`)})
     }
     let sound = state.loadedSounds[name]
     sound.pause();
     sound.currentTime = 0;
     return sound.play()
   },
-  vibrate: ({ rootGetters }, pattern = [50,30,50]) => {
+  vibrate: async ({ rootGetters }, pattern = [50]) => {
     if(!rootGetters['settings/canVibrate']) return
     return window.navigator.vibrate(pattern)
   }
