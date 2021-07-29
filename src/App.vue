@@ -10,10 +10,11 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import appClosedNotifications from '@/mixins/appClosedNotifications'
+import migrations from '@/migrations'
 
 export default {
   name: 'App',
-  mixins: [appClosedNotifications]
+  mixins: [appClosedNotifications, migrations],
 }
 </script>
 

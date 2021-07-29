@@ -1,12 +1,6 @@
 import Vue from 'vue'
+import Interaction from '@/quizzes/Interaction'
 import { stripSpaces } from '@/quizzes/methods'
-
-class Interaction {
-  constructor(i = {}) {
-    this.isCorrect = i.isCorrect || false
-    this.key_presses = i.key_presses || 0 // count
-  }
-}
 
 /**
  * Stored State Data
@@ -71,6 +65,13 @@ const getters = {
  * @return state.data
  */
 const mutations = {
+  /**
+   * This is a dangerous mutation!
+   * @returns 
+   */
+  setAllInteractions: (state, data) => {
+    return state.interactions = data
+  },
   setActiveQuizId: (state, id) => {
     const quiz_id = state.active_quiz_id = id
     if(!state.interactions[quiz_id]) Vue.set(state.interactions, quiz_id, {})

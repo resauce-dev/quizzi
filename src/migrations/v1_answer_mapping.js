@@ -1,4 +1,4 @@
-const newMapping = {
+export default {
     'be6d568e-a70b-49cb-911b-29794d724db7': 'logos',
     '01d232d2-5e8c-4043-9978-f25d0f507948': 'logos',
     '2a5695bc-622c-4ad0-82b3-f7b6bed3727d': 'logos',
@@ -486,13 +486,3 @@ const newMapping = {
     '53fefa14-5667-44f2-b00a-e9ba6fdaf9db': 'marvel-chars',
     '795b0a6e-d3c1-430c-897d-a5fc12646d6e': 'marvel-chars',
 }
-
-const userCompletedIds = []
-let migratedAnswers = {}
-
-userCompletedIds.forEach(q_id => {
-    if(q_id in newMapping) {
-        const category = newMapping[q_id]
-        migratedAnswers[category] = q_id
-    }
-})
