@@ -45,7 +45,10 @@ const actions = {
     let sound = state.loadedSounds[name]
     sound.pause();
     sound.currentTime = 0;
-    return sound.play()
+    return new Promise(res => {
+      sound.play()
+      sound.onended = res
+    })
   },
   vibrate: async ({ rootGetters }, pattern = [50]) => {
     if(!rootGetters['settings/canVibrate']) return
