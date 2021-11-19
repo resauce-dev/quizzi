@@ -1,6 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import Home from '@/views/Home.vue'
+import QuizList from '@/views/QuizList.vue'
+import Quiz from '@/views/Quiz.vue'
+import Question from '@/views/Question.vue'
+import Privacy from '@/views/Privacy.vue'
+import About from '@/views/About.vue'
+import Settings from '@/views/Settings.vue'
+import Achievements from '@/views/Achievements.vue'
+import Error from '@/views/Error.vue'
 
 Vue.use(VueRouter)
 
@@ -11,35 +20,35 @@ const routes = [
   },
   { path: '/quizzes',
     name: 'Quiz List',
-    component: () => import('@/views/QuizList.vue')
+    component: QuizList
   },
   { path: '/quizzes/:quiz',
     name: 'Quiz',
-    component: () => import('@/views/Quiz.vue')
+    component: Quiz
   },
   { path: '/quizzes/:quiz/:question',
     name: 'Question',
-    component: () => import('@/views/Question.vue')
+    component: Question
   },
   { path: '/about',
     name: 'About',
-    component: () => import('@/views/About.vue')
+    component: About
   },
   { path: '/privacy',
     name: 'Privacy',
-    component: () => import('@/views/Privacy.vue')
+    component: Privacy
   },
   { path: '/settings',
     name: 'Settings',
-    component: () => import('@/views/Settings.vue')
+    component: Settings
   },
   { path: '/achievements',
     name: 'Achievements',
-    component: () => import('@/views/Achievements.vue')
+    component: Achievements
   },
   { path: "*", 
     name: 'Error',
-    component: () => import('@/views/Error.vue')
+    component: Error
   },
 ]
 
