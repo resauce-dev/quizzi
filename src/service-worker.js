@@ -1,7 +1,7 @@
 /**
  * Cache Default Files
  */
- self.addEventListener('install', e => {
+self.addEventListener('install', e => {
   e.waitUntil(
     caches.open('assets').then(cache => {
       return cache.addAll([
