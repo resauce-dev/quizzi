@@ -25,7 +25,8 @@ self.addEventListener('activate', e => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          const cacheName = 'example'
+          // Don't clear assets cache
+          const cacheName = 'assets'
           if (cache !== cacheName) {
             return caches.delete(cache)
           }
