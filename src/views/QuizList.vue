@@ -26,7 +26,11 @@
       </div>
       <div v-else class="py-5 text-center w-75 m-auto text-muted">
         <div v-if="quizzes.length < 1">
-          <p>Sorry! We don't appear to have any Quizzes available right now</p>
+          <p>
+            Sorry! We don't appear to have any Quizzes available right now. 
+            <br><br>
+            Please check back later...
+          </p>
         </div>
         <div v-else-if="showQuizzesWithStatus === 'not-started'">
           <p>Congratulations, you've completed all our quizzes at this time! </p>
