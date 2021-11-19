@@ -31,7 +31,7 @@
         This web-app doesn't have an income of any kind; factually, we're making a loss due to the cost 
         of hosting. Should you would like to sponsor future development of the app, please do get in touch to discuss options.
       </p>
-      <p> If you need to contact me, you can do so thtough my Twitter or through Email at resauce[at]lavington[dot]me. </p>
+      <p> If you need to contact me, you can do so through my Twitter or through Email at shea[at]lavington[dot]me. </p>
       <br>
       <btn-github />
     </div>
