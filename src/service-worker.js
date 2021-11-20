@@ -20,20 +20,25 @@ self.addEventListener('install', e => {
  */
 self.addEventListener('activate', e => {
   console.info('Event: Activate')
-  e.waitUntil(
-    self.clients.claim(),
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          // Don't clear assets cache
-          const cacheName = 'assets'
-          if (cache !== cacheName) {
-            return caches.delete(cache)
-          }
-        })
-      )
-    })
-  )
+  
+  // Right now, do not clear caches!
+  // We can later enable users to manually check for updates,
+  // Or check the network once...
+
+  // e.waitUntil(
+  //   self.clients.claim(),
+  //   caches.keys().then((cacheNames) => {
+  //     return Promise.all(
+  //       cacheNames.map((cache) => {
+  //         // Don't clear assets cache
+  //         const cacheName = 'assets'
+  //         if (cache !== cacheName) {
+  //           return caches.delete(cache)
+  //         }
+  //       })
+  //     )
+  //   })
+  // )
 })
 
 /**
