@@ -127,7 +127,7 @@ export default {
         if (!bool) return
         caches.open(cacheId).then(function(cache) {
           cache.keys().then(function(keys) {
-            if(keys.length < 1) return true
+            if(keys.length <= 1) return true
           });
         })
       })
