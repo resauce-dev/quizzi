@@ -13,7 +13,7 @@
             :style="{'--i': i}"
             v-for="(quiz, i) in filteredQuizzes" 
             :key="quiz.name"
-            :disabled="isQuizDisabled(quiz)"
+            :disabled="!isOnline && $store.getters['quiz/getQuestionCount'](quiz.id) < 1"
             :title="quiz.name"
             :subtitle="getQuizSubTitle(quiz)"
             :icon="getQuizIcon(quiz)"
@@ -116,22 +116,6 @@ export default {
         this.showQuizzesWithStatus === status 
         ? null 
         : status
-    },
-    isQuizDisabled(quiz) {
-      if(this.isQuizCacheMissingData(quiz)) return true
-      return !this.isOnline && this.$store.getters['quiz/getQuestionCount'](quiz.id) < 1
-    },
-    isQuizCacheMissingData(quiz) {
-      const cacheId = `quiz__${quiz.id}`
-      caches.has(cacheId).then(bool => {
-        if (!bool) return
-        caches.open(cacheId).then(function(cache) {
-          cache.keys().then(function(keys) {
-            if(keys.length <= 1) return true
-          });
-        })
-      })
-      return false
     },
     install() {
       alert('Installing App')
