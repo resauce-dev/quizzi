@@ -4,11 +4,11 @@
       <b-icon icon="caret-left" aria-hidden="true"></b-icon>
     </router-link>
     <h1 class="app-title">Quizzi</h1>
-    <router-link class="link-icon" to="/quizzes" alt="View all Quizzes" v-if="!hideHome">
-      <b-icon icon="house" aria-hidden="true"></b-icon>
-    </router-link>
-    <router-link class="link-icon" to="/settings" alt="Settings" v-else>
+    <router-link class="link-icon" to="/settings" alt="Settings" v-if="showSettings">
       <b-icon icon="sliders" aria-hidden="true"></b-icon>
+    </router-link>
+    <router-link class="link-icon" to="/quizzes" alt="View all Quizzes" v-else>
+      <b-icon icon="house" aria-hidden="true"></b-icon>
     </router-link>
   </nav>
 </template>
@@ -17,7 +17,7 @@
 export default {
   name: 'navigation',
   props: {
-    hideHome: {
+    showSettings: {
       type: Boolean,
       default: false
     },
@@ -31,6 +31,7 @@ export default {
       let splitUrl = this.$route.fullPath.split('/')
       splitUrl.pop()
       let parentUrl = splitUrl.join('/')
+      if(!parentUrl) return '/quizzes'
       return parentUrl ? parentUrl : '/'
     }
   }

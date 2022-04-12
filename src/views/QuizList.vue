@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navigation hide-home />
+    <navigation show-settings hide-back/>
     <div class="quizzes">
       <div class="type-toggle">
         <b-badge class="type-toggle-button" pill :variant="getVariant('not-started')" @click="toggleShowStatus('not-started')">Not Started</b-badge>
@@ -32,13 +32,13 @@
             Please check back later...
           </p>
         </div>
-        <div v-else-if="showQuizzesWithStatus === 'not-started'">
+        <!-- <div v-else-if="showQuizzesWithStatus === 'not-started'">
           <p>Congratulations, you've completed all our quizzes at this time! </p>
           <p>More coming soon... </p>
-        </div>
+        </div> -->
         <div v-else>
           <p>You don't currently have any quizzes {{ showQuizzesWithStatus }}...</p>
-          <p><b-button variant="neo" class="mt-5" size="lg" @click="toggleShowStatus('not-started')">Start a quiz</b-button></p>
+          <p><b-button variant="neo" class="mt-5" size="lg" @click="toggleShowStatus('not-started')">show all quizzes</b-button></p>
         </div>
       </div>  
 
