@@ -9,6 +9,7 @@
       <btn-notification />
       <btn-vibrate />
       <btn-audio />
+      <btn-reset />
 
     </div>
     <p class="footer-links mt-5 mb-4">
@@ -27,10 +28,14 @@ import BtnInstall from '@/components/buttons/BtnInstall.vue'
 import BtnNotification from '@/components/buttons/BtnNotification.vue'
 import BtnVibrate from '@/components/buttons/BtnVibrate.vue'
 import BtnAudio from '@/components/buttons/BtnAudio.vue'
+import BtnReset from '@/components/buttons/BtnReset.vue'
 
 export default {
   name: 'settings',
-  components: { Navigation, BtnInstall, BtnNotification, BtnVibrate, BtnAudio }
+  components: { 
+    Navigation, 
+    BtnInstall, BtnNotification, BtnVibrate, BtnAudio, BtnReset 
+  }
 }
 </script>
 

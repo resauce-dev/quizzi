@@ -94,6 +94,10 @@ const mutations = {
     let newCount = state.interactions[state.active_quiz_id][state.active_question_id].key_presses + 1
     Vue.set(state.interactions[state.active_quiz_id][state.active_question_id], 'key_presses', newCount)
     return state.interactions[state.active_quiz_id][state.active_question_id].key_presses
+  },
+  clearInteractions: (state) => {
+    Vue.set(state, 'interactions', {})
+    Vue.$gtag.event('gameplay_reset')
   }
 }
 
