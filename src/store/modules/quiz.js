@@ -55,6 +55,7 @@ const getters = {
     }
   },
   setQuizzes(state, quizzes) {
+    Vue.set(state, 'quizzes', [])
     quizzes.forEach(q => {
       if((q.id in state.quizzes)) return
       Vue.set(state.quizzes, q.id, {
