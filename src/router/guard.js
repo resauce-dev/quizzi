@@ -1,7 +1,7 @@
 import router from '@/router'
 import store from '@/store'
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from, next) => {  
   /**
    * Fetch all quiz root data
    * Only if there is no data already.
@@ -59,4 +59,9 @@ router.beforeEach(async (to, from, next) => {
    * Allow the users requested action
    */
   return next()
+})
+
+router.afterEach(() => {
+  if(!window.Vue) throw "Missing Vue Element"
+  window.Vue.$el.scrollTo(0,0)
 })
