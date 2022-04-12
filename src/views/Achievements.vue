@@ -3,7 +3,7 @@
     <navigation />
     <div class="wrapper">
       <h1>Achievements</h1>
-      <h2>Your Achievements...</h2>
+      <h2>Your Achievements (More coming soon)...</h2>
 
       <QuizCard 
         v-for="goal in list" 

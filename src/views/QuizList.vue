@@ -37,7 +37,7 @@
           <p>More coming soon... </p>
         </div>
         <div v-else>
-          <p>Ooops! You don't currently have any quizzes {{ showQuizzesWithStatus }}...</p>
+          <p>You don't currently have any quizzes {{ showQuizzesWithStatus }}...</p>
           <p><b-button variant="neo" class="mt-5" size="lg" @click="toggleShowStatus('not-started')">Start a quiz</b-button></p>
         </div>
       </div>  
@@ -65,11 +65,9 @@ import QuizCard from '@/components/QuizCard.vue'
 export default {
   name: 'Quiz-List',
   components: { Navigation, QuizCard },
-  data() {
-    return {
-      showQuizzesWithStatus: null
-    }
-  },
+  data: () => ({
+    showQuizzesWithStatus: null
+  }),
   computed: {
     ...mapGetters('app', ['isOnline']),
     ...mapGetters('quiz', {quizzes: 'getQuizList'}),
@@ -117,9 +115,9 @@ export default {
         ? null 
         : status
     },
-    install() {
-      alert('Installing App')
-    }
+  },
+  mounted() {
+    this.$store.dispatch('quiz/fetchQuizzes')
   }
 }
 </script>
