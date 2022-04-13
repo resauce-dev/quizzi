@@ -33,7 +33,7 @@
           </router-link>
         </div>
         <div v-else-if="canProceed" class="mt-5">
-          <router-link class="mt-5" :to="`/quizzes/${$route.params.quiz}/${nextQuestionId}`" alt="Go to next question" ref="next">
+          <router-link class="mt-5" :to="`/quizzes/${$route.params.quiz}/${nextIncompleteQuestionId}`" alt="Go to next question" ref="next">
             <b-button  variant="neo" size="lg">
               Next Question <b-icon icon="caret-right" aria-hidden="true"></b-icon>
             </b-button>
@@ -96,11 +96,13 @@ export default {
     /**
      * If the next generated ID doesn't exist, don't allow proceeding.
      */
-    canProceed(){ return this.nextQuestionId <= this.questionCount },
-    lastQuestionId(){ return parseInt(this.$route.params.question) + 1 },
-    nextQuestionId(){ return parseInt(this.$route.params.question) + 1 },
+    canProceed(){ return this.nextIncompleteQuestionId <= this.questionCount },
     questionCount(){ return this.getQuestionCount(this.quiz.id) },
     quizIsCompleted() { return this.$store.getters['quiz/isQuizCompleted'](this.quiz.id) },
+    nextIncompleteQuestionId(){ 
+      const currentIndex = parseInt(this.$route.params.question)
+      return this.$store.getters['questions/nextIncompleteQuestionId'](this.$route.params.quiz, currentIndex)
+    },
     userAnswer() {
       let builtName = ""
       this.activeLetters.forEach(letterIndex => {
