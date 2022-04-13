@@ -74,21 +74,20 @@ const getters = {
    * Given a question, find the next incomplete question.
    */
   nextIncompleteQuestionId: (state, getters, rootState, rootGetters) =>  (quiz_id, question_index, loopCount = 0) => {
-    if(loopCount > 1) return null // Avoid infinite loop when no questions left incorrect.
+    if(loopCount > 1) return 'loop more than once' // Avoid infinite loop when no questions left incorrect.
 
     const questions = rootGetters['quiz/getQuiz'](quiz_id).questions
 
     let nextIncompleteQuestionIndex = null;
     for (let i = question_index; i < questions.length; i++) {
       const quizQuestion = questions[i];
-      console.log(quiz_id, quizQuestion.id)
       const isCorrect = rootGetters['questions/isQuestionCorrect'](quiz_id, quizQuestion.id)
       if(isCorrect) continue
       nextIncompleteQuestionIndex = i
       break
     }
 
-    if(!nextIncompleteQuestionIndex) {
+    if(nextIncompleteQuestionIndex === null) {
       return getters['nextIncompleteQuestionId'](quiz_id, 0, loopCount + 1)
     }
 
