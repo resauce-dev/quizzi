@@ -10,7 +10,7 @@
           <template v-else-if="$store.getters['quiz/isQuizState'](quiz.id, 'in-progress')">In progress...</template>
         </p>
       </div>
-      <div class="mt-4 d-flex justify-content-center" v-if="incorrectLetterPresses > 0">
+      <div class="mt-4 d-flex justify-content-center" v-if="incorrectLetterPresses > 0 && quizIsComplete">
         <p class="incorrect-letters">
           {{incorrectLetterPresses}} Letter{{incorrectLetterPresses===1?'':'s'}} undone
         </p>
@@ -56,6 +56,9 @@ export default {
       const total = this.$store.getters['questions/lettersPressed'](this.quiz.id)
       const pressed = this.$store.getters['questions/lettersTotal'](this.quiz.id)
       return total - pressed
+    },
+    quizIsComplete() {
+      return this.$store.getters['quiz/isQuizCompleted'](this.quiz.id)
     }
   }
 }
