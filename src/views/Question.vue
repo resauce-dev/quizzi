@@ -10,9 +10,11 @@
           class="image"
         >
       </div>     
-      <p class="incorrect-letters" v-if="showIncorrectCount">
-        {{incorrectLetterPresses}} Letter{{incorrectLetterPresses>1?'s':''}} undone
-      </p>
+      <div class="mt-1 mb-3">
+        <p class="incorrect-letters" v-if="showIncorrectCount">
+          {{incorrectLetterPresses}} Letter{{incorrectLetterPresses===1?'':'s'}} undone
+        </p>
+      </div>
       <template>
         <div class="word-container">
           <div class="d-flex word" v-for="(word, wordi) in getQuestionNames().words" :key="word">
@@ -345,5 +347,6 @@ export default {
   padding: 2px 12px;
   color: white;
   background: #ff2d2d99;
+  margin: 0;
 }
 </style>

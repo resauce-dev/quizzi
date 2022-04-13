@@ -17,6 +17,19 @@ import { stripSpaces } from '@/quizzes/methods'
  * @return state.data
  */
 const getters = {
+  lettersPressed: (state) => (quiz_id) => {
+    const interactions = state.interactions[quiz_id]
+    if(!interactions) return 0
+    const interactionList = Object.values(interactions).map(i => i.key_presses)
+    const keyPresses = interactionList.reduce((a, b) => a + b)
+    return keyPresses
+  },
+  lettersTotal: (state, getters, rootState, rootGetters) => (quiz_id) => {
+    const questions = rootGetters['quiz/getQuiz'](quiz_id).questions
+    let totalCount = 0
+    questions.forEach(i => totalCount += i.name.length)
+    return totalCount
+  },
   /**
    * Get the details of the users interaction with this question
    */
