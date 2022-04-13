@@ -10,6 +10,7 @@ self.addEventListener('install', e => {
         '/audio/key_press.wav',
         '/audio/click.wav',
         '/audio/question_complete.wav',
+        '/img/logo.png',
       ])
     })
   )

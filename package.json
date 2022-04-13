@@ -52,6 +52,7 @@
     "not dead"
   ],
   "vue": {
+    "filenameHashing": false,
     "pwa": {
       "name": "Quizzi",
       "themeColor": "#191923",
