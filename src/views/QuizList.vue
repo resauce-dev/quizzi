@@ -116,7 +116,7 @@ export default {
         : status
     },
   },
-  mounted() {
+  created() {
     this.$store.dispatch('quiz/fetchQuizzes')
   }
 }
