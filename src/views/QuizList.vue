@@ -3,9 +3,9 @@
     <navigation show-settings hide-back/>
     <div class="quizzes">
       <div class="type-toggle">
-        <b-badge class="type-toggle-button" pill :variant="getVariant('not-started')" @click="toggleShowStatus('not-started')">Not Started</b-badge>
-        <b-badge class="type-toggle-button" pill :variant="getVariant('in-progress')" @click="toggleShowStatus('in-progress')">In Progress</b-badge>
-        <b-badge class="type-toggle-button" pill :variant="getVariant('completed')" @click="toggleShowStatus('completed')">Completed</b-badge>
+        <b-badge href="#" class="type-toggle-button" pill :variant="getVariant('not-started')" @click="toggleShowStatus('not-started')">Not Started</b-badge>
+        <b-badge href="#" class="type-toggle-button" pill :variant="getVariant('in-progress')" @click="toggleShowStatus('in-progress')">In Progress</b-badge>
+        <b-badge href="#" class="type-toggle-button" pill :variant="getVariant('completed')" @click="toggleShowStatus('completed')">Completed</b-badge>
       </div>
       <div v-if="filteredQuizzes.length > 0">
         <transition-group tag="div" name="slide-in" :style="{ '--total': filteredQuizzes.length }">
