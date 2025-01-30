@@ -19,5 +19,5 @@ jobs:
           cd ~/web/quizzi*
           git fetch
           git pull
-          ~/.nvm/versions/node/v12.18.2/bin/npm ci
-          ~/.nvm/versions/node/v12.18.2/bin/npm run build
+          ~/.nvm/versions/node/v22.13.1/bin/npm ci
+          ~/.nvm/versions/node/v22.13.1/bin/npm run build
