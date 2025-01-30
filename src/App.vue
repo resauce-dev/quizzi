@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <transition name="fade" mode="out-in">
-      <router-view :key="$route.fullPath" />
-    </transition>
+    <RouterView v-slot="{ Component, route }">
+      <Transition name="fade" mode="out-in">
+        <component :key="String(route.name)" :is="Component"></component>
+      </Transition>
+    </RouterView>
   </div>
 </template>
 
@@ -122,3 +124,4 @@ body {
 }
 
 </style>
+>

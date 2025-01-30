@@ -12,14 +12,15 @@
 <script>
 import QuizCard from '@/components/QuizCard.vue'
 import { mapGetters } from 'vuex'
+import { faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   components: { QuizCard },
   computed: {
     ...mapGetters('settings', ['canPlayAudio']),
     iconInfo() {
-      if(this.canPlayAudio) return {icon: 'volume-up', variant: 'success', subtitle: 'Enabled', disabled: true}
-      return {icon: 'volume-mute', variant: 'danger', subtitle: 'Disabled', disabled: true}
+      if(this.canPlayAudio) return {icon: faVolumeHigh, variant: 'success', subtitle: 'Enabled', disabled: true}
+      return {icon: faVolumeXmark, variant: 'danger', subtitle: 'Disabled', disabled: true}
     }
   },
   methods: {

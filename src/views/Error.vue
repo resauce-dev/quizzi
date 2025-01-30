@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import QButton from '@/components/QButton'
+import QButton from '@/components/QButton.vue'
 
 export default {
   name: 'Error',

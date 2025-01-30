@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
+import Navigation from '@/components/Navigation.vue'
 import BtnGithub from '@/components/buttons/BtnGithub.vue'
 
 export default {

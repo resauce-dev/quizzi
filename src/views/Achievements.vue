@@ -10,8 +10,8 @@
         :key="goal.title"
         :title="goal.title"
         :subtitle="goal.desc"
-        :icon="getValue(goal.getter)>=goal.threshold?'award-fill':null"
-        :variant="getValue(goal.getter)>=goal.threshold?'success':'secondary'"
+        :icon="getValue(goal.getter)>=goal.threshold ? faAward : null"
+        :variant="getValue(goal.getter)>=goal.threshold ? 'success' : 'secondary'"
         :progress-data="{value:getValue(goal.getter),max:goal.threshold}"
       />
         <!-- :badge-text="getValue(goal.getter)<goal.threshold?`${getValue(goal.getter)} / ${goal.threshold}`:null" -->
@@ -20,13 +20,15 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
+import Navigation from '@/components/Navigation.vue'
 import QuizCard from '@/components/QuizCard.vue'
 import { mapGetters } from 'vuex'
+import { faAward } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   name: 'settings',
   components: { Navigation, QuizCard },
+  data: () => ({ faAward }),
   computed: {
     ...mapGetters('achievements', ['list'])
   },

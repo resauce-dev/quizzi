@@ -1,14 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
 import modules from './modules'
 import plugins from './plugins'
+import { createStore } from 'vuex'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export const store = createStore({
   devtools: process.env.NODE_ENV !== 'production',
   strict: true,
-  plugins,
-  modules,
+  plugins: plugins,
+  modules: modules,
 })

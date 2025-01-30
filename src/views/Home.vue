@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img class="logo" alt="Quizzi logo" src="../assets/logo.png">
+    <img class="logo" alt="Quizzi logo" src="../assets/images/logo.png">
     <div class="d-flex flex-column">
       <div>
         <router-link to="/quizzes" alt="Play Now" v-slot="{ href, route, navigate }">
@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import QButton from '@/components/QButton'
-import BtnUpdateApp from '@/components/buttons/BtnUpdateApp'
+import QButton from '@/components/QButton.vue'
+import BtnUpdateApp from '@/components/buttons/BtnUpdateApp.vue'
 
 export default {
   name: 'Home',

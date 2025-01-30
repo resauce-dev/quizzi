@@ -13,18 +13,19 @@
 <script>
 import QuizCard from '@/components/QuizCard.vue'
 import { mapGetters } from 'vuex'
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 const cardVariants = {
   // Notifications are neither enabled or disabled
-  default: {icon: 'bell', variant: 'danger', subtitle: 'Disabled', disabled: false},
+  default: {icon: faBell, variant: 'danger', subtitle: 'Disabled', disabled: false},
   // Notifications are disabled
-  disabled: {icon: 'bell', variant: 'danger', subtitle: 'Disabled', disabled: false},
+  disabled: {icon: faBell, variant: 'danger', subtitle: 'Disabled', disabled: false},
   // Notifications are enabled
-  granted: {icon: 'bell', variant: 'success', subtitle: 'Enabled', disabled: false},
+  granted: {icon: faBell, variant: 'success', subtitle: 'Enabled', disabled: false},
   // User blocked browser notifications.
-  denied: {icon: 'bell', variant: 'danger', subtitle: 'Blocked', disabled: true},
+  denied: {icon: faBell, variant: 'danger', subtitle: 'Blocked', disabled: true},
   // No browser support for notifications 
-  unsupported: {icon: 'bell', variant: 'danger', subtitle: 'Unsupported', disabled: true},
+  unsupported: {icon: faBell, variant: 'danger', subtitle: 'Unsupported', disabled: true},
 }
 
 export default {

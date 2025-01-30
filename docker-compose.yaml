@@ -1,0 +1,13 @@
+version: '3'
+services:
+  app:
+    image: node:18-alpine
+    volumes:
+      - .:/app
+    working_dir: /app
+    tty: true
+    stdin_open: true
+    ports:
+      - '80:5173'
+    entrypoint: npm
+    command: "run dev"

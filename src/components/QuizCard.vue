@@ -60,7 +60,7 @@ export default {
       default: null
     },
     icon: {
-      type: String,
+      type: Object,
       default: null
     },
     compact: {

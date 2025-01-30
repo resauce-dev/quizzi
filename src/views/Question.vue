@@ -37,14 +37,14 @@
         <div v-else-if="canProceed" class="mt-5">
           <router-link class="mt-5" :to="`/quizzes/${$route.params.quiz}/${nextIncompleteQuestionId}`" alt="Go to next question" ref="next">
             <b-button  variant="neo" size="lg">
-              Next Question <b-icon icon="caret-right" aria-hidden="true"></b-icon>
+              Next Question <b-icon :icon="faCaretRight" aria-hidden="true"></b-icon>
             </b-button>
           </router-link>
         </div>
         <div v-else class="mt-5">
           <router-link :to="`/quizzes/${$route.params.quiz}`" class="View all questions" ref="next">
             <b-button class="mt-5" variant="neo" size="lg">
-              <b-icon icon="caret-left" aria-hidden="true"></b-icon> Go Back 
+              <b-icon :icon="faCaretLeft" aria-hidden="true"></b-icon> Go Back 
             </b-button>
           </router-link>
         </div>
@@ -63,7 +63,7 @@
         </div>
         <div class="action-bar">
           <b-button size="sm" variant="neo" @click="letterUndo()">
-            <b-icon icon="arrow-counterclockwise" aria-label="Undo Last Letter"></b-icon> Undo Letter
+            <b-icon :icon="faArrowRotateLeft" aria-label="Undo Last Letter"></b-icon> Undo Letter
           </b-button>
         </div>
         <small class="text-muted" v-if="isDevelopment">{{question.name}}</small>
@@ -74,10 +74,11 @@
 
 <script>
 import charList from '@/quizzes/charList'
-import Navigation from '@/components/Navigation'
-import SuccessCheckMark from '@/components/SuccessCheckMark'
+import Navigation from '@/components/Navigation.vue'
+import SuccessCheckMark from '@/components/SuccessCheckMark.vue'
 import { mapGetters } from 'vuex'
 import { shuffleArray, getRandomString, stripSpaces } from '@/quizzes/methods'
+import { faCaretRight, faCaretLeft, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   name: 'Quiz-Question',
@@ -90,6 +91,10 @@ export default {
       question: this.$store.getters['quiz/getQuestion'](this.$route.params.quiz, questionWithOffset),
       availableLetters: null,
       activeLetters: [], // Indexes
+      // Icons
+      faCaretRight,
+      faCaretLeft,
+      faArrowRotateLeft,
     }
   },
   computed: {

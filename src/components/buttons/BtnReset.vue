@@ -2,7 +2,7 @@
   <QuizCard 
     :compact="true"
     title="Reset All Progress"
-    icon="x-octagon-fill"
+    :icon="faEraser"
     variant="danger"
     subtitle="All gameplay progress will be lost"
     @click="reset"
@@ -12,9 +12,11 @@
 <script>
 import QuizCard from '@/components/QuizCard.vue'
 import { mapGetters } from 'vuex'
+import { faEraser } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   components: { QuizCard },
+  data: () => ({ faEraser }),
   computed: {
     ...mapGetters('settings', ['canPlayAudio']),
   },

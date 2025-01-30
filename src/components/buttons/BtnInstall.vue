@@ -4,7 +4,7 @@
     :compact="true"
     title="Install App"
     subtitle="Save your progress"
-    icon="app-indicator"
+    :icon="faDownload"
     variant="info"
     @click="install"
   />
@@ -13,9 +13,11 @@
 <script>
 import QuizCard from '@/components/QuizCard.vue'
 import { mapGetters } from 'vuex'
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   components: { QuizCard },
+  data: () => ({ faDownload }),
   computed: {
     ...mapGetters('settings', ['canInstall'])
   },

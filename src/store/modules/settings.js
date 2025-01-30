@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 /**
  * Stored State Data
  */
@@ -34,12 +32,12 @@ const mutations = {
   canInstallPrompt: (state, e) => state.canInstall = e,
   notifyStatus: (state, e) => state.notifyStatus = e,
   toggleNotifyStatus: state => {
-    if(state.notifyStatus === 'granted') {
+    if (state.notifyStatus === 'granted') {
       state.notifyStatus = 'disabled'
     } else if (state.notifyStatus === 'disabled') {
       state.notifyStatus = 'granted'
     }
-    Vue.$gtag.event(`notifications_${state.notifyStatus}`) 
+    window.Vue.$gtag.event(`notifications_${state.notifyStatus}`)
   },
 }
 
@@ -51,10 +49,10 @@ const mutations = {
 const actions = {
   requestNotifyPermission: async ({ commit }) => {
     commit('notifyStatus', await Notification.requestPermission())
-    Vue.$gtag.event(`notifications_${state.notifyStatus}`)
+    window.Vue.$gtag.event(`notifications_${state.notifyStatus}`)
   },
   toggleNotify: async ({ commit, dispatch }) => {
-    if(Notification.permission === 'default') {
+    if (Notification.permission === 'default') {
       dispatch('requestNotifyPermission')
     } else {
       commit('toggleNotifyStatus')

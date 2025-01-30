@@ -18,13 +18,13 @@ export default (new VuexPersistence({
         interactions: state.questions.interactions,
       }
     }
-    
+
     /**
      * If browser notifications are granted
      * And the saved state is 'disabled'
      * Repopulate setting using the disabled preference
      */
-    if(Notification.permission === 'granted' && state.settings.notifyStatus === 'disabled') {
+    if (Notification.permission === 'granted' && state.settings.notifyStatus === 'disabled') {
       toSave.settings.notifyStatus = state.settings.notifyStatus
     }
 

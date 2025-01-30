@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
+import Navigation from '@/components/Navigation.vue'
 import BtnInstall from '@/components/buttons/BtnInstall.vue'
 import BtnNotification from '@/components/buttons/BtnNotification.vue'
 import BtnVibrate from '@/components/buttons/BtnVibrate.vue'

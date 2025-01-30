@@ -59,8 +59,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Navigation from '@/components/Navigation'
+import Navigation from '@/components/Navigation.vue'
 import QuizCard from '@/components/QuizCard.vue'
+import { faCloudArrowDown, faCheckDouble, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   name: 'Quiz-List',
@@ -94,11 +95,11 @@ export default {
       return 'Missing Title'
     },
     getQuizIcon(quiz) {
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id) && !this.isOnline) return 'wifi-off'
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id)) return 'cloud-download'
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id) && !this.isOnline) return faTriangleExclamation
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id)) return faCloudArrowDown
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started')) return null
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'in-progress')) return null
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'completed')) return 'check2-circle'
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'completed')) return faCheckDouble
       return null
     },
     getQuizVariant(quiz) {

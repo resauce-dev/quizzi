@@ -1,21 +1,28 @@
 <template>
   <nav class="nav">
     <router-link class="link-icon" :to="parentUrl" alt="Go Back" :disabled="hideBack">
-      <b-icon icon="caret-left" aria-hidden="true"></b-icon>
+      <b-icon :icon="faCaretLeft" aria-hidden="true"></b-icon>
     </router-link>
     <h1 class="app-title">Quizzi</h1>
     <router-link class="link-icon" to="/settings" alt="Settings" v-if="showSettings">
-      <b-icon icon="sliders" aria-hidden="true"></b-icon>
+      <b-icon :icon="faSliders" aria-hidden="true"></b-icon>
     </router-link>
     <router-link class="link-icon" to="/quizzes" alt="View all Quizzes" v-else>
-      <b-icon icon="house" aria-hidden="true"></b-icon>
+      <b-icon :icon="faHouse" aria-hidden="true"></b-icon>
     </router-link>
   </nav>
 </template>
 
 <script>
+import { faCaretLeft, faSliders, faHouse } from '@fortawesome/free-solid-svg-icons';
+
 export default {
   name: 'navigation',
+  data: () => ({
+    faCaretLeft,
+    faSliders,
+    faHouse,
+  }),
   props: {
     showSettings: {
       type: Boolean,

@@ -12,14 +12,15 @@
 <script>
 import QuizCard from '@/components/QuizCard.vue'
 import { mapGetters } from 'vuex'
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   components: { QuizCard },
   computed: {
     ...mapGetters('settings', ['canVibrate']),
     iconInfo() {
-      if(this.canVibrate) return {icon: 'phone-vibrate', variant: 'success', subtitle: 'Enabled', disabled: true}
-      return {icon: 'phone-vibrate', variant: 'danger', subtitle: 'Disabled', disabled: true}
+      if(this.canVibrate) return {icon: faCheck, variant: 'success', subtitle: 'Enabled', disabled: true}
+      return {icon: faXmark, variant: 'danger', subtitle: 'Disabled', disabled: true}
     }
   },
   methods: {

@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 /**
  * Stored State Data
  */
@@ -29,9 +27,9 @@ const getters = {
   isQuizState: (state, getters) => (quiz_id, status) => getters.getQuizState(quiz_id) === status,
   isQuizCompleted: (state, getters, rootState, rootGetters) => (quiz_id) => getters.getQuestionCount(quiz_id) === rootGetters['questions/countCorrectAnswers'](quiz_id),
   getQuizState: (state, getters, rootState, rootGetters) => (quiz_id) => {
-    if(rootGetters['questions/countCorrectAnswers'](quiz_id) === 0)
+    if (rootGetters['questions/countCorrectAnswers'](quiz_id) === 0)
       return 'not-started'
-    else if(getters.isQuizCompleted(quiz_id))
+    else if (getters.isQuizCompleted(quiz_id))
       return 'completed'
     else
       return 'in-progress'
@@ -43,26 +41,26 @@ const getters = {
  * 
  * @return state.data
  */
- const mutations = {
+const mutations = {
   setQuiz(state, q) {
-    Vue.set(state.quizzes, q.id, {
+    state.quizzes[q.id] = {
       id: q.id,
       name: q.name,
       questions: q.questions
-    })
+    }
     state.quizzesMeta[q.id] = {
       quizLength: q.questions.length
     }
   },
   setQuizzes(state, quizzes) {
-    Vue.set(state, 'quizzes', [])
+    state['quizzes'] = []
     quizzes.forEach(q => {
-      if((q.id in state.quizzes)) return
-      Vue.set(state.quizzes, q.id, {
+      if ((q.id in state.quizzes)) return
+      state.quizzes[q.id] = {
         id: q.id,
         name: q.name,
         questions: []
-      })
+      }
     })
   }
 }
@@ -72,7 +70,7 @@ const getters = {
  * 
  * @return commit()
  */
- const actions = {
+const actions = {
   async fetchQuizzes({ rootGetters, commit }) {
     var url = new URL(`${rootGetters['app/apiUrl']}/items/quizzi_quizzes`)
 
@@ -97,7 +95,7 @@ const getters = {
       }
 
       var response = await fetch(url)
-      var {data} = await response.json()
+      var { data } = await response.json()
 
       console.info('📜 Fetched Quizzes', data)
       commit('setQuizzes', data)

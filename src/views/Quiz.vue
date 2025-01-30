@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
-import QButton from '@/components/QButton'
+import Navigation from '@/components/Navigation.vue'
+import QButton from '@/components/QButton.vue'
 
 export default {
   name: 'Quiz',
