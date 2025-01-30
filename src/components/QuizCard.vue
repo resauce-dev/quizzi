@@ -12,7 +12,7 @@
       `card__variant--${variant}`
     ]"
   >
-    <div class="card__content" @click="handleClick">
+    <div class="card__content" @click.stop="handleClick">
       <div class="card--body">
         <div class="card-textuals">
           <h2 class="card-textuals--title">{{title}}</h2>
