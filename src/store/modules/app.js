@@ -1,3 +1,5 @@
+import { Question } from "../../quizzes/classes"
+
 /**
  * Stored State Data
  */
@@ -17,7 +19,7 @@ const getters = {
   apiUrl: state => state.apiUrl,
   isOnline: state => state.isOnline,
   lastPlayedQuiz: state => state.lastPlayedQuiz,
-  getApiAsset: (state, getters) => imageId => `${getters['apiUrl']}/assets/${imageId}?fit=contain&height=200&quality=90`,
+  getImageAsset: (state, getters) => (quizId, question) => `/img/symbols/${quizId}/${question.image.id}.${question.image.extension}`,
 }
 
 /**
@@ -28,7 +30,7 @@ const getters = {
 const mutations = {
   setIsOnline: (state, bool) => state.isOnline = bool,
   setLastPlayedQuiz: (state, quiz_id) => state.lastPlayedQuiz = quiz_id,
-  addSound: (state, {name, sound}) => state.loadedSounds[name] = sound
+  addSound: (state, { name, sound }) => state.loadedSounds[name] = sound
 }
 
 /**
@@ -38,9 +40,9 @@ const mutations = {
  */
 const actions = {
   playSound: async ({ rootGetters, state, commit }, name) => {
-    if(!rootGetters['settings/canPlayAudio']) return
-    if(!state.loadedSounds[name]) {
-      commit('addSound', {name, sound:new Audio(`/audio/${name}.wav`)})
+    if (!rootGetters['settings/canPlayAudio']) return
+    if (!state.loadedSounds[name]) {
+      commit('addSound', { name, sound: new Audio(`/audio/${name}.wav`) })
     }
     let sound = state.loadedSounds[name]
     sound.pause();
@@ -51,7 +53,7 @@ const actions = {
     })
   },
   vibrate: async ({ rootGetters }, pattern = [50]) => {
-    if(!rootGetters['settings/canVibrate']) return
+    if (!rootGetters['settings/canVibrate']) return
     return window.navigator.vibrate(pattern)
   }
 }

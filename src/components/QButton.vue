@@ -1,5 +1,5 @@
 <template>
-  <b-button v-bind="$attrs" v-on="$listeners" @click="handleClick">
+  <b-button v-bind="$attrs" @click="handleClick">
     <slot />
   </b-button>
 </template>
@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'q-button',
+  emits: ['click'],
   methods: {
     async handleClick(e) {
       await this.$store.dispatch('app/playSound', 'click')

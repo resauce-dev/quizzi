@@ -2,7 +2,7 @@
   <div id="app">
     <RouterView v-slot="{ Component, route }">
       <Transition name="fade" mode="out-in">
-        <component :key="String(route.name)" :is="Component"></component>
+        <component :key="route.fullPath" :is="Component"></component>
       </Transition>
     </RouterView>
   </div>

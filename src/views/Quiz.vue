@@ -15,7 +15,7 @@
           {{incorrectLetterPresses}} Letter{{incorrectLetterPresses===1?'':'s'}} undone
         </p>
       </div>
-      <div class="sym-container mt-3" v-if="quiz.questions">
+      <div class="grid grid-cols-5 gap-4 mt-3" v-if="quiz.questions">
         <router-link
           v-for="(question, index) in quiz.questions" 
           :key="`question_${index}`" 
@@ -23,7 +23,7 @@
           :alt="`Attempt question ${index + 1}`"
           v-slot="{ href, route, navigate }">
           <q-button 
-            class="question-button" 
+            class="grow py-3 w-full question-button" 
             :class="$store.getters['questions/isQuestionCorrect'](quiz.id, question.id) ? 'text-success' : ''" 
             variant="neo" 
             :href="href" 
@@ -94,23 +94,23 @@ export default {
 }
 
 .sym-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
+  // display: flex;
+  // flex-wrap: wrap;
+  // justify-content: flex-start;
+  // align-items: center;
 }
 .question-button {
-    --margin: 0.5rem;
-    --font-size: 16px;
-    flex-basis: calc(25% - (var(--margin) * 2));
-    margin: var(--margin);
-    font-size: var(--font-size) !important;
-    height: calc(50px + var(--font-size));
-    width: calc(25% - (var(--margin) * 2));
-    padding: 0!important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // --margin: 0.5rem;
+    // --font-size: 16px;
+    // flex-basis: calc(25% - (var(--margin) * 2));
+    // margin: var(--margin);
+    // font-size: var(--font-size) !important;
+    // height: calc(50px + var(--font-size));
+    // width: calc(25% - (var(--margin) * 2));
+    // padding: 0!important;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
 }
 .incorrect-letters {
   text-transform: uppercase;

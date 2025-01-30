@@ -11,14 +11,15 @@
       (disabled ? 'card-disabled' : null),
       `card__variant--${variant}`
     ]"
+    @click.stop="handleClick"
   >
-    <div class="card__content" @click.stop="handleClick">
+    <div class="card__content">
       <div class="card--body">
         <div class="card-textuals">
           <h2 class="card-textuals--title">{{title}}</h2>
           <p class="card-textuals--subtitle" v-if="subtitle">{{subtitle}}</p>
         </div>
-        <b-badge v-if="badgeText" variant="success" class="ml-3" pill>
+        <b-badge v-if="badgeText" class="bg-green-600 text-white ml-3" pill>
           {{badgeText}}
         </b-badge>
         <b-icon 
@@ -84,6 +85,7 @@ export default {
       default: null
     }
   },
+  emits: ['click'],
   computed: {
     elementType() {
       if(!this.link) return null

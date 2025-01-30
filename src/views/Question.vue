@@ -1,11 +1,11 @@
 <template>
   <div>
     <navigation />
-    <div class="question mt-3 mb-5">
-      <b-badge class="question-badge shadow mb-2" pill variant="primary">Question {{$route.params.question}}</b-badge>
+    <div :key="$route.params.question" class="question mt-3 mb-5">
+      <b-badge class="question-badge shadow mb-2 bg-blue-500 text-white px-2" pill variant="primary">Question {{$route.params.question}}</b-badge>
       <div class="image-box my-3" :class="question.has_padding ? 'p-3' : ''">
         <img 
-          :src="question.image ? $store.getters['app/getApiAsset'](question.image.id) : './img/unknown.svg'" 
+          :src="question.image ? $store.getters['app/getImageAsset'](quiz.id, question) : './img/unknown.svg'" 
           alt="Questionable Image" 
           class="image"
         >
@@ -15,15 +15,13 @@
           {{incorrectLetterPresses}} Letter{{incorrectLetterPresses===1?'':'s'}} undone
         </p>
       </div>
-      <template>
-        <div class="word-container">
-          <div class="d-flex word" v-for="(word, wordi) in getQuestionNames().words" :key="word">
-            <div v-for="(letter, letteri) in word" :key="`${letteri}_${letter}`" class="display-letter" :class="letter === ' ' ? 'space' : ''"> 
-              {{ getLetter(wordi, letteri) }}
-            </div>
+      <div class="word-container">
+        <div class="d-flex word" v-for="(word, wordi) in getQuestionNames().words" :key="word">
+          <div v-for="(letter, letteri) in word" :key="`${letteri}_${letter}`" class="display-letter" :class="letter === ' ' ? 'space' : ''"> 
+            {{ getLetter(wordi, letteri) }}
           </div>
         </div>
-      </template>
+      </div>
       <div v-if="isActiveQuestionCorrect" class="pt-4">
         <success-check-mark class="mt-3" />
         <div v-if="quizIsCompleted" class="mt-5">
@@ -36,7 +34,7 @@
         </div>
         <div v-else-if="canProceed" class="mt-5">
           <router-link class="mt-5" :to="`/quizzes/${$route.params.quiz}/${nextIncompleteQuestionId}`" alt="Go to next question" ref="next">
-            <b-button  variant="neo" size="lg">
+            <b-button variant="neo" size="lg">
               Next Question <b-icon :icon="faCaretRight" aria-hidden="true"></b-icon>
             </b-button>
           </router-link>
@@ -81,7 +79,6 @@ import { shuffleArray, getRandomString, stripSpaces } from '@/quizzes/methods'
 import { faCaretRight, faCaretLeft, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default {
-  name: 'Quiz-Question',
   components: { Navigation, SuccessCheckMark },
   data() { 
     const questionWithOffset = parseInt(this.$route.params.question) - 1
@@ -134,10 +131,15 @@ export default {
       switch (key) {
         case 'ENTER':
           // Only proceed if the quesiton is correct
-          if(this.isActiveQuestionCorrect)
-            this.$refs.next.$el.click()
-          if(this.isActiveQuestionCorrect)
-            this.$refs.next.$el.click()
+          if(this.isActiveQuestionCorrect) {
+            if (this.quizIsCompleted) {
+              this.$router.push(`/quizzes/${this.$route.params.quiz}`)
+            } else if (this.canProceed) {
+              this.$router.push(`/quizzes/${this.$route.params.quiz}/${this.nextIncompleteQuestionId}`)
+            } else {
+              this.$router.push(`/quizzes/${this.$route.params.quiz}`)
+            }
+          }
           break
         case 'BACKSPACE':
           // Only undo if the question is not already completed
@@ -166,7 +168,7 @@ export default {
       }
     },
     letterClickIndex(letterIndex) {
-      if(!this.availableLetters[letterIndex]) { throw `The selected letter doesn't exist`  }
+      if(!this.availableLetters[letterIndex]) { throw `The selected letter doesn't exist` }
       if(this.userAnswer.length === this.getQuestionNames().stripped.length) return
       this.activeLetters.push(letterIndex)
 

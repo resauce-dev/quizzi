@@ -1,3 +1,5 @@
+import quizzes from "../../quizzes/index.js"
+
 /**
  * Stored State Data
  */
@@ -72,86 +74,16 @@ const mutations = {
  */
 const actions = {
   async fetchQuizzes({ rootGetters, commit }) {
-    var url = new URL(`${rootGetters['app/apiUrl']}/items/quizzi_quizzes`)
-
-    var params = {
-      fields: [
-        'id',
-        'sort',
-        'date_created',
-        'date_updated',
-        'name',
-        // 'questions.id'
-      ],
-      'filter[status][_eq]': 'published'
-    }
-
-    url.search = new URLSearchParams(params).toString()
-
-    try {
-      if (window.Cache !== undefined) {
-        const cache = await caches.open(`quiz-index`)
-        cache.add(url)
-      }
-
-      var response = await fetch(url)
-      var { data } = await response.json()
-
-      console.info('📜 Fetched Quizzes', data)
-      commit('setQuizzes', data)
-      return true
-    } catch (e) {
-      console.error('📜 Something went wrong!', e)
-      return false
-    }
+    commit('setQuizzes', quizzes)
   },
   async fetchQuiz({ rootGetters, commit }, id) {
-    var url = new URL(`${rootGetters['app/apiUrl']}/items/quizzi_quizzes/${id}`)
-
-    var params = {
-      fields: [
-        'id',
-        'sort',
-        'date_created',
-        'date_updated',
-        'name',
-        'questions.id',
-        'questions.sort',
-        'questions.date_created',
-        'questions.date_updated',
-        'questions.name',
-        'questions.has_padding',
-        'questions.image.id'
-      ],
-      'filter[status][_eq]': 'published',
-      'deep[questions][_filter][status][_eq]': 'published'
-    }
-
-    url.search = new URLSearchParams(params).toString()
-
-    try {
-      if (window.Cache !== undefined) {
-        const cache = await caches.open(`quiz__${id}`)
-        cache.add(url)
-      }
-
-      var response = await fetch(url)
-      var { data } = await response.json()
-
-      // Commit the result
-      console.info('📜 Fetched Quiz', data.name, data)
-      commit('setQuiz', data)
-      return true
-    } catch (e) {
-      console.error('📜 Something went wrong!', e)
-      return false
-    }
+    commit('setQuiz', quizzes.find(q => q.id === id))
   },
-  async fetchQuizAssets({ state, rootGetters }, id) {
+  async fetchQuizAssets({ state, rootGetters }, quizId) {
     if (window.Cache !== undefined) {
-      const cache = await caches.open(`quiz__${id}`)
-      const assetLinks = state.quizzes[id].questions.map(
-        i => rootGetters['app/getApiAsset'](i.image.id)
+      const cache = await caches.open(`quiz__${quizId}`)
+      const assetLinks = state.quizzes[quizId].questions.map(
+        q => rootGetters['app/getImageAsset'](quizId, q)
       )
       cache.addAll(assetLinks)
     }

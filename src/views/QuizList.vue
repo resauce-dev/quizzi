@@ -3,9 +3,9 @@
     <navigation show-settings hide-back/>
     <div class="quizzes">
       <div class="type-toggle">
-        <b-badge href="#" class="type-toggle-button" pill :variant="getVariant('not-started')" @click="toggleShowStatus('not-started')">Not Started</b-badge>
-        <b-badge href="#" class="type-toggle-button" pill :variant="getVariant('in-progress')" @click="toggleShowStatus('in-progress')">In Progress</b-badge>
-        <b-badge href="#" class="type-toggle-button" pill :variant="getVariant('completed')" @click="toggleShowStatus('completed')">Completed</b-badge>
+        <b-badge href="#" class="type-toggle-button px-2 text-white" pill :class="getVariantClass('not-started')" @click="toggleShowStatus('not-started')">Not Started</b-badge>
+        <b-badge href="#" class="type-toggle-button px-2 text-white" pill :class="getVariantClass('in-progress')" @click="toggleShowStatus('in-progress')">In Progress</b-badge>
+        <b-badge href="#" class="type-toggle-button px-2 text-white" pill :class="getVariantClass('completed')" @click="toggleShowStatus('completed')">Completed</b-badge>
       </div>
       <div v-if="filteredQuizzes.length > 0">
         <transition-group tag="div" name="slide-in" :style="{ '--total': filteredQuizzes.length }">
@@ -47,7 +47,7 @@
       <QuizCard 
         title="My Achievements"
         subtitle="See what you've achieved!"
-        icon="controller"
+        :icon="faGamepad"
         variant="success"
         :compact="true"
         :link="{to:`/achievements`, alt:'My Achievements'}"
@@ -61,13 +61,14 @@
 import { mapGetters } from 'vuex'
 import Navigation from '@/components/Navigation.vue'
 import QuizCard from '@/components/QuizCard.vue'
-import { faCloudArrowDown, faCheckDouble, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faCloudArrowDown, faCheckDouble, faTriangleExclamation, faGamepad } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   name: 'Quiz-List',
   components: { Navigation, QuizCard },
   data: () => ({
-    showQuizzesWithStatus: null
+    showQuizzesWithStatus: null,
+    faGamepad,
   }),
   computed: {
     ...mapGetters('app', ['isOnline']),
@@ -84,8 +85,8 @@ export default {
     }
   },
   methods: {
-    getVariant(key) {
-      return this.showQuizzesWithStatus === key ? 'success' : 'secondary'
+    getVariantClass(key) {
+      return this.showQuizzesWithStatus === key ? '!bg-green-600 !shadow-lg' : '!bg-zinc-500'
     },
     getQuizSubTitle(quiz) {
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id)) return 'Tap to download'
