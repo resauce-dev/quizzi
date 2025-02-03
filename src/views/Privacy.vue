@@ -1,8 +1,9 @@
 <template>
   <div>
     <navigation />
-    <div class="px-5 my-3 text-center">
-      <h2>Privacy Policy</h2>
+    <div class="px-5 mt-3 mb-5">
+      <h1>Privacy Policy</h1>
+      <h2>Legal Stuff...</h2>
       <p>Your privacy is important to us. It is Quizzi's policy to respect your privacy regarding any information we may collect from you across our website, <a href="https://quizzi.resauce.dev">https://quizzi.resauce.dev</a>, and other sites we own and operate.</p>
       <p>We only ask for personal information when we truly need it to provide a service to you. We collect it by fair and lawful means, with your knowledge and consent. We also let you know why we’re collecting it and how it will be used.</p>
       <p>We only retain collected information for as long as necessary to provide you with your requested service. What data we store, we’ll protect within commercially acceptable means to prevent loss and theft, as well as unauthorised access, disclosure, copying, use or modification.</p>
@@ -16,7 +17,7 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
+import Navigation from '@/components/Navigation.vue'
 
 export default {
   name: 'privacy',
@@ -25,16 +26,19 @@ export default {
 </script>
 
 <style scoped>
-h2 {
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--blue);
-  margin-bottom: 2rem;
+h1 {
+  color: var(--primary);
+  margin-bottom: 0.2rem;
   font-size: 24px;
   font-weight: bold;
 }
+h2 {
+  color: var(--secondary);
+  margin-bottom: 2rem;
+  font-size: 14px;
+  font-weight: bold;
+}
 p {
-  text-transform: uppercase;
   font-size: 12px;
 }
 </style>

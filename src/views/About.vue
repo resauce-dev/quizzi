@@ -1,46 +1,61 @@
 <template>
   <div>
     <navigation />
-    <div class="px-5 my-3 text-center">
-      <h2>About this site</h2>
+    <div class="px-5 mt-3 mb-5">
+      <h1 class="mb-5">About Quizzi</h1>
+      <h2 class="">Who, What, Where, When, Why...</h2>
       <p>
-        Quizzi is just a little bit of fun, for you to play and for me to develop, 
-        I hope you enjoy playing, created by <strong>@sheahlavington</strong> on Twitter.
+        Quizzi is a side-project by me, <a href="https://www.linkedin.com/in/shealavington/" target="_blank">Shea Lavington</a>. 
+        To learn the fundamentals of a Progressive Web-App, you've really got to get stuck-in, 
+        and what better way than create something fun and interactive?
+      </p>
+      <p> 
+        Interactive games test the limits of a developer as not only do you have to break the issues down to solutions,
+        you also have to architecture the states of each interactive part and the challenge keeps it interesting. 
+      </p>
+      <p> 
+        Most of the system was written in the evenings laid up in bed all comfy, surprising what you can do when you're 
+        excited about reaching a goal! The first COVID-19 Lockdown in the United Kingdom started in March 2020, 
+        I had some spare time and challenged myself to create something new while pushing my limits; thus, 
+        the progressive web-app Quizzi was created.
+      </p>
+
+      <br>
+      <h2>Disclaimer:</h2>
+      <p>
+        Images within this web-app were sourced from Google, if you own any of the images
+        and would like them removed from this site, please get in touch with proof of ownership and 
+        I'll be more than happy to make the required changes.
       </p>
       <p>
-        Some images on this site have been sourced from Google, if you are the owner 
-        of an image and would like it removed, please get in touch with some proof of ownership
-        and I'll be happy to get the image changed or removed.
+        This web-app doesn't have an income of any kind; factually, I'm making a loss due to the cost 
+        of hosting. Should you would like to sponsor future development of the app, or anything else, please do get in touch to discuss options.
       </p>
-      <p>
-        This site does not make any profit, in-fact, this site is making a loss at the cost 
-        of hosting, if you would like to sponsor, please do get in touch. :P 
-      </p>
-      <p> Contact me at (admin[at]resauce[dot]dev) </p>
+      <p> If you need to contact me, you can do so through my LinkedIn or through Email at shea[at]lavington[dot]me. </p>
+      <br>
+      <btn-github />
     </div>
   </div>
 </template>
 
-<script>
-import Navigation from '@/components/Navigation'
-
-export default {
-  name: 'about',
-  components: { Navigation }
-}
+<script setup>
+import Navigation from '@/components/Navigation.vue'
+import BtnGithub from '@/components/buttons/BtnGithub.vue'
 </script>
 
 <style scoped>
-h2 {
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--blue);
-  margin-bottom: 2rem;
+h1 {
+  color: var(--primary);
+  margin-bottom: 0.2rem;
   font-size: 24px;
   font-weight: bold;
 }
+h2 {
+  color: var(--secondary);
+  font-size: 14px;
+  font-weight: bold;
+}
 p {
-  text-transform: uppercase;
   font-size: 12px;
 }
 </style>

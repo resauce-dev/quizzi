@@ -1,17 +1,21 @@
 <template>
   <div id="app">
-    <transition name="fade" mode="out-in">
-      <router-view :key="$route.fullPath" />
-    </transition>
+    <RouterView v-slot="{ Component, route }">
+      <Transition name="fade" mode="out-in">
+        <component :key="route.fullPath" :is="Component"></component>
+      </Transition>
+    </RouterView>
   </div>
 </template>
 
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import appClosedNotifications from '@/mixins/appClosedNotifications'
 
 export default {
-  name: 'App'
+  name: 'App',
+  mixins: [appClosedNotifications],
 }
 </script>
 
@@ -60,7 +64,8 @@ body {
   touch-action: manipulation; /* Disables double-tap to zoom */
 }
 
-@media screen and (min-width: 480px) {
+/* Fake Mobile View if smallter than a small laptop */
+@media screen and (min-width: 1024px) { 
   #app {
     height: 80vh;
     max-height: 800px;
@@ -87,7 +92,6 @@ body {
 .btn-neo:active {
   color: var(--gray);
   font-size: 14px!important;
-  padding: 20px 30px!important;
   border: 1px solid transparent!important;
 
   outline: 0;
@@ -97,6 +101,14 @@ body {
   border-radius: 5px;
 }
 
+.btn-sm {
+  padding: 10px 15px!important;
+}
+
+.btn-lg {
+  padding: 20px 30px!important;
+}
+
 .btn-neo,
 .neo-shadow {
   background: linear-gradient(135deg, var(--color-cultured), #ffffffa1);
@@ -104,13 +116,11 @@ body {
               -6px -6px 13px rgba(255, 255, 255, 0.5)
 }
 
-a.btn-neo:hover,
-button.btn-neo:hover,
-a.neo-shadow:hover,
-button.neo-shadow:hover {
+.btn-neo:hover {
   background: linear-gradient(-20deg, var(--color-cultured), #ffffffa1);
   box-shadow: 6px 6px 13px rgba(196, 196, 196, 0.6), 
               -6px -6px 13px rgba(255, 255, 255, 0.5)
 }
 
 </style>
+>

@@ -1,27 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import quizzes from '@/quizzes'
+import modules from './modules'
+import plugins from './plugins'
+import { createStore } from 'vuex'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-  state: {
-    quizzes: quizzes
-  },
-  getters: {
-    getQuiz: (state) => (slug) => {
-      return state.quizzes.find(q => q.slug === slug)
-    },
-    getQuizSymbol: (state) => (slug, symbolIndex) => {
-      const quiz = state.quizzes.find(q => q.slug === slug)
-      const symbol = quiz.symbols[symbolIndex]
-      return symbol
-    }
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+export const store = createStore({
+  devtools: process.env.NODE_ENV !== 'production',
+  strict: true,
+  plugins: plugins,
+  modules: modules,
 })
