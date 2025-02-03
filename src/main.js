@@ -7,12 +7,7 @@ import { store } from './store'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import './registerServiceWorker'
-
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
-
 import './assets/main.css'
-
 
 /**
  * Init Vue App

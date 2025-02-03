@@ -9,6 +9,7 @@
     "src/**/__tests__/*"
   ],
   "compilerOptions": {
+    "allowJs": true,
     "target": "esnext",
     "composite": true,
     "baseUrl": ".",
