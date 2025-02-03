@@ -25,7 +25,7 @@
         <b-icon 
           v-if="icon"
           :icon="icon" 
-          :variant="variant" 
+          :class="`card__icon-variant--${variant}`" 
           scale="1.5" 
           class="mx-2" 
           aria-hidden="true"
@@ -37,7 +37,7 @@
           height="0.4rem" 
           :value="progressData.value" 
           :max="progressData.max" 
-          :variant="variant">
+          :bg-variant="variant">
         </b-progress>
       </div>
     </div>
@@ -155,6 +155,15 @@ a {
 .card__variant--info:hover { color: var(--info) }
 .card__variant--light:hover { color: var(--light) }
 .card__variant--dark:hover { color: var(--dark) }
+
+.card__icon-variant--primary { color: var(--primary) }
+.card__icon-variant--secondary { color: var(--secondary) }
+.card__icon-variant--success { color: var(--success) }
+.card__icon-variant--danger { color: var(--danger) }
+.card__icon-variant--warning { color: var(--warning) }
+.card__icon-variant--info { color: var(--info) }
+.card__icon-variant--light { color: var(--light) }
+.card__icon-variant--dark { color: var(--dark) }
 
 .card__content {
   color: inherit;

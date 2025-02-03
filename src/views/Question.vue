@@ -2,7 +2,7 @@
   <div>
     <navigation />
     <div :key="$route.params.question" class="question mt-3 mb-5">
-      <b-badge class="question-badge shadow mb-2 bg-blue-500 text-white px-2" pill variant="primary">Question {{$route.params.question}}</b-badge>
+      <b-badge class="question-badge shadow mb-2 bg-blue-500 text-white px-2" pill>Question {{$route.params.question}}</b-badge>
       <div class="image-box my-3" :class="question.has_padding ? 'p-3' : ''">
         <img 
           :src="question.image ? $store.getters['app/getImageAsset'](quiz.id, question) : './img/unknown.svg'" 
@@ -223,7 +223,7 @@ export default {
 
     window.addEventListener('keydown', this.keyHandler)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('keydown', this.keyHandler)
   },
 }

@@ -61,7 +61,7 @@
 import { mapGetters } from 'vuex'
 import Navigation from '@/components/Navigation.vue'
 import QuizCard from '@/components/QuizCard.vue'
-import { faCloudArrowDown, faCheckDouble, faTriangleExclamation, faGamepad } from '@fortawesome/free-solid-svg-icons';
+import { faCloudArrowDown, faMedal, faTriangleExclamation, faGamepad } from '@fortawesome/free-solid-svg-icons';
 
 export default {
   name: 'Quiz-List',
@@ -100,7 +100,7 @@ export default {
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started') && !this.isCached(quiz.id)) return faCloudArrowDown
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'not-started')) return null
       if(this.$store.getters['quiz/isQuizState'](quiz.id, 'in-progress')) return null
-      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'completed')) return faCheckDouble
+      if(this.$store.getters['quiz/isQuizState'](quiz.id, 'completed')) return faMedal
       return null
     },
     getQuizVariant(quiz) {

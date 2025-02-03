@@ -1,10 +1,7 @@
-import { Question } from "../../quizzes/classes"
-
 /**
  * Stored State Data
  */
 const state = {
-  apiUrl: 'https://cms.resauce.dev',
   isOnline: window.navigator.onLine,
   lastPlayedQuiz: null,
   loadedSounds: [],
@@ -16,10 +13,9 @@ const state = {
  * @return state.data
  */
 const getters = {
-  apiUrl: state => state.apiUrl,
   isOnline: state => state.isOnline,
   lastPlayedQuiz: state => state.lastPlayedQuiz,
-  getImageAsset: (state, getters) => (quizId, question) => `/img/symbols/${quizId}/${question.image.id}.${question.image.extension}`,
+  getImageAsset: () => (quizId, question) => `/img/symbols/${quizId}/${question.image.id}.${question.image.extension}`,
 }
 
 /**
@@ -45,11 +41,10 @@ const actions = {
       commit('addSound', { name, sound: new Audio(`/audio/${name}.wav`) })
     }
     let sound = state.loadedSounds[name]
-    sound.pause();
+    await sound.pause();
     sound.currentTime = 0;
-    return new Promise(res => {
-      sound.play()
-      sound.onended = res
+    return new Promise(resolve => {
+      sound.play().then(() => resolve)
     })
   },
   vibrate: async ({ rootGetters }, pattern = [50]) => {

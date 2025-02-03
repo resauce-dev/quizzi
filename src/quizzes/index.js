@@ -514,8 +514,8 @@ marvelChars.addSymbol('698ef4ae-e2d8-45dc-b3f2-c970d95f002c', 'Nick Fury', 'png'
 marvelChars.addSymbol('53fefa14-5667-44f2-b00a-e9ba6fdaf9db', 'Loki', 'png', false)
 marvelChars.addSymbol('795b0a6e-d3c1-430c-897d-a5fc12646d6e', 'Mister Fantastic', 'png', false)
 
-export default [ 
-    logos, animChars, flags, apparel, socialMedia, 
-    foodDrink, vehicleBrands, dogBreeds, 
-    musicArtists, animals, movieTitles, marvelChars
+export default [
+  logos, animChars, flags, apparel, socialMedia,
+  foodDrink, vehicleBrands, dogBreeds,
+  musicArtists, animals, movieTitles, marvelChars
 ]

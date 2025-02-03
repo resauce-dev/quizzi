@@ -93,25 +93,6 @@ export default {
   margin: 0;
 }
 
-.sym-container {
-  // display: flex;
-  // flex-wrap: wrap;
-  // justify-content: flex-start;
-  // align-items: center;
-}
-.question-button {
-    // --margin: 0.5rem;
-    // --font-size: 16px;
-    // flex-basis: calc(25% - (var(--margin) * 2));
-    // margin: var(--margin);
-    // font-size: var(--font-size) !important;
-    // height: calc(50px + var(--font-size));
-    // width: calc(25% - (var(--margin) * 2));
-    // padding: 0!important;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-}
 .incorrect-letters {
   text-transform: uppercase;
   letter-spacing: 1px;
