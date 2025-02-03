@@ -17,7 +17,6 @@
 import { faCaretLeft, faSliders, faHouse } from '@fortawesome/free-solid-svg-icons';
 
 export default {
-  name: 'navigation',
   data: () => ({
     faCaretLeft,
     faSliders,
@@ -63,7 +62,7 @@ export default {
   color: var(--blue);
 }
 
-.link-icon[disabled] {
+.link-icon[disabled="true"] {
   pointer-events: none;
   opacity: 0.25;
 }

@@ -5,7 +5,7 @@
       <h1 class="mb-5">About Quizzi</h1>
       <h2 class="">Who, What, Where, When, Why...</h2>
       <p>
-        Quizzi is developed as a side-project by <a href="https://twitter.com/sheahlavington" target="_blank">@sheahlavington</a>. 
+        Quizzi is a side-project by me, <a href="https://www.linkedin.com/in/shealavington/" target="_blank">Shea Lavington</a>. 
         To learn the fundamentals of a Progressive Web-App, you've really got to get stuck-in, 
         and what better way than create something fun and interactive?
       </p>
@@ -23,29 +23,24 @@
       <br>
       <h2>Disclaimer:</h2>
       <p>
-        Many images on this web-app have been sourced from Google, if you own any of the images
-        and would like it removed from this site, please do get in touch with some proof of ownership and 
+        Images within this web-app were sourced from Google, if you own any of the images
+        and would like them removed from this site, please get in touch with proof of ownership and 
         I'll be more than happy to make the required changes.
       </p>
       <p>
-        This web-app doesn't have an income of any kind; factually, we're making a loss due to the cost 
-        of hosting. Should you would like to sponsor future development of the app, please do get in touch to discuss options.
+        This web-app doesn't have an income of any kind; factually, I'm making a loss due to the cost 
+        of hosting. Should you would like to sponsor future development of the app, or anything else, please do get in touch to discuss options.
       </p>
-      <p> If you need to contact me, you can do so through my Twitter or through Email at shea[at]lavington[dot]me. </p>
+      <p> If you need to contact me, you can do so through my LinkedIn or through Email at shea[at]lavington[dot]me. </p>
       <br>
       <btn-github />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import Navigation from '@/components/Navigation.vue'
 import BtnGithub from '@/components/buttons/BtnGithub.vue'
-
-export default {
-  name: 'about',
-  components: { Navigation, BtnGithub }
-}
 </script>
 
 <style scoped>
