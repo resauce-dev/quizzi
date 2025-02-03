@@ -67,6 +67,9 @@
     ],
     "rules": {}
   },
+  "optionalDependencies": {
+    "@tailwindcss/oxide-linux-arm64-gnu": "^4.0.1"
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
