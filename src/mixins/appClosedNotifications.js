@@ -1,7 +1,7 @@
 export default {
   async created() {
-    
-    const MINUTES = 5;
+
+    const ONE_MINUTE = (60 * 1000);
 
     /**
      * Don't do anything 
@@ -48,13 +48,13 @@ export default {
         swRegistration.showNotification(`Finish the ${quiz.name} quiz`, {
           tag: 'app-closed',
           body: `You've completed ${correctCount}/${questionCount} questions, almost there!`,
-          showTrigger: new window.TimestampTrigger(Date.now() + ((60 * 1000) * MINUTES)), // One Hour
+          showTrigger: new window.TimestampTrigger(Date.now() + (ONE_MINUTE * 60)), // One Hour
         })
       } else if (hasQuizzes) { // The last quiz was not in progress
         swRegistration.showNotification(`Fancy another challenge?`, {
           tag: 'app-closed',
           body: `Come back and start a new quiz!`,
-          showTrigger: new window.TimestampTrigger(Date.now() + ((60 * 1000) * MINUTES)), // One Hour
+          showTrigger: new window.TimestampTrigger(Date.now() + (ONE_MINUTE * 60) * 24), // One Day
         })
       }
       

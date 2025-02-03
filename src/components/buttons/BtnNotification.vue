@@ -23,9 +23,9 @@ const cardVariants = {
   // Notifications are enabled
   granted: {icon: faBell, variant: 'success', subtitle: 'Enabled', disabled: false},
   // User blocked browser notifications.
-  denied: {icon: faBell, variant: 'danger', subtitle: 'Blocked', disabled: true},
+  denied: {icon: faBell, variant: 'danger', subtitle: 'Blocked via browser settings', disabled: true},
   // No browser support for notifications 
-  unsupported: {icon: faBell, variant: 'danger', subtitle: 'Unsupported', disabled: true},
+  unsupported: {icon: faBell, variant: 'danger', subtitle: 'Not supported on this device', disabled: true},
 }
 
 export default {

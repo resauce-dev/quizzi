@@ -2,9 +2,8 @@
   <div>
     <navigation />
     <div class="wrapper">
-      <h1>Achievements</h1>
-      <h2>Your Achievements (More coming soon)...</h2>
-
+      <h1>Your Achievements</h1>
+      <h2>An experimental feature for the future</h2>
       <QuizCard 
         v-for="goal in list" 
         :key="goal.title"
@@ -13,7 +12,7 @@
         :icon="getValue(goal.getter)>=goal.threshold ? faAward : null"
         :variant="getValue(goal.getter)>=goal.threshold ? 'success' : 'secondary'"
         :progress-data="{value:getValue(goal.getter),max:goal.threshold}"
-      />
+        />
         <!-- :badge-text="getValue(goal.getter)<goal.threshold?`${getValue(goal.getter)} / ${goal.threshold}`:null" -->
     </div>
   </div>
@@ -26,7 +25,6 @@ import { mapGetters } from 'vuex'
 import { faAward } from '@fortawesome/free-solid-svg-icons';
 
 export default {
-  name: 'settings',
   components: { Navigation, QuizCard },
   data: () => ({ faAward }),
   computed: {

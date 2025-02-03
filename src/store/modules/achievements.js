@@ -14,7 +14,7 @@ const state = {
       threshold: 1,
     },
     { title: 'Junior Quizzer',
-      desc: 'Complete 10 Questions',
+      desc: 'Complete 10 questions',
       getter: 'questionsCompleted',
       threshold: 10,
     },
