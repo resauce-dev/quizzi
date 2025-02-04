@@ -3,7 +3,7 @@ import plugins from './plugins'
 import { createStore } from 'vuex'
 
 export const store = createStore({
-  devtools: process.env.NODE_ENV !== 'production',
+  devtools: import.meta.env.DEV,
   strict: true,
   plugins: plugins,
   modules: modules,

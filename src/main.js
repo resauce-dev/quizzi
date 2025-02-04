@@ -17,7 +17,7 @@ window.Vue = createApp(App)
   .use(createBootstrap())
   .use(store)
   .use(VueGtag, {
-    enabled: process.env.NODE_ENV == "development" ? false : true,
+    enabled: import.meta.env.PROD ? true : false,
     config: { id: 'UA-167804735-1' }
   }, router)
   .component('b-icon', FontAwesomeIcon)

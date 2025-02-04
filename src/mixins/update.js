@@ -2,7 +2,7 @@ export default {
   data() {
     // refresh variables
     return {
-      isDevelopment: process.env.NODE_ENV === 'development',
+      isDevelopment: import.meta.env.DEV,
       isFetchingUpdateContent: false,
       isUpdateInstallable: false,
       isUpdating: false,

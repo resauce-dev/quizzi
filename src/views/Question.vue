@@ -83,7 +83,7 @@ export default {
   data() { 
     const questionWithOffset = parseInt(this.$route.params.question) - 1
     return { 
-      isDevelopment:process.env.NODE_ENV === 'development',
+      isDevelopment: import.meta.env.DEV,
       quiz: this.$store.getters['quiz/getQuiz'](this.$route.params.quiz),
       question: this.$store.getters['quiz/getQuestion'](this.$route.params.quiz, questionWithOffset),
       availableLetters: null,
