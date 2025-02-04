@@ -19,7 +19,7 @@
           <h2 class="card-textuals--title">{{title}}</h2>
           <p class="card-textuals--subtitle" v-if="subtitle">{{subtitle}}</p>
         </div>
-        <b-badge v-if="badgeText" class="bg-green-600 text-white ml-3" pill>
+        <b-badge v-if="badgeText" class="bg-red-600 text-white ml-3 px-2" pill>
           {{badgeText}}
         </b-badge>
         <b-icon 
@@ -37,8 +37,9 @@
           height="0.4rem" 
           :value="progressData.value" 
           :max="progressData.max" 
-          :bg-variant="variant">
-        </b-progress>
+          :bg-variant="variant"
+          aria-label="Quiz Progress"
+        />
       </div>
     </div>
   </component>

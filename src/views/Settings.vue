@@ -3,7 +3,7 @@
     <navigation />
     <div class="wrapper">
       <h1>Settings</h1>
-      <h2>Your Preferences...</h2>
+      <h2 class="!text-gray-600">Your Preferences...</h2>
 
       <btn-install />
       <btn-notification />

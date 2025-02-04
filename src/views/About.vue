@@ -21,7 +21,7 @@
       </p>
 
       <br>
-      <h2>Disclaimer:</h2>
+      <h2 class="!text-gray-600">Disclaimer:</h2>
       <p>
         Images within this web-app were sourced from Google, if you own any of the images
         and would like them removed from this site, please get in touch with proof of ownership and 

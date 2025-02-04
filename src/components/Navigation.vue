@@ -1,13 +1,16 @@
 <template>
   <nav class="nav">
     <router-link class="link-icon" :to="parentUrl" alt="Go Back" :disabled="hideBack">
+      <span class="sr-only">Go Back</span>
       <b-icon :icon="faCaretLeft" aria-hidden="true"></b-icon>
     </router-link>
-    <h1 class="app-title">Quizzi</h1>
+    <h1 class="app-title text-gray-700 ml-4">Quizzi</h1>
     <router-link class="link-icon" to="/settings" alt="Settings" v-if="showSettings">
+      <span class="sr-only">Settings</span>
       <b-icon :icon="faSliders" aria-hidden="true"></b-icon>
     </router-link>
     <router-link class="link-icon" to="/quizzes" alt="View all Quizzes" v-else>
+      <span class="sr-only">Home</span>
       <b-icon :icon="faHouse" aria-hidden="true"></b-icon>
     </router-link>
   </nav>
