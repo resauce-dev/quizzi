@@ -14,7 +14,7 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     env:
-      BASE_URL: ${{ steps.builddeploy.outputs.static_web_app_url }}
+      BASE_URL: ${{ secrets.APP_URL }}
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
