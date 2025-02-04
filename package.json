@@ -74,6 +74,7 @@
     "not dead"
   ],
   "vue": {
+    "filenameHashing": false,
     "pwa": {
       "name": "Quizzi",
       "themeColor": "#191923",
@@ -82,6 +83,10 @@
       "appleMobileWebAppStatusBarStyle": "white",
       "manifestOptions": {
         "display": "fullscreen"
+      },
+      "workboxPluginMode": "InjectManifest",
+      "workboxOptions": {
+        "swSrc": "src/service-worker.js"
       }
     }
   }
