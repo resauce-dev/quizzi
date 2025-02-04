@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img class="logo" alt="Quizzi logo" src="../assets/images/logo.png">
+    <img class="logo" alt="Quizzi logo" src="/img/logo.png">
     <div class="d-flex flex-column">
       <div>
         <router-link to="/quizzes" alt="Play Now" v-slot="{ href, route, navigate }">
